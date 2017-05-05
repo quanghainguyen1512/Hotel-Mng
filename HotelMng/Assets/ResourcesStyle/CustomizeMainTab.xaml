@@ -204,7 +204,7 @@
                                     Grid.Column="1"
                                     Grid.Row="0"
                                     KeyboardNavigation.TabIndex="1"
-                                    Margin="6"
+                                    Margin="10"
                                     Panel.ZIndex="1">
                                 <StackPanel Name="HeaderPanel"
                                             IsItemsHost="True"
@@ -230,8 +230,9 @@
     </Style>
 
     <Style TargetType="TextBlock" x:Key="styleHeaderText">
-        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="FontSize" Value="15"/>
         <Setter Property="Foreground" Value="White"/>
+        <Setter Property="VerticalAlignment" Value="Center"></Setter>
     </Style>
 
     <Style TargetType="Image" x:Key="styleHeaderImage">

@@ -4,7 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HotelMng"
-        xmlns:HamburgerMenu="clr-namespace:HamburgerMenu;assembly=HamburgerMenu"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:hamburgerMenu="clr-namespace:HamburgerMenu;assembly=hamburgerMenu"
         mc:Ignorable="d"
         Title="MainWindow" Height="700" Width="1000" 
         WindowState="Maximized">
@@ -29,22 +30,45 @@
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
-                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="4*"/>
                     </Grid.ColumnDefinitions>
-                    <StackPanel></StackPanel>
+                    <StackPanel Background="{StaticResource gradientBrushTabControlHeader}"></StackPanel>
                     <Grid Grid.Column="1">
+                        <Grid.Resources>
+                            <ResourceDictionary Source="Assets/ResourcesStyle/TextBlockStyle.xaml"/>
+                        </Grid.Resources>
                         <Grid.RowDefinitions>
                             <RowDefinition/>
                             <RowDefinition/>
                             <RowDefinition Height="0.5*"/>
-                            <RowDefinition Height="4*"/>
+                            <RowDefinition Height="5*"/>
                         </Grid.RowDefinitions>
                         <TextBlock Grid.Row="0"
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Left"
                                    Text="Danh sách phòng"
                                    FontSize="18"
-                                   Margin="30,0"></TextBlock>
+                                   Margin="30,0"/>
+                        <StackPanel Grid.Row="1" 
+                                    Orientation="Horizontal"
+                                    VerticalAlignment="Center">
+                            <TextBlock Text="Từ ngày:" 
+                                       Margin="20,0,10,0"
+                                       Style="{StaticResource styleFilterHeadline}"/>
+                            <DatePicker SelectedDate="{x:Static sys:DateTime.Today}" Width="150"/>
+                            <TextBlock Text="Đến ngày:"
+                                       Margin="100,0,10,0"
+                                       Style="{StaticResource styleFilterHeadline}"/>
+                            <DatePicker SelectedDate="{x:Static sys:DateTime.Today}" Width="150"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal"
+                                    VerticalAlignment="Center"
+                                    Grid.Row="2">
+                            <TextBlock Text="Tình trạng phòng:"
+                                       Margin="20,0"
+                                       Style="{StaticResource styleFilterHeadline}"/>
+                            
+                        </StackPanel>
                     </Grid>
                 </Grid>
             </TabItem>
@@ -56,12 +80,12 @@
                     </StackPanel>
                 </TabItem.Header>
                 <StackPanel Orientation="Horizontal">
-                    <HamburgerMenu:HamburgerMenu Background="DarkCyan" MenuIconColor="White" SelectionIndicatorColor="White" MenuItemForeground="White" HorizontalAlignment="Left">
-                        <HamburgerMenu:HamburgerMenuItem Text="alskdnalskdnf"/>
-                        <HamburgerMenu:HamburgerMenuItem Text="alskdnalskdnf"/>
-                        <HamburgerMenu:HamburgerMenuItem Text="alskdnalskdnf"/>
-                        <HamburgerMenu:HamburgerMenuItem Text="alskdnalskdnf"/>
-                    </HamburgerMenu:HamburgerMenu>
+                    <hamburgerMenu:HamburgerMenu Background="DarkCyan" MenuIconColor="White" SelectionIndicatorColor="White" MenuItemForeground="White" HorizontalAlignment="Left">
+                        <hamburgerMenu:HamburgerMenuItem Text="alskdnalskdnf"/>
+                        <hamburgerMenu:HamburgerMenuItem Text="alskdnalskdnf"/>
+                        <hamburgerMenu:HamburgerMenuItem Text="alskdnalskdnf"/>
+                        <hamburgerMenu:HamburgerMenuItem Text="alskdnalskdnf"/>
+                    </hamburgerMenu:HamburgerMenu>
                 </StackPanel>
             </TabItem>
             <TabItem Style="{DynamicResource styleTabItemDefault}">
