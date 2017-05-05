@@ -1,0 +1,85 @@
+﻿<Window x:Class="HotelMng.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HotelMng"
+        xmlns:HamburgerMenu="clr-namespace:HamburgerMenu;assembly=HamburgerMenu"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="700" Width="1000" 
+        WindowState="Maximized">
+    <DockPanel>
+        <DockPanel.Resources>
+            <ResourceDictionary>
+                <ResourceDictionary.MergedDictionaries>
+                    <ResourceDictionary Source="Assets/ResourcesStyle/CustomizeMainTab.xaml"/>
+                </ResourceDictionary.MergedDictionaries>
+            </ResourceDictionary>
+        </DockPanel.Resources>
+
+        <TabControl Style="{DynamicResource styleTabControl}">
+            <TabItem Style="{DynamicResource styleTabItemLeft}">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="Assets/Icon/home-icon-white.png" Style="{StaticResource styleHeaderImage}"/>
+                        <TextBlock Text="HOME" Style="{StaticResource styleHeaderText}"/>
+                    </StackPanel>
+                </TabItem.Header>
+                
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel></StackPanel>
+                    <Grid Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition Height="0.5*"/>
+                            <RowDefinition Height="4*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Left"
+                                   Text="Danh sách phòng"
+                                   FontSize="18"
+                                   Margin="30,0"></TextBlock>
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem Style="{DynamicResource styleTabItemDefault}">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="Assets/Icon/management-icon-white.png" Style="{StaticResource styleHeaderImage}"/>
+                        <TextBlock Text="MANGEMENT" Style="{StaticResource styleHeaderText}"/>
+                    </StackPanel>
+                </TabItem.Header>
+                <StackPanel Orientation="Horizontal">
+                    <HamburgerMenu:HamburgerMenu Background="DarkCyan" MenuIconColor="White" SelectionIndicatorColor="White" MenuItemForeground="White" HorizontalAlignment="Left">
+                        <HamburgerMenu:HamburgerMenuItem Text="alskdnalskdnf"/>
+                        <HamburgerMenu:HamburgerMenuItem Text="alskdnalskdnf"/>
+                        <HamburgerMenu:HamburgerMenuItem Text="alskdnalskdnf"/>
+                        <HamburgerMenu:HamburgerMenuItem Text="alskdnalskdnf"/>
+                    </HamburgerMenu:HamburgerMenu>
+                </StackPanel>
+            </TabItem>
+            <TabItem Style="{DynamicResource styleTabItemDefault}">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="Assets/Icon/report-icon-white.png" Style="{StaticResource styleHeaderImage}"/>
+                        <TextBlock Text="REPORT" Style="{StaticResource styleHeaderText}"/>
+                    </StackPanel>
+                </TabItem.Header>
+            </TabItem>
+            <TabItem Style="{DynamicResource styleTabItemRight}">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="Assets/Icon/about-icon-white.png" Style="{StaticResource styleHeaderImage}"/>
+                        <TextBlock Text="ABOUT" Style="{StaticResource styleHeaderText}"/>
+                    </StackPanel>
+                </TabItem.Header>
+            </TabItem>
+        </TabControl>
+    </DockPanel>
+</Window>
