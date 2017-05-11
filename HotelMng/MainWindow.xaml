@@ -55,6 +55,7 @@
                                 <TextBlock Text="Lúc"
                                            Margin="20,0,10,0"
                                            Style="{StaticResource styleFilterHeadline}"/>
+                                <uc:MyTimePicker Width="120"></uc:MyTimePicker>
                                 <Button>
                                     
                                 </Button>

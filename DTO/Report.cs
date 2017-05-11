@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DTO
 {
-    class Report
+    public class Report
     {
         #region Properties
         public char RoomTypeId { get; set; }

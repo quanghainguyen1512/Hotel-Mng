@@ -7,26 +7,12 @@
         xmlns:local="clr-namespace:HotelMng"
         xmlns:uc="clr-namespace:HotelMng.Assets.UserControls"
         mc:Ignorable="d"
-        Title="RegistrationForm" Height="500" Width="400">
+        Title="RegistrationForm" Height="500" Width="400"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize">
     <Grid Margin="2">
         <Grid.Resources>
-            <Style TargetType="{x:Type TextBlock}">
-                <Setter Property="VerticalAlignment" Value="Center"/>
-                <Setter Property="Margin" Value="5,2"></Setter>
-            </Style>
-            <Style TargetType="xctk:WatermarkTextBox">
-                <Setter Property="VerticalAlignment" Value="Center"/>
-                <Setter Property="WatermarkTemplate">
-                    <Setter.Value>
-                        <DataTemplate>
-                            <ContentControl Content="{Binding}" 
-                                            Foreground="Gray" 
-                                            FontStyle="Italic"
-                                            FontSize="11"></ContentControl>
-                        </DataTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
+            <ResourceDictionary Source="Assets/ResourcesStyle/FormResources.xaml"/>
         </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -100,6 +86,7 @@
                     </xctk:WatermarkComboBox>
                     <xctk:WatermarkTextBox Margin="20,0"
                                            Width="100"
+                                           Watermark="Nhập quốc tịch"
                                            Visibility="Collapsed"/>
                 </StackPanel>
             </Grid>
@@ -131,13 +118,7 @@
                         VerticalAlignment="Center">
                 <DatePicker/>
                 <TextBlock Text="lúc" Margin="5,0"/>
-                <xctk:IntegerUpDown Increment="1"
-                                    Maximum="23"
-                                    Minimum="0"/>
-                <TextBlock Text="h"/>
-                <xctk:IntegerUpDown Increment="5"
-                                    Maximum="59"
-                                    Minimum="0"/>
+                <uc:MyTimePicker/>
             </StackPanel>
             <TextBlock Grid.Row="2" Grid.Column="0"
                        Text="Ngày ra:"/>
@@ -146,13 +127,7 @@
                         VerticalAlignment="Center">
                 <DatePicker/>
                 <TextBlock Text="lúc" Margin="5,0"/>
-                <xctk:IntegerUpDown Increment="1"
-                                    Maximum="23"
-                                    Minimum="0"/>
-                <TextBlock Text="h"/>
-                <xctk:IntegerUpDown Increment="5"
-                                    Maximum="59"
-                                    Minimum="0"/>
+                <uc:MyTimePicker/>
             </StackPanel>
             <TextBlock Grid.Row="3" Grid.Column="0" 
                        Text="Trả trước:"/>
@@ -171,8 +146,8 @@
         <StackPanel Grid.Row="3"
                     HorizontalAlignment="Right"
                     Orientation="Horizontal">
-            <Button Content="Áp dụng"/>
-            <Button Content="Đóng"/>
+            <Button Content="ÁP DỤNG" Style="{DynamicResource styleBtnInForm}"/>
+            <Button Content="ĐÓNG" Style="{DynamicResource styleBtnInForm}"/>
         </StackPanel>
     </Grid>
 </Window>

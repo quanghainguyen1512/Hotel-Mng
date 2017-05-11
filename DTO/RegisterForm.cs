@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DTO
 {
-    class RegisterForm
+    public class RegisterForm
     {
         #region Properties
         public int      FormId { get; set; }
