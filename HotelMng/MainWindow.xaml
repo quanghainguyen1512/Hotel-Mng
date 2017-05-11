@@ -3,8 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xceed="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:HotelMng"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:uc="clr-namespace:HotelMng.Assets.UserControls"
         xmlns:hamburgerMenu="clr-namespace:HamburgerMenu;assembly=hamburgerMenu"
         mc:Ignorable="d"
         Title="MainWindow" Height="700" Width="1000" 
@@ -13,78 +15,112 @@
         <DockPanel.Resources>
             <ResourceDictionary>
                 <ResourceDictionary.MergedDictionaries>
-                    <ResourceDictionary Source="Assets/ResourcesStyle/CustomizeMainTab.xaml"/>
+                    <ResourceDictionary Source="Assets/ResourcesStyle/HomePageResources.xaml"/>
                 </ResourceDictionary.MergedDictionaries>
             </ResourceDictionary>
         </DockPanel.Resources>
-
         <TabControl Style="{DynamicResource styleTabControl}">
             <TabItem Style="{DynamicResource styleTabItemLeft}">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <Image Source="Assets/Icon/home-icon-white.png" Style="{StaticResource styleHeaderImage}"/>
-                        <TextBlock Text="HOME" Style="{StaticResource styleHeaderText}"/>
+                        <TextBlock Text="TRANG CHỦ" Style="{StaticResource styleHeaderText}"/>
                     </StackPanel>
                 </TabItem.Header>
                 
                 <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition Width="4*"/>
-                    </Grid.ColumnDefinitions>
-                    <StackPanel Background="{StaticResource gradientBrushTabControlHeader}"></StackPanel>
-                    <Grid Grid.Column="1">
-                        <Grid.Resources>
-                            <ResourceDictionary Source="Assets/ResourcesStyle/TextBlockStyle.xaml"/>
-                        </Grid.Resources>
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition Height="0.5*"/>
-                            <RowDefinition Height="5*"/>
-                        </Grid.RowDefinitions>
-                        <TextBlock Grid.Row="0"
-                                   VerticalAlignment="Center"
-                                   HorizontalAlignment="Left"
-                                   Text="Danh sách phòng"
-                                   FontSize="18"
-                                   Margin="30,0"/>
-                        <StackPanel Grid.Row="1" 
-                                    Orientation="Horizontal"
-                                    VerticalAlignment="Center">
-                            <TextBlock Text="Từ ngày:" 
+                    <GroupBox Style="{StaticResource styleGroupBox}">
+                        <GroupBox.Header>
+                            <TextBlock Text="Danh sách phòng"
+                                       FontSize="20"
+                                       Margin="25,0"></TextBlock>
+                        </GroupBox.Header>
+                        <Grid>
+                            <Grid.Resources>
+                                <ResourceDictionary Source="Assets/ResourcesStyle/TextBlockStyle.xaml"/>
+                            </Grid.Resources>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0.5*"/>
+                                <RowDefinition Height="5*"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <StackPanel Grid.Row="2" 
+                                        Orientation="Horizontal"
+                                        VerticalAlignment="Center">
+                                <TextBlock Text="Ngày:"
+                                           Margin="20,0,10,0"
+                                           Style="{StaticResource styleFilterHeadline}"></TextBlock>
+                                <DatePicker Width="150"
+                                            SelectedDate="{x:Static sys:DateTime.Today}"/>
+                                <TextBlock Text="Lúc"
+                                           Margin="20,0,10,0"
+                                           Style="{StaticResource styleFilterHeadline}"/>
+                                <Button>
+                                    
+                                </Button>
+                                <!--<TextBlock Text="Từ ngày:" 
                                        Margin="20,0,10,0"
                                        Style="{StaticResource styleFilterHeadline}"/>
-                            <DatePicker SelectedDate="{x:Static sys:DateTime.Today}" Width="150"/>
+                            <DatePicker Width="150"
+                                        SelectedDate="{x:Static sys:DateTime.Today}" 
+                                        FirstDayOfWeek="Sunday"
+                                        SelectedDateFormat="Short"/>
                             <TextBlock Text="Đến ngày:"
                                        Margin="100,0,10,0"
                                        Style="{StaticResource styleFilterHeadline}"/>
-                            <DatePicker SelectedDate="{x:Static sys:DateTime.Today}" Width="150"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal"
-                                    VerticalAlignment="Center"
-                                    Grid.Row="2">
-                            <TextBlock Text="Tình trạng phòng:"
-                                       Margin="20,0"
-                                       Style="{StaticResource styleFilterHeadline}"/>
-                            
-                        </StackPanel>
-                    </Grid>
+                            <DatePicker Width="150"
+                                        SelectedDate="{x:Static sys:DateTime.Today}"  
+                                        FirstDayOfWeek="Sunday"
+                                        />-->
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal"
+                                        VerticalAlignment="Center"
+                                        Grid.Row="0"
+                                        Height="Auto">
+                                <TextBlock Text="Tình trạng phòng:"
+                                           Margin="20,0"
+                                           Style="{StaticResource styleFilterHeadline}"/>
+                                <Rectangle Width="15" Fill="#64B5F6"/>
+                                <TextBlock Text="Cần dọn (1)"/>
+                                <Rectangle Width="15" Fill="#E0E0E0"/>
+                                <TextBlock Text="Phòng trống (14)"/>
+                                <Rectangle Width="15" Fill="#F48FB1"/>
+                                <TextBlock Text="Có khách (5)"/>
+
+                            </StackPanel>
+                            <ListView Grid.Row="1">
+                                <ListView.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel/>
+                                    </ItemsPanelTemplate>
+                                </ListView.ItemsPanel>
+                                <uc:RoomItem Height="120" Width="100"/>
+                                <uc:RoomItem Height="120" Width="100"></uc:RoomItem>
+                            </ListView>
+
+                        </Grid>
+
+                    </GroupBox>
                 </Grid>
             </TabItem>
             <TabItem Style="{DynamicResource styleTabItemDefault}">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <Image Source="Assets/Icon/management-icon-white.png" Style="{StaticResource styleHeaderImage}"/>
-                        <TextBlock Text="MANGEMENT" Style="{StaticResource styleHeaderText}"/>
+                        <TextBlock Text="QUẢN LÝ" Style="{StaticResource styleHeaderText}"/>
                     </StackPanel>
                 </TabItem.Header>
                 <StackPanel Orientation="Horizontal">
-                    <hamburgerMenu:HamburgerMenu Background="DarkCyan" MenuIconColor="White" SelectionIndicatorColor="White" MenuItemForeground="White" HorizontalAlignment="Left">
-                        <hamburgerMenu:HamburgerMenuItem Text="alskdnalskdnf"/>
-                        <hamburgerMenu:HamburgerMenuItem Text="alskdnalskdnf"/>
-                        <hamburgerMenu:HamburgerMenuItem Text="alskdnalskdnf"/>
-                        <hamburgerMenu:HamburgerMenuItem Text="alskdnalskdnf"/>
+                    <hamburgerMenu:HamburgerMenu Background="DarkCyan" 
+                                                 MenuIconColor="White" 
+                                                 SelectionIndicatorColor="White" 
+                                                 MenuItemForeground="White" 
+                                                 HorizontalAlignment="Left"
+                                                 IsOpen="True">
+                        <hamburgerMenu:HamburgerMenuItem Text="Quản lý phòng ở"/>
+                        <hamburgerMenu:HamburgerMenuItem Text="Danh sách dịch vụ"/>
+                        <hamburgerMenu:HamburgerMenuItem Text="Danh sách khách hàng"/>
+                        <hamburgerMenu:HamburgerMenuItem Text="Điều chỉnh giá phòng"/>
                     </hamburgerMenu:HamburgerMenu>
                 </StackPanel>
             </TabItem>
@@ -92,7 +128,7 @@
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <Image Source="Assets/Icon/report-icon-white.png" Style="{StaticResource styleHeaderImage}"/>
-                        <TextBlock Text="REPORT" Style="{StaticResource styleHeaderText}"/>
+                        <TextBlock Text="BÁO CÁO" Style="{StaticResource styleHeaderText}"/>
                     </StackPanel>
                 </TabItem.Header>
             </TabItem>
@@ -100,7 +136,7 @@
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <Image Source="Assets/Icon/about-icon-white.png" Style="{StaticResource styleHeaderImage}"/>
-                        <TextBlock Text="ABOUT" Style="{StaticResource styleHeaderText}"/>
+                        <TextBlock Text="THÔNG TIN" Style="{StaticResource styleHeaderText}"/>
                     </StackPanel>
                 </TabItem.Header>
             </TabItem>

@@ -10,18 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using DTO;
 
-namespace HotelMng.Assets.UserControls
+namespace HotelMng
 {
     /// <summary>
-    /// Interaction logic for RoomItem.xaml
+    /// Interaction logic for RegistrationForm.xaml
     /// </summary>
-    public partial class RoomItem : UserControl
+    public partial class RegistrationForm : Window
     {
-        public RoomItem()
+        public RegistrationForm()
         {
             InitializeComponent();
         }

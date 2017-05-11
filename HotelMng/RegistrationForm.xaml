@@ -1,0 +1,178 @@
+﻿<Window x:Class="HotelMng.RegistrationForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HotelMng"
+        xmlns:uc="clr-namespace:HotelMng.Assets.UserControls"
+        mc:Ignorable="d"
+        Title="RegistrationForm" Height="500" Width="400">
+    <Grid Margin="2">
+        <Grid.Resources>
+            <Style TargetType="{x:Type TextBlock}">
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="Margin" Value="5,2"></Setter>
+            </Style>
+            <Style TargetType="xctk:WatermarkTextBox">
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="WatermarkTemplate">
+                    <Setter.Value>
+                        <DataTemplate>
+                            <ContentControl Content="{Binding}" 
+                                            Foreground="Gray" 
+                                            FontStyle="Italic"
+                                            FontSize="11"></ContentControl>
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <GroupBox Name="groupBoxRenterInfo"
+                  Style="{StaticResource styleGroupBox}" 
+                  Height="200">
+            <GroupBox.Header>
+                <TextBlock Text="Thông tin khách hàng đại diện thuê"
+                           FontSize="13"/>
+            </GroupBox.Header>
+            <Grid>
+                
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0"
+                           Text="Họ tên:"/>
+                <xctk:WatermarkTextBox Grid.Row="0" Grid.Column="1"
+                                        Watermark="Tên khách hàng"/>
+                <TextBlock Grid.Row="1" Grid.Column="0"
+                           Text="Giới tính:"/>
+                <StackPanel Grid.Row="1" Grid.Column="1"
+                            Orientation="Horizontal"
+                            VerticalAlignment="Center">
+                    <RadioButton Content="Nam" Margin="0,0,30,0"/>
+                    <RadioButton Content="Nữ" Margin="0,0,30,0"/>
+                    <RadioButton Content="Khác"/>
+                </StackPanel>
+                <TextBlock Grid.Row="2" Grid.Column="0"
+                           Text="CMND:"/>
+                <xctk:WatermarkTextBox Grid.Row="2" Grid.Column="1"
+                                        Watermark="CMND"/>
+                <TextBlock Grid.Row="3" Grid.Column="0"
+                           Text="SĐT:"/>
+                <xctk:WatermarkTextBox Grid.Row="3" Grid.Column="1"
+                                        Watermark="SĐT"/>
+                <TextBlock Grid.Row="4" Grid.Column="0"
+                           Text="Quốc tịch:"/>
+                <StackPanel Grid.Row="4" Grid.Column="1"
+                            Orientation="Horizontal">
+                    <xctk:WatermarkComboBox VerticalAlignment="Center"
+                                             Width="Auto"
+                                             Watermark="Chọn quốc tịch">
+                        <xctk:WatermarkComboBox.WatermarkTemplate>
+                            <DataTemplate>
+                                <ContentControl Content="{Binding}"
+                                                FontSize="11"
+                                                FontStyle="Italic"
+                                                Foreground="Gray"></ContentControl>
+                            </DataTemplate>
+                        </xctk:WatermarkComboBox.WatermarkTemplate>
+                        <ComboBoxItem Content="Việt Nam"/>
+                        <ComboBoxItem Content="Mỹ"/>
+                        <ComboBoxItem Content="Trung Quốc"/>
+                        <ComboBoxItem Content="Pháp"/>
+                        <ComboBoxItem Content="Hàn Quốc"/>
+                        <ComboBoxItem Content="Khác"/>
+                    </xctk:WatermarkComboBox>
+                    <xctk:WatermarkTextBox Margin="20,0"
+                                           Width="100"
+                                           Visibility="Collapsed"/>
+                </StackPanel>
+            </Grid>
+        </GroupBox>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" 
+                       Text="Lựa chọn:"/>
+            <StackPanel Grid.Row="0" Grid.Column="1"
+                        Orientation="Horizontal"
+                        VerticalAlignment="Center">
+                <RadioButton Content="Nhận phòng"/>
+                <RadioButton Content="Đặt trước" Margin="30,0"/>
+            </StackPanel>
+            <TextBlock Grid.Row="1" Grid.Column="0"
+                       Text="Ngày vào:"/>
+            <StackPanel Grid.Row="1" Grid.Column="1"
+                        Orientation="Horizontal"
+                        VerticalAlignment="Center">
+                <DatePicker/>
+                <TextBlock Text="lúc" Margin="5,0"/>
+                <xctk:IntegerUpDown Increment="1"
+                                    Maximum="23"
+                                    Minimum="0"/>
+                <TextBlock Text="h"/>
+                <xctk:IntegerUpDown Increment="5"
+                                    Maximum="59"
+                                    Minimum="0"/>
+            </StackPanel>
+            <TextBlock Grid.Row="2" Grid.Column="0"
+                       Text="Ngày ra:"/>
+            <StackPanel Grid.Row="2" Grid.Column="1"
+                        Orientation="Horizontal"
+                        VerticalAlignment="Center">
+                <DatePicker/>
+                <TextBlock Text="lúc" Margin="5,0"/>
+                <xctk:IntegerUpDown Increment="1"
+                                    Maximum="23"
+                                    Minimum="0"/>
+                <TextBlock Text="h"/>
+                <xctk:IntegerUpDown Increment="5"
+                                    Maximum="59"
+                                    Minimum="0"/>
+            </StackPanel>
+            <TextBlock Grid.Row="3" Grid.Column="0" 
+                       Text="Trả trước:"/>
+            <xctk:WatermarkTextBox Grid.Row="3" Grid.Column="1"
+                                   Watermark="Nhập số tiền trả trước khi đặt phòng"/>
+            <TextBlock Grid.Row="4" Grid.Column="0"
+                       Text="Ghi chú:" VerticalAlignment="Top"/>
+            <xctk:WatermarkTextBox Grid.Row="4" Grid.Column="1"
+                                   TextWrapping="Wrap"
+                                   VerticalAlignment="Stretch"
+                                   VerticalScrollBarVisibility="Auto"
+                                   Watermark="Ghi chú"/>
+        </Grid>
+        <Separator Grid.Row="2"
+                   Margin="0,15,0,5"/>
+        <StackPanel Grid.Row="3"
+                    HorizontalAlignment="Right"
+                    Orientation="Horizontal">
+            <Button Content="Áp dụng"/>
+            <Button Content="Đóng"/>
+        </StackPanel>
+    </Grid>
+</Window>

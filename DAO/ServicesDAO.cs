@@ -8,7 +8,7 @@ namespace DAO
     public class ServicesDAO
     {
         private static ServicesDAO _instance;
-        private static readonly object Padlock;
+        private static readonly object Padlock = new object();
         private ServicesDAO() { }
         public static ServicesDAO Instance
         {

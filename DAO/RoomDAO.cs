@@ -11,7 +11,7 @@ namespace DAO
     public class RoomDAO
     {
         private static RoomDAO _instance;
-        private static readonly object Padlock;
+        private static readonly object Padlock = new object();
         private RoomDAO() { }
         public static RoomDAO Instance
         {
@@ -33,5 +33,6 @@ namespace DAO
             return (from DataRow row in data.Rows
                     select new Room(row)).ToList();
         }
+
     }
 }

@@ -9,18 +9,27 @@ namespace DTO
     public class Room
     {
         #region Properties
-        public string RoomId { get; set; }
+        public int RoomId { get; set; }
         public string Description { get; set; }
         public int StatusId { get; set; }
+        public string Status { get; set; }
         public char RoomTypeId { get; set; }
         #endregion
 
         public Room(System.Data.DataRow row)
         {
-            RoomId      = row["RoomId"].ToString();
+            RoomId      = (int) row["RoomId"];
             Description = row["Description"].ToString();
             StatusId    = (int) row["StatusId"];
             RoomTypeId  = (char) row["RoomTypeId"];
-        }       
+            Status      = row["StatusName"].ToString();
+        }
+
+        public override string ToString()
+        {
+            if (StatusId != 0)
+                return RoomId + $" ({Status})";
+            return RoomId.ToString();
+        }
     }
 }
