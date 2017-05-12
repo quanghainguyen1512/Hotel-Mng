@@ -55,10 +55,8 @@
                                 <TextBlock Text="Lúc"
                                            Margin="20,0,10,0"
                                            Style="{StaticResource styleFilterHeadline}"/>
-                                <uc:MyTimePicker Width="120"></uc:MyTimePicker>
-                                <Button>
-                                    
-                                </Button>
+                                <uc:MyTimePicker x:Name="Picker" Width="120"/>
+                                <Button Width="100" Click="ButtonBase_OnClick"></Button>
                                 <!--<TextBlock Text="Từ ngày:" 
                                        Margin="20,0,10,0"
                                        Style="{StaticResource styleFilterHeadline}"/>

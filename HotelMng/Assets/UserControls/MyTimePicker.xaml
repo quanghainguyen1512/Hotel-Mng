@@ -8,7 +8,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="25" d:DesignWidth="100">
     <Grid VerticalAlignment="Stretch"
-          HorizontalAlignment="Stretch">
+          HorizontalAlignment="Stretch"
+          DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:MyTimePicker}}}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition Width="Auto"/>
@@ -18,7 +19,8 @@
                             Maximum="23"
                             Minimum="0"
                             HorizontalAlignment="Stretch"
-                            Grid.Column="0"/>
+                            Grid.Column="0"
+                            Value="{Binding Hours, UpdateSourceTrigger=PropertyChanged}"/>
         <TextBlock Text=":" 
                    VerticalAlignment="Center"
                    Grid.Column="1"
@@ -28,7 +30,8 @@
                             Maximum="59"
                             Minimum="0"
                             HorizontalAlignment="Stretch"
-                            Grid.Column="2"/>
+                            Grid.Column="2"
+                            Value="{Binding Minutes, UpdateSourceTrigger=PropertyChanged}"/>
     </Grid>
+
 </UserControl>
- 
