@@ -35,7 +35,7 @@ namespace HotelMng.Assets.UserControls
 
         // Using a DependencyProperty as the backing store for Hours.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty HoursProperty =
-            DependencyProperty.Register("Hours", typeof(int), typeof(MyTimePicker), new PropertyMetadata(3));
+            DependencyProperty.Register("Hours", typeof(int), typeof(MyTimePicker), new PropertyMetadata(DateTime.Now.Hour));
 
 
 
@@ -47,7 +47,7 @@ namespace HotelMng.Assets.UserControls
 
         // Using a DependencyProperty as the backing store for Minutes.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty MinutesProperty =
-            DependencyProperty.Register("Minutes", typeof(int), typeof(MyTimePicker), new PropertyMetadata(5));
+            DependencyProperty.Register("Minutes", typeof(int), typeof(MyTimePicker), new PropertyMetadata(DateTime.Now.Minute));
 
 
         public TimeSpan SelectedTime

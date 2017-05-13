@@ -5,6 +5,7 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HotelMng"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:uc="clr-namespace:HotelMng.Assets.UserControls"
         mc:Ignorable="d"
         Title="RegistrationForm" Height="500" Width="400"
@@ -12,7 +13,12 @@
         ResizeMode="NoResize">
     <Grid Margin="2">
         <Grid.Resources>
-            <ResourceDictionary Source="Assets/ResourcesStyle/FormResources.xaml"/>
+            <ResourceDictionary>
+                <ResourceDictionary.MergedDictionaries>
+                    <ResourceDictionary Source="Assets/ResourcesStyle/FormResources.xaml"/>
+                    <ResourceDictionary Source="Assets/ResourcesStyle/HomePageResources.xaml"></ResourceDictionary>
+                </ResourceDictionary.MergedDictionaries>
+            </ResourceDictionary>
         </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -112,23 +118,15 @@
                 <RadioButton Content="Đặt trước" Margin="30,0"/>
             </StackPanel>
             <TextBlock Grid.Row="1" Grid.Column="0"
-                       Text="Ngày vào:"/>
-            <StackPanel Grid.Row="1" Grid.Column="1"
+                       Text="Thời điểm vào:"/>
+            <mah:DateTimePicker Grid.Row="1" Grid.Column="1"
                         Orientation="Horizontal"
-                        VerticalAlignment="Center">
-                <DatePicker/>
-                <TextBlock Text="lúc" Margin="5,0"/>
-                <uc:MyTimePicker/>
-            </StackPanel>
+                        VerticalAlignment="Center"/>
             <TextBlock Grid.Row="2" Grid.Column="0"
-                       Text="Ngày ra:"/>
-            <StackPanel Grid.Row="2" Grid.Column="1"
+                       Text="Thời điểm ra:"/>
+            <mah:DateTimePicker Grid.Row="2" Grid.Column="1"
                         Orientation="Horizontal"
-                        VerticalAlignment="Center">
-                <DatePicker/>
-                <TextBlock Text="lúc" Margin="5,0"/>
-                <uc:MyTimePicker/>
-            </StackPanel>
+                        VerticalAlignment="Center"/>
             <TextBlock Grid.Row="3" Grid.Column="0" 
                        Text="Trả trước:"/>
             <xctk:WatermarkTextBox Grid.Row="3" Grid.Column="1"

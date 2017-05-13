@@ -25,5 +25,39 @@ namespace HotelMng.Assets.UserControls
         {
             InitializeComponent();
         }
+
+        public Brush StatusColor
+        {
+            get => (Brush)GetValue(StatusColorProperty);
+            set => SetValue(StatusColorProperty, value);
+        }
+
+        // Using a DependencyProperty as the backing store for StatusColor.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty StatusColorProperty =
+            DependencyProperty.Register("StatusColor", typeof(Brush), typeof(RoomItem), new PropertyMetadata(new SolidColorBrush(Color.FromRgb(100,150,112))));
+
+        public string RoomNum
+        {
+            get => (string)GetValue(RoomNumProperty);
+            set => SetValue(RoomNumProperty, value);
+        }
+
+        // Using a DependencyProperty as the backing store for RoomNum.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty RoomNumProperty =
+            DependencyProperty.Register("RoomNum", typeof(string), typeof(RoomItem), new PropertyMetadata(""));
+
+
+
+        public string GuessName
+        {
+            get => (string)GetValue(GuessNameProperty);
+            set => SetValue(GuessNameProperty, value);
+        }
+
+        // Using a DependencyProperty as the backing store for GuessName.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty GuessNameProperty =
+            DependencyProperty.Register("GuessName", typeof(string), typeof(RoomItem), new PropertyMetadata(""));
+
+
     }
 }

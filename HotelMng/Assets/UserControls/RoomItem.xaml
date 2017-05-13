@@ -7,7 +7,7 @@
              xmlns:local="clr-namespace:HotelMng.Assets.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="120" d:DesignWidth="100">
-    <Grid>
+    <Grid DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:RoomItem}}}">
         <Grid.RowDefinitions>
             <RowDefinition Height="3*"/>
             <RowDefinition/>
@@ -22,20 +22,25 @@
                 CornerRadius="5" 
                 BorderBrush="Gray" 
                 BorderThickness="1" 
-                Background="#F48FB1">
+                Background="{Binding StatusColor, UpdateSourceTrigger=PropertyChanged}">
             <Border.Effect>
-                <DropShadowEffect BlurRadius="15" 
+                <DropShadowEffect BlurRadius="5" 
                                   ShadowDepth="3" 
                                   Direction="270"/>
             </Border.Effect>
 
             <StackPanel>
                 <Image Source="../Icon/roomitem-icon.png" Margin="15,15,15,10"/>
-                <TextBlock HorizontalAlignment="Center" Text="Phòng"></TextBlock>
+                <TextBlock HorizontalAlignment="Center" 
+                           Text="{Binding RoomNum, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
             </StackPanel>
         </Border>
 
-        <TextBlock Name="renterName" Grid.Row="1" Text="Name" TextWrapping="Wrap"
-                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <TextBlock Name="renterName" 
+                   Grid.Row="1" 
+                   Text="{Binding GuessName, UpdateSourceTrigger=PropertyChanged}" 
+                   TextWrapping="Wrap"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"/>
     </Grid>
 </UserControl>

@@ -7,6 +7,7 @@
         xmlns:local="clr-namespace:HotelMng"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:uc="clr-namespace:HotelMng.Assets.UserControls"
+        xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:hamburgerMenu="clr-namespace:HamburgerMenu;assembly=hamburgerMenu"
         mc:Ignorable="d"
         Title="MainWindow" Height="700" Width="1000" 
@@ -47,16 +48,57 @@
                             <StackPanel Grid.Row="2" 
                                         Orientation="Horizontal"
                                         VerticalAlignment="Center">
-                                <TextBlock Text="Ngày:"
-                                           Margin="20,0,10,0"
-                                           Style="{StaticResource styleFilterHeadline}"></TextBlock>
-                                <DatePicker Width="150"
-                                            SelectedDate="{x:Static sys:DateTime.Today}"/>
-                                <TextBlock Text="Lúc"
+                                <TextBlock Text="Thời gian:"
                                            Margin="20,0,10,0"
                                            Style="{StaticResource styleFilterHeadline}"/>
-                                <uc:MyTimePicker x:Name="Picker" Width="120"/>
-                                <Button Width="100" Click="ButtonBase_OnClick"></Button>
+                                <mah:DateTimePicker Name="TimePicker" 
+                                                    Width="200"
+                                                    Margin="20,0"/>
+                                <Button Margin="200,0"
+                                        Content="Tìm nâng cao">
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate>
+                                                        <Border x:Name="outlineBorder"
+                                                                BorderThickness="1"
+                                                                BorderBrush="#1A237E"
+                                                                CornerRadius="4"
+                                                                Cursor="Hand"
+                                                                Background="White">
+                                                            <!--<Border.Effect>
+                                                                <DropShadowEffect ShadowDepth="2"
+                                                                                  Direction="270"/>
+                                                            </Border.Effect>-->
+                                                            <Grid>
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="Auto"/>
+                                                                    <ColumnDefinition Width="*"/>
+                                                                </Grid.ColumnDefinitions>
+                                                                <ContentPresenter x:Name="contentBtn" 
+                                                                                  Grid.Column="0"
+                                                                                  Content="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}"
+                                                                                  HorizontalAlignment="Center"
+                                                                                  VerticalAlignment="Center"
+                                                                                  Margin="8,2"/>
+                                                                <Grid Grid.Column="1"
+                                                                      Background="#1A237E">
+                                                                    <TextBlock Text=">>"
+                                                                               VerticalAlignment="Center"
+                                                                               HorizontalAlignment="Center"
+                                                                               FontWeight="Heavy"
+                                                                               Margin="5,0,5,2"
+                                                                               Foreground="White"/>
+                                                                </Grid>
+                                                            </Grid>
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
                                 <!--<TextBlock Text="Từ ngày:" 
                                        Margin="20,0,10,0"
                                        Style="{StaticResource styleFilterHeadline}"/>
@@ -93,12 +135,10 @@
                                         <WrapPanel/>
                                     </ItemsPanelTemplate>
                                 </ListView.ItemsPanel>
+                                <uc:RoomItem Height="120" Width="100" RoomNum="101" GuessName="Hải" StatusColor="Aqua"/>
                                 <uc:RoomItem Height="120" Width="100"/>
-                                <uc:RoomItem Height="120" Width="100"></uc:RoomItem>
                             </ListView>
-
                         </Grid>
-
                     </GroupBox>
                 </Grid>
             </TabItem>
@@ -130,6 +170,7 @@
                         <TextBlock Text="BÁO CÁO" Style="{StaticResource styleHeaderText}"/>
                     </StackPanel>
                 </TabItem.Header>
+                <mah:MetroProgressBar Height="40" EllipseDiameter="50" EllipseOffset="40"></mah:MetroProgressBar>
             </TabItem>
             <TabItem Style="{DynamicResource styleTabItemRight}">
                 <TabItem.Header>
@@ -142,3 +183,4 @@
         </TabControl>
     </DockPanel>
 </Window>
+
