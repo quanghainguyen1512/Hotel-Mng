@@ -10,19 +10,23 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace HotelMng
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for BillWindow.xaml
     /// </summary>
-    public partial class MainWindow 
+    public partial class BillWindow
     {
-        public MainWindow()
+        public BillWindow()
         {
             InitializeComponent();
         }
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
     }
 }

@@ -1,17 +1,18 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <LinearGradientBrush x:Key="gradientBrushTabControlHeader" StartPoint="0.5, 0" EndPoint="0.5, 1">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:uc="clr-namespace:HotelMng.Assets.UserControls">
+    <LinearGradientBrush x:Key="GradientBrushTabControlHeader" StartPoint="0.5, 0" EndPoint="0.5, 1">
         <GradientStop Color="#002E8A" Offset="0" />
         <GradientStop Color="#0071B7" Offset="0.5" />
         <GradientStop Color="#002E8A" Offset="1" />
     </LinearGradientBrush>
-    <LinearGradientBrush x:Key="gradientBrushSegmentedTabItem" StartPoint="0.5,0" EndPoint="0.5,1">
+    <LinearGradientBrush x:Key="GradientBrushSegmentedTabItem" StartPoint="0.5,0" EndPoint="0.5,1">
         <GradientStop Color="#4C8BC0" Offset="0" />
         <GradientStop Color="#015CA3" Offset="0.49" />
         <GradientStop Color="#024795" Offset="0.50" />
         <GradientStop Color="#2C5198" Offset="1" />
     </LinearGradientBrush>
-    <LinearGradientBrush x:Key="gradientBrushSegmentedActiveTabItem" StartPoint="0.5,0" EndPoint="0.5,1">
+    <LinearGradientBrush x:Key="GradientBrushSegmentedActiveTabItem" StartPoint="0.5,0" EndPoint="0.5,1">
         <GradientStop Color="#000098" Offset="0" />
         <GradientStop Color="#000075" Offset="0.33" />
         <GradientStop Color="#000075" Offset="0.66" />
@@ -19,7 +20,7 @@
     </LinearGradientBrush>
 
     <!--#region styleGroupBox -->
-    <Style TargetType="GroupBox" x:Key="styleGroupBox">
+    <Style TargetType="GroupBox" x:Key="StyleGroupBox">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="GroupBox">
@@ -68,13 +69,13 @@
     <!--#endregion-->
 
     <!--#region styleMainTab -->
-    <Style x:Key="styleTabItemDefault" TargetType="TabItem">
+    <Style x:Key="StyleTabItemDefault" TargetType="TabItem">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="TabItem">
                     <Border x:Name="rightBorder"
-                            Background="{StaticResource gradientBrushSegmentedTabItem}"
+                            Background="{StaticResource GradientBrushSegmentedTabItem}"
                             BorderThickness="0,0,1,0"
                             BorderBrush="#032A6B">
                         <Border x:Name="leftBorder"
@@ -102,7 +103,7 @@
                         <Trigger Property="IsSelected" Value="True">
                             <Setter TargetName="rightBorder"
                                     Property="Border.Background"
-                                    Value="{StaticResource gradientBrushSegmentedActiveTabItem}"/>
+                                    Value="{StaticResource GradientBrushSegmentedActiveTabItem}"/>
                             <Setter TargetName="leftBorder"
                                     Property="Border.BorderThickness"
                                     Value="0"/>
@@ -119,13 +120,13 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="styleTabItemLeft" TargetType="{x:Type TabItem}">
+    <Style x:Key="StyleTabItemLeft" TargetType="{x:Type TabItem}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TabItem}">
                     <Border x:Name="rightBorder"
-                            Background="{StaticResource ResourceKey=gradientBrushSegmentedTabItem}"
+                            Background="{StaticResource ResourceKey=GradientBrushSegmentedTabItem}"
                             BorderThickness="0,0,1,0"
                             BorderBrush="#032A6B"
                             CornerRadius="4,0,0,4">
@@ -155,7 +156,7 @@
                         <Trigger Property="IsSelected" Value="True">
                             <Setter TargetName="rightBorder"
                                     Property="Border.Background"
-                                    Value="{StaticResource ResourceKey=gradientBrushSegmentedActiveTabItem}" />
+                                    Value="{StaticResource ResourceKey=GradientBrushSegmentedActiveTabItem}" />
                             <Setter TargetName="leftBorder"
                                     Property="BorderThickness"
                                     Value="0" />
@@ -172,13 +173,13 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="styleTabItemRight" TargetType="{x:Type TabItem}">
+    <Style x:Key="StyleTabItemRight" TargetType="{x:Type TabItem}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TabItem}">
                     <Border x:Name="rightBorder"
-                            Background="{StaticResource ResourceKey=gradientBrushSegmentedTabItem}"
+                            Background="{StaticResource ResourceKey=GradientBrushSegmentedTabItem}"
                             BorderThickness="0,0,1,0"
                             BorderBrush="#032A6B"
                             CornerRadius="0,4,4,0">
@@ -208,7 +209,7 @@
                         <Trigger Property="IsSelected" Value="True">
                             <Setter TargetName="rightBorder"
                                     Property="Background"
-                                    Value="{StaticResource ResourceKey=gradientBrushSegmentedActiveTabItem}" />
+                                    Value="{StaticResource ResourceKey=GradientBrushSegmentedActiveTabItem}" />
                             <Setter TargetName="leftBorder"
                                     Property="BorderThickness"
                                     Value="0" />
@@ -225,7 +226,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="styleTabControl" TargetType="{x:Type TabControl}">
+    <Style x:Key="StyleTabControl" TargetType="{x:Type TabControl}">
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
@@ -242,7 +243,7 @@
                         <Border Grid.Column="0"
                                 Grid.Row="0">
                             <Grid Name="Header"
-                                  Background="{StaticResource ResourceKey=gradientBrushTabControlHeader}">
+                                  Background="{StaticResource ResourceKey=GradientBrushTabControlHeader}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="Auto"/>
@@ -281,25 +282,25 @@
         </Setter>
     </Style>
 
-    <Style TargetType="TextBlock" x:Key="styleHeaderText">
+    <Style TargetType="TextBlock" x:Key="StyleHeaderText">
         <Setter Property="FontSize" Value="13"/>
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="VerticalAlignment" Value="Center"></Setter>
     </Style>
 
-    <Style TargetType="Image" x:Key="styleHeaderImage">
+    <Style TargetType="Image" x:Key="StyleHeaderImage">
         <Setter Property="Height" Value="20"/>
         <Setter Property="Margin" Value="0,0,5,0"/>
     </Style>
     <!--#endregion-->
     
     <!--#region roomContainerStyle-->
-    <Style x:Key="roomContainerStyle" TargetType="{x:Type ListViewItem}">
+    <Style x:Key="RoomContainerStyle" TargetType="{x:Type ListViewItem}">
         <Setter Property="Margin" Value=""/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListViewItem}">
-                    
+                    <uc:RoomItem/>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

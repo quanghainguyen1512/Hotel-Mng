@@ -18,7 +18,7 @@
                 
             </ContextMenu>
         </Grid.ContextMenu>
-        <Border Name="border" 
+        <Border Name="Border" 
                 CornerRadius="5" 
                 BorderBrush="Gray" 
                 BorderThickness="1" 
@@ -36,7 +36,7 @@
             </StackPanel>
         </Border>
 
-        <TextBlock Name="renterName" 
+        <TextBlock Name="RenterName" 
                    Grid.Row="1" 
                    Text="{Binding GuessName, UpdateSourceTrigger=PropertyChanged}" 
                    TextWrapping="Wrap"

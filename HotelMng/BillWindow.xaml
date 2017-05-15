@@ -1,0 +1,179 @@
+﻿<mah:MetroWindow x:Class="HotelMng.BillWindow"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:local="clr-namespace:HotelMng"
+                 xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                 xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                 xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+                 mc:Ignorable="d"
+                 Title="BillWindow" Height="500" Width="600"
+                 WindowStartupLocation="CenterOwner"
+                 ResizeMode="NoResize"
+                 Background="{StaticResource MetroWindowBackgroundInForm}">
+    <mah:MetroWindow.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Assets/ResourcesStyle/FormResources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </mah:MetroWindow.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Border Grid.Column="0"
+                BorderThickness="1"
+                BorderBrush="DarkGray">
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Column="0">
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Left">
+                        <TextBlock Text="Hóa đơn phòng:"
+                                   FontSize="15"/>
+                        <TextBlock Text="0102" Name="TxblRoomId"
+                                   FontSize="15"
+                                   FontWeight="DemiBold"></TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Right">
+                        <TextBlock Text="Mã HĐ:"/>
+                        <TextBlock Text="123" Name="TxblBillId"/>
+                    </StackPanel>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.5*"/>
+                        <RowDefinition Height="0.5*"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="0.8*"/>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0"
+                               Text="Ngày vào:"/>
+                    <TextBlock Grid.Row="0" Grid.Column="1"
+                               Text="DateTime"/>
+                    <TextBlock Grid.Row="1" Grid.Column="0"
+                               Text="Ngày ra:"/>
+                    <TextBlock Grid.Row="1" Grid.Column="1"
+                               Text="DateTime"/>
+                    <Separator Grid.Row="2" Grid.ColumnSpan="2"
+                               Margin="200,5,0,5"/>
+                    <StackPanel Grid.Row="3" Grid.ColumnSpan="2"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                Orientation="Horizontal">
+                        <TextBlock Text="Tổng (1):"/>
+                        <TextBlock Text="00000"
+                                   Name="TxblRentalCost"
+                                   FontWeight="DemiBold"/>
+                        <TextBlock Text="VND"/>
+                    </StackPanel>
+
+                    <TextBlock Grid.Row="4" Grid.Column="0"
+                               TextWrapping="Wrap"
+                               Text="Danh sách dịch vụ đã sử dụng:"/>
+                    <StackPanel Grid.Row="4" Grid.Column="1"
+                                VerticalAlignment="Center"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Right">
+                        <StackPanel.Resources>
+                            <x:Array Type="sys:Int32" x:Key="ArrayQuantityService">
+                                <sys:Int32>1</sys:Int32>
+                                <sys:Int32>2</sys:Int32>
+                                <sys:Int32>5</sys:Int32>
+                                <sys:Int32>10</sys:Int32>
+                                <sys:Int32>-1</sys:Int32>
+                                <sys:Int32>-2</sys:Int32>
+                                <sys:Int32>-5</sys:Int32>
+                                <sys:Int32>-10</sys:Int32>
+                            </x:Array>
+
+                        </StackPanel.Resources>
+                        <ComboBox SelectedIndex="0" 
+                                  Width="100"/>
+                        <TextBlock Text="x"/>
+                        <ComboBox ItemsSource="{StaticResource ArrayQuantityService}"
+                                  SelectedIndex="0"/>
+                        <Button Width="30"
+                                Height="30"
+                                VerticalAlignment="Top"
+                                Style="{DynamicResource MetroCircleButtonStyle}">
+                            <Rectangle Width="15"
+                                       Height="15">
+                                <Rectangle.Fill>
+                                    <VisualBrush Stretch="Fill"
+                                                 Visual="{StaticResource appbar_add}" />
+                                </Rectangle.Fill>
+                            </Rectangle>
+                        </Button>
+                    </StackPanel>
+                    <Grid Grid.Row="5" Grid.ColumnSpan="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <DataGrid Grid.Row="0" 
+                                  GridLinesVisibility="All">
+                            <DataGrid.Columns>
+                                <mah:DataGridNumericUpDownColumn Header="Số lượng"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <Separator Grid.Row="1"
+                                   Margin="200,5,0,5"/>
+                        <StackPanel Grid.Row="2"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    Orientation="Horizontal">
+                            <TextBlock Text="Tổng (2):"/>
+                            <TextBlock Text="00000"
+                                       Name="TxblServTotalPrice"
+                                       FontWeight="DemiBold"/>
+                            <TextBlock Text="VND"/>
+                        </StackPanel>
+                    </Grid>
+                    <TextBlock Grid.Row="6" Grid.Column="0"
+                               TextWrapping="Wrap"
+                               Text="Tổng tiền (1) + (2):"/>
+                    <StackPanel Grid.Row="6" Grid.Column="1"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Right">
+                        <TextBlock Text="00000"
+                                   Name="TxblTotal"
+                                   FontSize="20"
+                                   Foreground="Red"/>
+                        <TextBlock Text="VND"
+                                   FontSize="20"
+                                   Foreground="Red"></TextBlock>
+                    </StackPanel>
+                    <Separator Grid.Row="7" Grid.ColumnSpan="2"
+                               Margin="0,15,0,5"/>
+                    <StackPanel Grid.Row="8" Grid.ColumnSpan="2"
+                                HorizontalAlignment="Right"
+                                Orientation="Horizontal">
+                        <Button Content="THANH TOÁN" Style="{DynamicResource StyleBtnInForm}"/>
+                        <Button Content="ĐÓNG" 
+                                Style="{DynamicResource StyleBtnInForm}"
+                                Click="ButtonBase_OnClick"/>
+
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</mah:MetroWindow>

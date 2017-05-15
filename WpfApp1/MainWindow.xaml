@@ -4,10 +4,37 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
-        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <StackPanel>
-        
+        Title="MainWindow" Height="350" Width="525"
+                 BorderThickness="0" 
+                 GlowBrush="Black"
+                 ResizeMode="CanResizeWithGrip"
+
+                 WindowTransitionsEnabled="False"
+                 WindowStartupLocation="CenterScreen">
+    <StackPanel Orientation="Horizontal"
+                DataContext="{Binding RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
+
+        <mah:Tile Title="Title"
+                  Count="Room"
+                  TiltFactor="3"></mah:Tile>
+        <ComboBox VerticalAlignment="Center"
+                  ItemsSource="{Binding ListCollectionView}">
+            <ComboBox.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}"></TextBlock>
+                        </DataTemplate>
+                    </GroupStyle.HeaderTemplate>
+                </GroupStyle>
+            </ComboBox.GroupStyle>
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}"></TextBlock>  
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
     </StackPanel>
 </mah:MetroWindow>
