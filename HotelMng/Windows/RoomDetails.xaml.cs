@@ -17,11 +17,16 @@ namespace HotelMng.Windows
     /// <summary>
     /// Interaction logic for RoomDetails.xaml
     /// </summary>
-    public partial class RoomDetails : Window
+    public partial class RoomDetails
     {
         public RoomDetails()
         {
             InitializeComponent();
+        }
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

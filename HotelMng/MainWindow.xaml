@@ -16,7 +16,7 @@
         <DockPanel.Resources>
             <ResourceDictionary>
                 <ResourceDictionary.MergedDictionaries>
-                    <ResourceDictionary Source="Assets/ResourcesStyle/HomePageResources.xaml"/>
+                    <ResourceDictionary Source="Assets/Styles/HomePageResources.xaml"/>
                 </ResourceDictionary.MergedDictionaries>
             </ResourceDictionary>
         </DockPanel.Resources>
