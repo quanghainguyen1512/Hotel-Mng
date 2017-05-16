@@ -99,19 +99,19 @@
     <Compile Include="Windows\RoomDetails.xaml.cs">
       <DependentUpon>RoomDetails.xaml</DependentUpon>
     </Compile>
-    <Page Include="Assets\ResourcesStyle\FormResources.xaml">
+    <Page Include="Assets\Styles\FormResources.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Assets\ResourcesStyle\HomePageResources.xaml">
+    <Page Include="Assets\Styles\HomePageResources.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Assets\ResourcesStyle\CustomizeTabControl.xaml">
+    <Page Include="Assets\Styles\CustomizeTabControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Assets\ResourcesStyle\TextBlockStyle.xaml">
+    <Page Include="Assets\Styles\TextBlockStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -219,6 +219,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="AppIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="SQL scripts\HotelMng.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

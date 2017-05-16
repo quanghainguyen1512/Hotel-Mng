@@ -4,20 +4,17 @@
                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                  xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                 xmlns:local="clr-namespace:HotelMng"
                  xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-                 xmlns:uc="clr-namespace:HotelMng.Assets.UserControls"
-                 xmlns:sys="clr-namespace:System;assembly=mscorlib"
                  mc:Ignorable="d"
                  Title="Phiếu đăng ký" Height="500" Width="400"
                  WindowStartupLocation="CenterOwner"
-                 ResizeMode="NoResize"
-                 WindowTransitionsEnabled="True">
+                 GlowBrush="{DynamicResource AccentColorBrush}"
+                 ResizeMode="NoResize">
     <mah:MetroWindow.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../Assets/ResourcesStyle/FormResources.xaml"/>
-                <ResourceDictionary Source="../Assets/ResourcesStyle/HomePageResources.xaml"/>
+                <ResourceDictionary Source="../Assets/Styles/FormResources.xaml"/>
+                <ResourceDictionary Source="../Assets/Styles/HomePageResources.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </mah:MetroWindow.Resources>

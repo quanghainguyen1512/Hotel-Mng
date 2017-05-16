@@ -3,7 +3,6 @@ GO
 USE HotelManagement
 GO
 
-
 CREATE TABLE ACCOUNT
 (
 	UserName	varchar(20) not null PRIMARY KEY,

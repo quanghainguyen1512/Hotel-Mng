@@ -4,12 +4,12 @@
                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                  xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                 xmlns:local="clr-namespace:HotelMng.Windows"
                  mc:Ignorable="d"
+                 WindowStartupLocation="CenterOwner"
                  Title="Chuyển phòng" Height="200" Width="300"
                  ResizeMode="NoResize">
     <mah:MetroWindow.Resources>
-        <ResourceDictionary Source="../Assets/ResourcesStyle/FormResources.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="../Assets/Styles/FormResources.xaml"></ResourceDictionary>
     </mah:MetroWindow.Resources>
     <Grid>
         <Grid.RowDefinitions>

@@ -3,21 +3,18 @@
                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                 xmlns:local="clr-namespace:HotelMng"
                  xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
                  xmlns:sys="clr-namespace:System;assembly=mscorlib"
-                 xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
                  mc:Ignorable="d"
                  Title="Hóa đơn" Height="500" Width="600"
                  WindowStartupLocation="CenterOwner"
                  ResizeMode="NoResize"
                  GlowBrush="{DynamicResource AccentColorBrush}"
-                 WindowTransitionsEnabled="False"
                  WindowStyle="None">
     <mah:MetroWindow.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../Assets/ResourcesStyle/FormResources.xaml"/>
+                <ResourceDictionary Source="../Assets/Styles/FormResources.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </mah:MetroWindow.Resources>
@@ -74,9 +71,11 @@
                                Text="DateTime"
                                HorizontalAlignment="Right"
                                FontSize="14"/>
-                    <Separator Grid.Row="2" Grid.ColumnSpan="2"
+                    <Separator Grid.Row="2" Grid.Column="0"
+                               Grid.ColumnSpan="2"
                                Margin="200,5,0,5"/>
-                    <StackPanel Grid.Row="3" Grid.ColumnSpan="2"
+                    <StackPanel Grid.Row="3" Grid.Column="0"
+                                Grid.ColumnSpan="2"
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Center"
                                 Orientation="Horizontal">
@@ -125,7 +124,8 @@
                             </Rectangle>
                         </Button>
                     </StackPanel>
-                    <Grid Grid.Row="5" Grid.ColumnSpan="2">
+                    <Grid Grid.Row="5" Grid.Column="0"
+                          Grid.ColumnSpan="2">
                         <Grid.RowDefinitions>
                             <RowDefinition/>
                             <RowDefinition Height="Auto"/>
@@ -150,7 +150,8 @@
                             <TextBlock Text="VND"/>
                         </StackPanel>
                     </Grid>
-                    <Separator Grid.Row="6" Grid.ColumnSpan="2"
+                    <Separator Grid.Row="6" Grid.Column="0"
+                               Grid.ColumnSpan="2"
                                Margin="0,15,0,5"/>
                     <TextBlock Grid.Row="7" Grid.Column="0"
                                TextWrapping="Wrap"
@@ -221,7 +222,8 @@
                            Text="CT TNHH adjansdlsad"
                            FontWeight="DemiBold"
                            TextWrapping="Wrap"/>
-                <DataGrid Grid.Row="2" Grid.ColumnSpan="2"
+                <DataGrid Grid.Row="2" Grid.Column="0"
+                          Grid.ColumnSpan="2"
                           Margin="5"
                           SelectedIndex="0"/>
                 <TextBlock Grid.Row="3" Grid.Column="0"
