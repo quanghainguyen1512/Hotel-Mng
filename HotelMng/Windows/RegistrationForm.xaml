@@ -9,15 +9,15 @@
                  xmlns:uc="clr-namespace:HotelMng.Assets.UserControls"
                  xmlns:sys="clr-namespace:System;assembly=mscorlib"
                  mc:Ignorable="d"
-                 Title="RegistrationForm" Height="500" Width="400"
+                 Title="Phiếu đăng ký" Height="500" Width="400"
                  WindowStartupLocation="CenterOwner"
                  ResizeMode="NoResize"
                  WindowTransitionsEnabled="True">
     <mah:MetroWindow.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Assets/ResourcesStyle/FormResources.xaml"/>
-                <ResourceDictionary Source="Assets/ResourcesStyle/HomePageResources.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="../Assets/ResourcesStyle/FormResources.xaml"/>
+                <ResourceDictionary Source="../Assets/ResourcesStyle/HomePageResources.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </mah:MetroWindow.Resources>
@@ -163,7 +163,6 @@
             <Button Content="ĐÓNG" 
                     Style="{DynamicResource StyleBtnInForm}"
                     Click="ButtonBase_OnClick"/>
-
         </StackPanel>
     </Grid>
 </mah:MetroWindow>

@@ -1,0 +1,51 @@
+﻿<mah:MetroWindow x:Class="HotelMng.Windows.ChangeRoomWindow"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:local="clr-namespace:HotelMng.Windows"
+                 mc:Ignorable="d"
+                 Title="Chuyển phòng" Height="200" Width="300"
+                 ResizeMode="NoResize">
+    <mah:MetroWindow.Resources>
+        <ResourceDictionary Source="../Assets/ResourcesStyle/FormResources.xaml"></ResourceDictionary>
+    </mah:MetroWindow.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="Chuyển tới phòng:"
+                       Margin="30,0,0,0"/>
+            <ComboBox Margin="10,0,0,0"
+                      VerticalAlignment="Center"/>
+            <Button Style="{DynamicResource MetroCircleButtonStyle}"
+                    Width="30"
+                    Height="30"
+                    VerticalAlignment="Center"
+                    ToolTip="Xem trước thông tin phòng đang chọn"
+                    Margin="60,0,0,0">
+                <Rectangle Width="10"
+                           Height="15">
+                    <Rectangle.Fill>
+                        <VisualBrush Visual="{StaticResource appbar_question}" />
+                    </Rectangle.Fill>
+                </Rectangle>
+            </Button>
+        </StackPanel>
+        <Separator Grid.Row="1"
+                   Margin="0,15,0,5"/>
+        <StackPanel Grid.Row="2"
+                    HorizontalAlignment="Right"
+                    Orientation="Horizontal">
+            <Button Content="OK" Style="{DynamicResource StyleBtnInForm}"/>
+            <Button Content="ĐÓNG" 
+                    Style="{DynamicResource StyleBtnInForm}"
+                    Click="ButtonBase_OnClick"/>
+        </StackPanel>
+
+    </Grid>
+</mah:MetroWindow>
