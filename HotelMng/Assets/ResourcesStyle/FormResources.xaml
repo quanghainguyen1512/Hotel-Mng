@@ -5,7 +5,7 @@
                     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit">
     <SolidColorBrush x:Key="NormalButtonBrushInForm">#2196F3</SolidColorBrush>
     <SolidColorBrush x:Key="HoverButtonBrushInForm">#F9A825</SolidColorBrush>
-    <SolidColorBrush x:Key="MetroWindowBackgroundInForm">#EEEEEE</SolidColorBrush>
+    <Color x:Key="FormBackgroundColor">#EEEEEE</Color>
     <Style TargetType="{x:Type TextBlock}">
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="Margin" Value="5,2"></Setter>

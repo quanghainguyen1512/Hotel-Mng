@@ -12,8 +12,7 @@
                  Title="RegistrationForm" Height="500" Width="400"
                  WindowStartupLocation="CenterOwner"
                  ResizeMode="NoResize"
-                 WindowTransitionsEnabled="True"
-                 Background="{StaticResource MetroWindowBackgroundInForm}">
+                 WindowTransitionsEnabled="True">
     <mah:MetroWindow.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -22,6 +21,9 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </mah:MetroWindow.Resources>
+    <mah:MetroWindow.Background>
+        <SolidColorBrush Color="{StaticResource FormBackgroundColor}"></SolidColorBrush>
+    </mah:MetroWindow.Background>
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>

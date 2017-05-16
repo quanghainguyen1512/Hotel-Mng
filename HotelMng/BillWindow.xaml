@@ -11,7 +11,9 @@
                  Title="BillWindow" Height="500" Width="600"
                  WindowStartupLocation="CenterOwner"
                  ResizeMode="NoResize"
-                 Background="{StaticResource MetroWindowBackgroundInForm}">
+                 GlowBrush="{DynamicResource AccentColorBrush}"
+                 WindowTransitionsEnabled="False"
+                 WindowStyle="None">
     <mah:MetroWindow.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -19,6 +21,9 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </mah:MetroWindow.Resources>
+    <mah:MetroWindow.Background>
+        <SolidColorBrush Color="{StaticResource FormBackgroundColor}"></SolidColorBrush>
+    </mah:MetroWindow.Background>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
@@ -27,7 +32,7 @@
         <Border Grid.Column="0"
                 BorderThickness="1"
                 BorderBrush="DarkGray">
-            <Grid Margin="10">
+            <Grid Margin="10,10,10,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition/>
@@ -35,16 +40,11 @@
                 <Grid Grid.Column="0">
                     <StackPanel Orientation="Horizontal"
                                 HorizontalAlignment="Left">
-                        <TextBlock Text="Hóa đơn phòng:"
+                        <TextBlock Text="Phòng:"
                                    FontSize="15"/>
                         <TextBlock Text="0102" Name="TxblRoomId"
                                    FontSize="15"
-                                   FontWeight="DemiBold"></TextBlock>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal"
-                                HorizontalAlignment="Right">
-                        <TextBlock Text="Mã HĐ:"/>
-                        <TextBlock Text="123" Name="TxblBillId"/>
+                                   FontWeight="DemiBold"/>
                     </StackPanel>
                 </Grid>
                 <Grid Grid.Row="1">
@@ -58,19 +58,22 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="0.8*"/>
-                        <RowDefinition Height="2*"/>
-                        <RowDefinition/>
+                        <RowDefinition Height="3*"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0" Grid.Column="0"
                                Text="Ngày vào:"/>
                     <TextBlock Grid.Row="0" Grid.Column="1"
-                               Text="DateTime"/>
+                               Text="DateTime"
+                               HorizontalAlignment="Right"
+                               FontSize="14"/>
                     <TextBlock Grid.Row="1" Grid.Column="0"
                                Text="Ngày ra:"/>
                     <TextBlock Grid.Row="1" Grid.Column="1"
-                               Text="DateTime"/>
+                               Text="DateTime"
+                               HorizontalAlignment="Right"
+                               FontSize="14"/>
                     <Separator Grid.Row="2" Grid.ColumnSpan="2"
                                Margin="200,5,0,5"/>
                     <StackPanel Grid.Row="3" Grid.ColumnSpan="2"
@@ -147,10 +150,12 @@
                             <TextBlock Text="VND"/>
                         </StackPanel>
                     </Grid>
-                    <TextBlock Grid.Row="6" Grid.Column="0"
+                    <Separator Grid.Row="6" Grid.ColumnSpan="2"
+                               Margin="0,15,0,5"/>
+                    <TextBlock Grid.Row="7" Grid.Column="0"
                                TextWrapping="Wrap"
                                Text="Tổng tiền (1) + (2):"/>
-                    <StackPanel Grid.Row="6" Grid.Column="1"
+                    <StackPanel Grid.Row="7" Grid.Column="1"
                                 Orientation="Horizontal"
                                 HorizontalAlignment="Right">
                         <TextBlock Text="00000"
@@ -159,21 +164,95 @@
                                    Foreground="Red"/>
                         <TextBlock Text="VND"
                                    FontSize="20"
-                                   Foreground="Red"></TextBlock>
-                    </StackPanel>
-                    <Separator Grid.Row="7" Grid.ColumnSpan="2"
-                               Margin="0,15,0,5"/>
-                    <StackPanel Grid.Row="8" Grid.ColumnSpan="2"
-                                HorizontalAlignment="Right"
-                                Orientation="Horizontal">
-                        <Button Content="THANH TOÁN" Style="{DynamicResource StyleBtnInForm}"/>
-                        <Button Content="ĐÓNG" 
-                                Style="{DynamicResource StyleBtnInForm}"
-                                Click="ButtonBase_OnClick"/>
-
+                                   Foreground="Red"/>
                     </StackPanel>
                 </Grid>
             </Grid>
         </Border>
+        <Grid Grid.Column="1">
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,0.3" EndPoint="0, 1.2">
+                    <GradientStop Color="#1E88E5" Offset="0"/>
+                    <GradientStop Color="#EEEEEE" Offset="1.2"></GradientStop>
+                </LinearGradientBrush>
+            </Grid.Background>
+            <Grid.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Setter Property="Margin" Value="8"></Setter>
+                </Style>
+            </Grid.Resources>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right"
+                        Grid.Row="0">
+                <TextBlock Text="Mã HĐ:"
+                           FontSize="20"/>
+                <TextBlock Text="123" Name="TxblBillId"
+                           FontSize="20"/>
+            </StackPanel>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0"
+                           Text="Khách hàng:"/>
+                <TextBlock Grid.Row="0" Grid.Column="1"
+                           Text="Nguyễn Văn A"
+                           HorizontalAlignment="Right"
+                           FontWeight="DemiBold"/>
+                <TextBlock Grid.Row="1" Grid.Column="0"
+                           Text="Công ty:"/>
+                <TextBlock Grid.Row="1" Grid.Column="1"
+                           HorizontalAlignment="Right"
+                           Text="CT TNHH adjansdlsad"
+                           FontWeight="DemiBold"
+                           TextWrapping="Wrap"/>
+                <DataGrid Grid.Row="2" Grid.ColumnSpan="2"
+                          Margin="5"
+                          SelectedIndex="0"/>
+                <TextBlock Grid.Row="3" Grid.Column="0"
+                           Text="Trị giá hóa đơn:"
+                           Foreground="Red"
+                           FontSize="15"
+                           FontWeight="Bold"
+                           TextWrapping="Wrap"/>
+                <StackPanel Grid.Row="3" Grid.Column="1"
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Right">
+                    <TextBlock Text="00000"
+                               Foreground="Red"
+                               FontSize="15"
+                               FontWeight="Bold"/>
+                    <TextBlock Text="VND" 
+                               Foreground="Red"
+                               FontSize="15"
+                               FontWeight="Bold"></TextBlock>
+                </StackPanel>
+            </Grid>
+            <StackPanel Grid.Row="2" Grid.ColumnSpan="2"
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal">
+                <Button Content="THANH TOÁN" 
+                        Style="{DynamicResource StyleBtnInForm}"/>
+                <Button Content="ĐÓNG"
+                        Style="{DynamicResource StyleBtnInForm}"
+                        Click="ButtonBase_OnClick"/>
+            </StackPanel>
+
+        </Grid>
     </Grid>
 </mah:MetroWindow>
