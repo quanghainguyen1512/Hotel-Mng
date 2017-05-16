@@ -11,6 +11,10 @@
     <mah:MetroWindow.Resources>
         <ResourceDictionary Source="../Assets/Styles/FormResources.xaml"></ResourceDictionary>
     </mah:MetroWindow.Resources>
+    <mah:MetroWindow.Background>
+        <SolidColorBrush Color="{StaticResource FormBackgroundColor}"></SolidColorBrush>
+    </mah:MetroWindow.Background>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
