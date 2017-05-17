@@ -84,19 +84,22 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Assets\UserControls\MyTimePicker.xaml.cs">
-      <DependentUpon>MyTimePicker.xaml</DependentUpon>
+    <Compile Include="Assets\UserControls\MoneyDisplay.xaml.cs">
+      <DependentUpon>MoneyDisplay.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\BillWindow.xaml.cs">
+    <Compile Include="Pages\RoomMngPage.xaml.cs">
+      <DependentUpon>RoomMngPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SubWindows\BillWindow.xaml.cs">
       <DependentUpon>BillWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\ChangeRoomWindow.xaml.cs">
+    <Compile Include="SubWindows\ChangeRoomWindow.xaml.cs">
       <DependentUpon>ChangeRoomWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\RegistrationForm.xaml.cs">
+    <Compile Include="SubWindows\RegistrationForm.xaml.cs">
       <DependentUpon>RegistrationForm.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\RoomDetails.xaml.cs">
+    <Compile Include="SubWindows\RoomDetails.xaml.cs">
       <DependentUpon>RoomDetails.xaml</DependentUpon>
     </Compile>
     <Page Include="Assets\Styles\FormResources.xaml">
@@ -115,7 +118,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Assets\UserControls\MyTimePicker.xaml">
+    <Page Include="Assets\UserControls\MoneyDisplay.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -123,7 +126,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\BillWindow.xaml">
+    <Page Include="Pages\RoomMngPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SubWindows\BillWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -142,11 +149,11 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Windows\ChangeRoomWindow.xaml">
+    <Page Include="SubWindows\ChangeRoomWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\RegistrationForm.xaml">
+    <Page Include="SubWindows\RegistrationForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -158,7 +165,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Windows\RoomDetails.xaml">
+    <Page Include="SubWindows\RoomDetails.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -221,7 +228,12 @@
     <Resource Include="AppIcon.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Assets\Icon\appbar.people.png" />
+    <Resource Include="Assets\Icon\appbar.key.png" />
+    <Resource Include="Assets\Icon\appbar.math.plus.minus.png" />
+    <Resource Include="Assets\Icon\appbar.social.delicious.png" />
     <Content Include="SQL scripts\HotelMng.sql" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

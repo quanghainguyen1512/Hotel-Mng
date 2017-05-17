@@ -5,36 +5,45 @@ GO
 
 CREATE TABLE ACCOUNT
 (
-	UserName	VARCHAR(20) not null PRIMARY KEY,
-	Password	VARCHAR(20) not null,
+	UserName	VARCHAR(20) NOT NULL PRIMARY KEY,
+	Password	VARCHAR(20) NOT NULL,
 )
 
 GO
 CREATE TABLE ROOM_TYPE												--Loại phòng
 (
-	RoomTypeId	CHAR(1) not null PRIMARY KEY,		--QD1--
-	Price		MONEY not null,
-	Note		VARCHAR(100)
+	RoomTypeId		CHAR(1) NOT NULL PRIMARY KEY,		--QD1--
+	PriceByDay		MONEY NOT NULL,
+	Price1stHour	MONEY NOT NULL,
+	PricePerHour	MONEY NOT NULL,
+	Note			NVARCHAR(100)
 )												
 GO
 CREATE TABLE ROOM_STATUS
 (
-	StatusID	INT IDENTITY not null PRIMARY KEY,
+	StatusID	INT IDENTITY NOT NULL PRIMARY KEY,
 	StatusName	NVARCHAR(20)
 )													
 GO
+CREATE TABLE FLOOR
+(
+	FloorId INT IDENTITY PRIMARY KEY,
+	FloorName NVARCHAR(10)
+)
+GO
 CREATE TABLE ROOM													--Phòng
 (
-	RoomId		INT not null PRIMARY KEY,
+	RoomId		INT NOT NULL PRIMARY KEY,
 	RoomTypeId	CHAR(1),
 	Description	NVARCHAR(200),
 	NumOfBed	INT,
 	PeoPerBed	INT,
 	MaxCapacity INT,
-	Floor		INT,
+	FloorId		INT,
 	StatusId	INT 
 	FOREIGN KEY (RoomTypeId) REFERENCES ROOM_TYPE(RoomTypeId),
-	FOREIGN KEY (StatusId) REFERENCES ROOM_STATUS(StatusId)
+	FOREIGN KEY (StatusId) REFERENCES ROOM_STATUS(StatusId),
+	FOREIGN KEY (FloorId) REFERENCES dbo.FLOOR(FloorId)
 )
 GO
 CREATE TABLE NATIONALITY
@@ -44,9 +53,9 @@ CREATE TABLE NATIONALITY
 )
 CREATE TABLE RENTER														--Người Thuê
 (
-	RenterId	VARCHAR(20) not null PRIMARY KEY,
-	Name		NVARCHAR(30) not null,
-	Gender		bit not null,
+	RenterId	VARCHAR(20) NOT NULL PRIMARY KEY,
+	Name		NVARCHAR(30) NOT NULL,
+	Gender		bit NOT NULL,
 	PhoneNum	VARCHAR(15),
 	NatId		INT,													--QD2--
 	IDENTITYNum	VARCHAR(20),
@@ -72,10 +81,10 @@ CREATE TABLE SERVICE
 GO
 CREATE TABLE BILL														--hóa đơn
 (
-	BillId		VARCHAR(20) not null PRIMARY KEY,
+	BillId		VARCHAR(20) NOT NULL PRIMARY KEY,
 	RenterId	VARCHAR(20),
 	RoomId		INT,
-	TotalMoney	MONEY not null,
+	TotalMoney	MONEY NOT NULL,
 	
 	FOREIGN KEY (RoomId) REFERENCES ROOM(RoomId),
 	FOREIGN KEY (RenterId) REFERENCES RENTER(RenterId),)
@@ -89,7 +98,7 @@ GO
 CREATE TABLE REG_FORM														--phiếu thuê phòng
 (
 	FormId		INT IDENTITY PRIMARY KEY,
-	CheckIn		smalldatetime not null,
+	CheckIn		smalldatetime NOT NULL,
 	CheckOut	smalldatetime,
 	RenterId	VARCHAR(20),
 	RoomId		INT,
@@ -113,22 +122,7 @@ CREATE TABLE USE_SERVICES
 	FOREIGN KEY (FormId) REFERENCES REG_FORM(FormId)
 )
 GO
-CREATE TABLE APPLIANCE
-(
-	ApplianceId	INT IDENTITY PRIMARY KEY,
-	Name		NVARCHAR(30)
-)
-GO
-CREATE TABLE HAVE_APPLIANCE
-(
-	ApplianceId INT,
-	RoomId		INT,
-	PRIMARY KEY(ApplianceId, RoomId),
-	FOREIGN KEY(ApplianceId) REFERENCES APPLIANCE(ApplianceId),
-	FOREIGN KEY(RoomId) REFERENCES ROOM(RoomId)
-)
-GO
-CREATE TABLE ROOMMATE
+CREATE TABLE ROOMMATES
 (
 	Name	VARCHAR(30),
 	NatId	INT,

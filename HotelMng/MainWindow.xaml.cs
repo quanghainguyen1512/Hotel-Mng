@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using HamburgerMenu;
 
 namespace HotelMng
 {
@@ -23,6 +24,15 @@ namespace HotelMng
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void HamburgerMenuItem_OnSelected(object sender, RoutedEventArgs e)
+        {
+            var hbgMenuItem = sender as HamburgerMenuItem;
+            if (hbgMenuItem == null)
+                throw new Exception("Unexpected Error..");
+            var targetView = hbgMenuItem.Tag.ToString();
+            Frame.Source = new Uri(targetView, UriKind.Relative);
         }
     }
 }

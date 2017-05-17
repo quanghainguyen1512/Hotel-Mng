@@ -5,6 +5,7 @@
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                  xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
                  xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                 xmlns:uc="clr-namespace:HotelMng.Assets.UserControls"
                  mc:Ignorable="d"
                  Title="Hóa đơn" Height="500" Width="600"
                  WindowStartupLocation="CenterOwner"
@@ -80,10 +81,8 @@
                                 VerticalAlignment="Center"
                                 Orientation="Horizontal">
                         <TextBlock Text="Tổng (1):"/>
-                        <TextBlock Text="00000"
-                                   Name="TxblRentalCost"
-                                   FontWeight="DemiBold"/>
-                        <TextBlock Text="VND"/>
+                        <uc:MoneyDisplay x:Name="RentalCost"
+                                         FontWeight="DemiBold"/>
                     </StackPanel>
 
                     <TextBlock Grid.Row="4" Grid.Column="0"
@@ -144,10 +143,8 @@
                                     VerticalAlignment="Center"
                                     Orientation="Horizontal">
                             <TextBlock Text="Tổng (2):"/>
-                            <TextBlock Text="00000"
-                                       Name="TxblServTotalPrice"
-                                       FontWeight="DemiBold"/>
-                            <TextBlock Text="VND"/>
+                            <uc:MoneyDisplay x:Name="ServTotalPrice" 
+                                             FontWeight="DemiBold"/>
                         </StackPanel>
                     </Grid>
                     <Separator Grid.Row="6" Grid.Column="0"
@@ -159,13 +156,9 @@
                     <StackPanel Grid.Row="7" Grid.Column="1"
                                 Orientation="Horizontal"
                                 HorizontalAlignment="Right">
-                        <TextBlock Text="00000"
-                                   Name="TxblTotal"
-                                   FontSize="20"
-                                   Foreground="Red"/>
-                        <TextBlock Text="VND"
-                                   FontSize="20"
-                                   Foreground="Red"/>
+                        <uc:MoneyDisplay x:Name="Total" 
+                                         FontSize="20"
+                                         Foreground="Red"/>
                     </StackPanel>
                 </Grid>
             </Grid>
@@ -174,14 +167,14 @@
             <Grid.Background>
                 <LinearGradientBrush StartPoint="0,0.3" EndPoint="0, 1.2">
                     <GradientStop Color="#1E88E5" Offset="0"/>
-                    <GradientStop Color="#EEEEEE" Offset="1.2"></GradientStop>
+                    <GradientStop Color="#EEEEEE" Offset="1.2"/>
                 </LinearGradientBrush>
             </Grid.Background>
             <Grid.Resources>
                 <Style TargetType="TextBlock">
                     <Setter Property="Foreground" Value="White"/>
                     <Setter Property="VerticalAlignment" Value="Center"/>
-                    <Setter Property="Margin" Value="8"></Setter>
+                    <Setter Property="Margin" Value="8"/>
                 </Style>
             </Grid.Resources>
             <Grid.RowDefinitions>
@@ -232,18 +225,11 @@
                            FontSize="15"
                            FontWeight="Bold"
                            TextWrapping="Wrap"/>
-                <StackPanel Grid.Row="3" Grid.Column="1"
-                            Orientation="Horizontal"
-                            HorizontalAlignment="Right">
-                    <TextBlock Text="00000"
-                               Foreground="Red"
-                               FontSize="15"
-                               FontWeight="Bold"/>
-                    <TextBlock Text="VND" 
-                               Foreground="Red"
-                               FontSize="15"
-                               FontWeight="Bold"></TextBlock>
-                </StackPanel>
+                <uc:MoneyDisplay Grid.Row="3" Grid.Column="1"
+                                 Foreground="Red"
+                                 FontSize="15"
+                                 FontWeight="Bold"
+                                 HorizontalAlignment="Right"/>
             </Grid>
             <StackPanel Grid.Row="2" Grid.ColumnSpan="2"
                         HorizontalAlignment="Right"

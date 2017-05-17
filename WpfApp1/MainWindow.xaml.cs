@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MahApps.Metro.Controls;
+using HamburgerMenuItem = HamburgerMenu.HamburgerMenuItem;
 
 namespace WpfApp1
 {
@@ -21,24 +22,30 @@ namespace WpfApp1
     /// </summary>
     public partial class MainWindow
     {
-        public List<Food> Foods { get; set; }
-        public ListCollectionView ListCollectionView { get; set; }
+        //public List<Food> Foods { get; set; }
+        //public ListCollectionView ListCollectionView { get; set; }
         public MainWindow()
         {
             InitializeComponent();
-            Foods = new List<Food>
-            {
-                new Food {Name = "Food1", Type = 1},
-                new Food {Name = "Food2", Type = 1},
-                new Food {Name = "Food3", Type = 1},
-                new Food {Name = "Food4", Type = 2},
-                new Food {Name = "Food5", Type = 2},
-                new Food {Name = "Food6", Type = 3},
-                new Food {Name = "Food7", Type = 4}
-            };
-            ListCollectionView = new ListCollectionView(Foods);
-            ListCollectionView.GroupDescriptions?.Add(new PropertyGroupDescription("Type"));
+            //Foods = new List<Food>
+            //{
+            //    new Food {Name = "Food1", Type = 1},
+            //    new Food {Name = "Food2", Type = 1},
+            //    new Food {Name = "Food3", Type = 1},
+            //    new Food {Name = "Food4", Type = 2},
+            //    new Food {Name = "Food5", Type = 2},
+            //    new Food {Name = "Food6", Type = 3},
+            //    new Food {Name = "Food7", Type = 4}
+            //};
+            //ListCollectionView = new ListCollectionView(Foods);
+            //ListCollectionView.GroupDescriptions?.Add(new PropertyGroupDescription("Type"));
 
+        }
+
+        private void ListBoxItem_OnSelected(object sender, RoutedEventArgs e)
+        {
+            var targetView = ((HamburgerMenuItem)sender).Tag.ToString();
+            TheFrame.Source = new Uri(targetView, UriKind.Relative);
         }
     }
 
