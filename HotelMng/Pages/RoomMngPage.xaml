@@ -7,35 +7,22 @@
       xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
       xmlns:local="clr-namespace:HotelMng.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300"
+      d:DesignHeight="600" d:DesignWidth="600"
       Title="RoomMngPage">
 
     <Page.Resources>
-        <x:Array Type="sys:String" x:Key="a">
-            <sys:String>Tầng 1</sys:String>
-            <sys:String>Tầng 1</sys:String>
-            <sys:String>Tầng 1</sys:String>
-            <sys:String>Tầng 1</sys:String>
-        </x:Array>
+        <ResourceDictionary Source="../Assets/Styles/HomePageResources.xaml"/>
     </Page.Resources>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
         <GroupBox Header="Phân loại phòng">
-            <StackPanel>
-                <StackPanel>
-                    <TextBlock Text="Theo lầu:"/>
-                    <Separator/>
-                    <ListView ItemsSource="{StaticResource a}">
-                        <ListView.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <WrapPanel/>
-                            </ItemsPanelTemplate>
-                        </ListView.ItemsPanel>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding}"></TextBlock>
-                        </DataTemplate>
-                    </ListView>
-                </StackPanel>
-            </StackPanel>
+            <DataGrid/>
+        </GroupBox>
+        <GroupBox Grid.Row="1" Header="Danh sách phòng">
+            <DataGrid/>
         </GroupBox>
     </Grid>
 </Page>

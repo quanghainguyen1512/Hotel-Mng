@@ -87,8 +87,14 @@
     <Compile Include="Assets\UserControls\MoneyDisplay.xaml.cs">
       <DependentUpon>MoneyDisplay.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\RentersPage.xaml.cs">
+      <DependentUpon>RentersPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\RoomMngPage.xaml.cs">
       <DependentUpon>RoomMngPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ServicesPage.xaml.cs">
+      <DependentUpon>ServicesPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="SubWindows\BillWindow.xaml.cs">
       <DependentUpon>BillWindow.xaml</DependentUpon>
@@ -126,7 +132,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\RentersPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\RoomMngPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ServicesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

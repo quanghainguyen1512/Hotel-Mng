@@ -20,9 +20,23 @@ namespace WpfApp1
     /// </summary>
     public partial class Page1 : Page
     {
+        public List<Student> Students { get; set; }
         public Page1()
         {
             InitializeComponent();
+            Students = new List<Student>()
+            {
+                new Student(){Id = 1, Name = "aaa"},
+                new Student(){Id = 2, Name = "bbb"},
+                new Student(){Id = 3, Name = "ccc"},
+                new Student(){Id = 4, Name = "ddd"},
+            };
         }
+    }
+
+    public class Student
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 }

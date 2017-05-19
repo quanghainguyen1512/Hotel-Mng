@@ -44,8 +44,11 @@ namespace WpfApp1
 
         private void ListBoxItem_OnSelected(object sender, RoutedEventArgs e)
         {
-            var targetView = ((HamburgerMenuItem)sender).Tag.ToString();
-            TheFrame.Source = new Uri(targetView, UriKind.Relative);
+            var hbgMenuItem = sender as HamburgerMenuItem;
+            if (hbgMenuItem == null)
+                throw new Exception("Unexpected Error..");
+            var targetView = hbgMenuItem.Tag.ToString();
+            Frame.Source = new Uri(targetView, UriKind.Relative);
         }
     }
 

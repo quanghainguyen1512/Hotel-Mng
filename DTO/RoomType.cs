@@ -11,7 +11,9 @@ namespace DTO
         #region Properties
 
         public char RoomTypeId { get; set; }
-        public int Price { get; set; }
+        public int PriceByDay { get; set; }
+        public int Price1StHour { get; set; }
+        public int PricePerHour { get; set; }
         public string Note { get; set; }
 
         #endregion
@@ -19,7 +21,9 @@ namespace DTO
         public RoomType(System.Data.DataRow row)
         {
             RoomTypeId = (char) row["RoomTypeId"];
-            Price = (int) row["Price"];
+            PriceByDay = (int) row["Price"];
+            Price1StHour = (int) row["Price1stHour"];
+            PricePerHour = (int) row["PricePerHour"];
             Note = row["Note"].ToString();
         }
     }

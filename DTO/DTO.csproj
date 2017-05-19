@@ -44,8 +44,8 @@
     <Compile Include="RegisterForm.cs" />
     <Compile Include="Renter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Report.cs" />
     <Compile Include="Room.cs" />
+    <Compile Include="Roommate.cs" />
     <Compile Include="RoomType.cs" />
     <Compile Include="Service.cs" />
   </ItemGroup>

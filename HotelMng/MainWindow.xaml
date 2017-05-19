@@ -67,7 +67,7 @@
                                 <TextBlock Text="Có khách (5)"/>
 
                             </StackPanel>
-                            <ListView Grid.Row="1">
+                            <!--<ListView Grid.Row="1">
                                 <ListView.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <WrapPanel/>
@@ -75,7 +75,21 @@
                                 </ListView.ItemsPanel>
                                 <uc:RoomItem Height="120" Width="100" RoomNum="101" GuessName="Hải" StatusColor="Aqua"/>
                                 <uc:RoomItem Height="120" Width="100"/>
-                            </ListView>
+                                <mah:Tile Title="tile"
+                                          Content="Center" Foreground="Black"
+                                          />
+                            </ListView>-->
+                            <ItemsControl Grid.Row="1">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <mah:Tile Title="Title" 
+                                          BorderBrush="LightGray" 
+                                          BorderThickness="1"
+                                          Content="asd"/>
+                            </ItemsControl>
                             <StackPanel Grid.Row="2" 
                                         Orientation="Horizontal"
                                         VerticalAlignment="Center">
@@ -177,14 +191,13 @@
                                                          Icon="Assets/Icon/appbar.key.png"
                                                          Tag="Pages/RoomMngPage.xaml"
                                                          Selected="HamburgerMenuItem_OnSelected"/>
-                        <hamburgerMenu:HamburgerMenuItem Text="Điều chỉnh cách tính giá thuê"
-                                                         Icon="Assets/Icon/appbar.math.plus.minus.png"
-                                                         Selected="HamburgerMenuItem_OnSelected"/>
                         <hamburgerMenu:HamburgerMenuItem Text="Danh sách dịch vụ"
                                                          Icon="Assets/Icon/appbar.social.delicious.png"
+                                                         Tag="Pages/ServicesPage.xaml"
                                                          Selected="HamburgerMenuItem_OnSelected"/>
                         <hamburgerMenu:HamburgerMenuItem Text="Danh sách khách hàng" 
                                                          Icon="Assets/Icon/appbar.people.png"
+                                                         Tag="Pages/RentersPage.xaml"
                                                          Selected="HamburgerMenuItem_OnSelected"/>
                     </hamburgerMenu:HamburgerMenu>
                     <Frame Grid.Column="1"
