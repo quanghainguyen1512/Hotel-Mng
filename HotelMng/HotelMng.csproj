@@ -87,6 +87,9 @@
     <Compile Include="Assets\UserControls\MoneyDisplay.xaml.cs">
       <DependentUpon>MoneyDisplay.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Assets\UserControls\RoomStatusItem.xaml.cs">
+      <DependentUpon>RoomStatusItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\RentersPage.xaml.cs">
       <DependentUpon>RentersPage.xaml</DependentUpon>
     </Compile>
@@ -95,6 +98,9 @@
     </Compile>
     <Compile Include="Pages\ServicesPage.xaml.cs">
       <DependentUpon>ServicesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SubWindows\AddNewServiceTypeDialog.xaml.cs">
+      <DependentUpon>AddNewServiceTypeDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="SubWindows\BillWindow.xaml.cs">
       <DependentUpon>BillWindow.xaml</DependentUpon>
@@ -132,6 +138,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Assets\UserControls\RoomStatusItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\RentersPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -141,6 +151,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\ServicesPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SubWindows\AddNewServiceTypeDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -214,13 +228,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Icon\roomitem-icon.png" />
-    <Resource Include="Assets\Icon\system-icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Icon\about-icon-white.png" />
-    <Resource Include="Assets\Icon\home-icon-white.png" />
-    <Resource Include="Assets\Icon\management-icon-white.png" />
-    <Resource Include="Assets\Icon\report-icon-white.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DAO\DAO.csproj">
@@ -239,13 +246,11 @@
     <Resource Include="Resources\Entypo-license.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="AppIcon.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Assets\Icon\appbar.people.png" />
     <Resource Include="Assets\Icon\appbar.key.png" />
     <Resource Include="Assets\Icon\appbar.math.plus.minus.png" />
     <Resource Include="Assets\Icon\appbar.social.delicious.png" />
+    <Resource Include="AppIcon.ico" />
     <Content Include="SQL scripts\HotelMng.sql" />
   </ItemGroup>
   <ItemGroup />

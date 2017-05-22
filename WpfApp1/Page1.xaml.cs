@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,23 +21,35 @@ namespace WpfApp1
     /// </summary>
     public partial class Page1 : Page
     {
-        public List<Student> Students { get; set; }
+        public ObservableCollection<Student> Students { get; set; }
         public Page1()
         {
             InitializeComponent();
-            Students = new List<Student>()
-            {
-                new Student(){Id = 1, Name = "aaa"},
-                new Student(){Id = 2, Name = "bbb"},
-                new Student(){Id = 3, Name = "ccc"},
-                new Student(){Id = 4, Name = "ddd"},
-            };
+            //Load();
         }
+        //void Load()
+        //{
+        //    var query = "SELECT * FROM STUDENT";
+        //    var data = DataProvider.Instance.ExecuteQueries(query);
+        //    foreach (System.Data.DataRow row in data.Rows)
+        //    {
+        //        Students.Add(new Student(row));
+        //    }
+        //}
+
     }
 
     public class Student
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public int Class { get; set; }
+
+        //public Student(System.Data.DataRow row)
+        //{
+        //    Id = (int) row["Id"];
+        //    Name = row["Name"].ToString();
+        //    Class = (int) row["ClassId"];
+        //}
     }
 }

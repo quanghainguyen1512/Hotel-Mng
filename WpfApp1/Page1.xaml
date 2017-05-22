@@ -18,7 +18,18 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <controls:Tile Content="{Binding Name}" Title="{Binding Id}"/>
+                    <controls:Tile Title="{Binding Id}">
+                        <controls:Tile.Content>
+                            <StackPanel>
+                                <Viewbox Width="100" Height="48">
+                                    <Canvas Width="24" Height="24">
+                                        <Path Data="M7,13A3,3 0 0,0 10,10A3,3 0 0,0 7,7A3,3 0 0,0 4,10A3,3 0 0,0 7,13M19,7H11V14H3V7H1V17H23V11A4,4 0 0,0 19,7Z" Fill="Black" />
+                                    </Canvas>
+                                </Viewbox>
+                                <TextBlock Text="{Binding Name}"></TextBlock>
+                            </StackPanel>
+                        </controls:Tile.Content>
+                    </controls:Tile>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>

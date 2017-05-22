@@ -19,7 +19,16 @@
         <GradientStop Color="#000075" Offset="0.66" />
         <GradientStop Color="#000082" Offset="1" />
     </LinearGradientBrush>
-
+    <SolidColorBrush x:Key="RoomNeedsCleaningBrush" Color="#FFCA28"/>
+    <SolidColorBrush x:Key="EmptyRoomBrush" Color="#E0E0E0"/>
+    <SolidColorBrush x:Key="RentedRoomBrush" Color="#F48FB1"/>
+    <SolidColorBrush x:Key="RoomNeedsFixingBrush" Color="#00E5FF"/>
+    <Canvas Width="24" Height="24" x:Key="ReportIcon">
+        <Path Data="M13,9H18.5L13,3.5V9M6,2H14L20,8V20A2,2 0 0,1 18,22H6C4.89,22 4,21.1 4,20V4C4,2.89 4.89,2 6,2M15,18V16H6V18H15M18,14V12H6V14H18Z" Fill="White" />
+    </Canvas>
+    <Canvas Width="24" Height="24" x:Key="HomeIcon">
+        <Path Data="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z" Fill="White" />
+    </Canvas>
     <!--#region styleGroupBox -->
     <Style TargetType="GroupBox" x:Key="StyleGroupBox">
         <Setter Property="Template">
@@ -284,49 +293,83 @@
     </Style>
 
     <Style TargetType="TextBlock" x:Key="StyleHeaderText">
-        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="FontSize" Value="15"/>
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="VerticalAlignment" Value="Center"></Setter>
     </Style>
 
-    <Style TargetType="Image" x:Key="StyleHeaderImage">
+    <Style TargetType="Rectangle" x:Key="StyleHeaderIcon">
         <Setter Property="Height" Value="20"/>
         <Setter Property="Margin" Value="0,0,5,0"/>
     </Style>
     <!--#endregion-->
-    
-    <!--#region roomContainerStyle-->
-    <Style x:Key="RoomContainerStyle" TargetType="{x:Type ListViewItem}">
-        <Setter Property="Margin" Value=""/>
+
+    <Style TargetType="Button" x:Key="StyleButtonReload">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ListViewItem}">
-                    <uc:RoomItem/>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="outlineBorder"
+                            BorderThickness="1"
+                            BorderBrush="#1A237E"
+                            CornerRadius="4"
+                            Cursor="Hand"
+                            Background="White">
+                       
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <ContentPresenter x:Name="contentBtn" 
+                                              Grid.Column="0"
+                                              Content="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}"
+                                              HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              Margin="8,2"/>
+                            <Grid Grid.Column="1"
+                                  Background="#1A237E">
+                                <Viewbox Width="20" Height="20"
+                                         Margin="5,3">
+                                    <Canvas Width="24" Height="24">
+                                        <Path Data="M12,5V1L7,6L12,11V7A6,6 0 0,1 18,13A6,6 0 0,1 12,19A6,6 0 0,1 6,13H4A8,8 0 0,0 12,21A8,8 0 0,0 20,13A8,8 0 0,0 12,5Z" Fill="White" />
+                                    </Canvas>
+                                </Viewbox>
+                            </Grid>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="RenderTransform">
+                                <Setter.Value>
+                                    <ScaleTransform ScaleX="0.98"
+                                                    ScaleY="0.98"
+                                                    CenterX="0.5"
+                                                    CenterY="0.5" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-    <!--#endregion -->
-    
-    <!--<Style TargetType="Button" x:Key="styleAdvSearchBtn">
-        <Setter Property="Template">
 
-        </Setter>
-    </Style>-->
+    <!--#region TileStyle-->
     <Style TargetType="mah:Tile">
         <Setter Property="Foreground" Value="Black"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="mah:Tile">
                     <Border CornerRadius="3"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}">
+                            BorderBrush="#B0BEC5"
+                            BorderThickness="2">
                         <Border.Effect>
                             <DropShadowEffect BlurRadius="5" 
                                               ShadowDepth="3" 
                                               Direction="270"/>
                         </Border.Effect>
-                        <Grid Background="{TemplateBinding Background}">
+                        <Grid Background="{TemplateBinding Background}"
+                              x:Name="TileBackground">
                             <StackPanel VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                         HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                         Orientation="Horizontal">
@@ -361,9 +404,23 @@
                                 </Setter.Value>
                             </Setter>
                         </Trigger>
+                        <DataTrigger Binding="{Binding StatusId}" Value="1">
+                            <Setter TargetName="TileBackground" Property="Background" Value="{StaticResource EmptyRoomBrush}"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding StatusId}" Value="2">
+                            <Setter TargetName="TileBackground" Property="Background" Value="{StaticResource RentedRoomBrush}"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding StatusId}" Value="3">
+                            <Setter TargetName="TileBackground" Property="Background" Value="{StaticResource RoomNeedsCleaningBrush}"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding StatusId}" Value="4">
+                            <Setter TargetName="TileBackground" Property="Background" Value="{StaticResource RoomNeedsFixingBrush}"/>
+                        </DataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
+    <!--#endregion -->
+
 </ResourceDictionary>

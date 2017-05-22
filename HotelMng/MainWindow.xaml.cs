@@ -12,7 +12,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using HamburgerMenu;
+using DAO;
+using DTO;
+using MahApps.Metro.Controls;
+using HamburgerMenuItem = HamburgerMenu.HamburgerMenuItem;
 
 namespace HotelMng
 {
@@ -21,9 +24,18 @@ namespace HotelMng
     /// </summary>
     public partial class MainWindow 
     {
+        public class StatusInfo
+        {
+            
+        }
+        public IEnumerable<Room> Rooms { get; set; }
+        public IEnumerable<StatusInfo> StatusInfos { get; set; }
         public MainWindow()
         {
             InitializeComponent();
+            Rooms = RoomDAO.Instance.GetAllRooms();
+            var view = (CollectionView) CollectionViewSource.GetDefaultView(Rooms);
+            view.GroupDescriptions.Add(new PropertyGroupDescription("RoomTypeId"));
         }
 
         private void HamburgerMenuItem_OnSelected(object sender, RoutedEventArgs e)
@@ -34,5 +46,11 @@ namespace HotelMng
             var targetView = hbgMenuItem.Tag.ToString();
             Frame.Source = new Uri(targetView, UriKind.Relative);
         }
+
+        private void TimePicker_OnSelectedDateChanged(object sender, TimePickerBaseSelectionChangedEventArgs<DateTime?> e)
+        {
+
+        }
+
     }
 }

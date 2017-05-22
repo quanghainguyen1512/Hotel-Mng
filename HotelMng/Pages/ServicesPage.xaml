@@ -3,16 +3,197 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
       xmlns:local="clr-namespace:HotelMng.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300"
+      d:DesignHeight="500" d:DesignWidth="800"
       Title="ServicesPage">
 
-    <Grid>
+    <Grid DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:ServicesPage}}}">
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
             <ColumnDefinition/>
-            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        <DataGrid></DataGrid>
+        <!--<ListView Name="LvServices" SelectionMode="Single" ItemsSource="{Binding Services}">
+            <ListView.View>
+                <GridView x:Name="GridView">
+                    <GridViewColumn Header="Tên" Width="200"
+                                    DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Header="Đơn giá" Width="100" 
+                                    DisplayMemberBinding="{Binding Price}"/>
+                    <GridViewColumn Width="30">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Margin="0,1" Content="X"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>-->
+        <DataGrid Grid.Column="0" 
+                  ItemsSource="{Binding Services}"
+                  Name="DgServices"
+                  AutoGenerateColumns="False"
+                  SelectionMode="Single"
+                  SelectionUnit="FullRow"
+                  CanUserAddRows="False"
+                  CanUserDeleteRows="False"
+                  GridLinesVisibility="All"
+                  IsReadOnly="True"
+                  >
+            <DataGrid.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.HeaderTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text="{Binding Path=Name}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </GroupStyle.HeaderTemplate>
+                    <GroupStyle.ContainerStyle>
+                        <Style TargetType="{x:Type GroupItem}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type GroupItem}">
+                                        <Expander>
+                                            <Expander.Background>
+                                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                                    <GradientStop Color="#CFD8DC" Offset="1"/>
+                                                    <GradientStop Color="#78909C" Offset="0"/>
+                                                </LinearGradientBrush>
+                                            </Expander.Background>
+                                            <Expander.Header>
+                                                <StackPanel Orientation="Horizontal"
+                                                            Margin="30,0,0,0">
+                                                    <TextBlock Text="{Binding Name}" 
+                                                               FontSize="18" 
+                                                               FontWeight="DemiBold"
+                                                               Foreground="White"/>
+                                                    <StackPanel VerticalAlignment="Center"
+                                                                Orientation="Horizontal">
+                                                        <TextBlock Text=" (" Foreground="White"/>
+                                                        <TextBlock Text="{Binding ItemCount}" Foreground="White"/>
+                                                        <TextBlock Text=") " Foreground="White"/>
+                                                        <TextBlock Text="Item(s)" Foreground="White"/>
+                                                    </StackPanel>
+                                                </StackPanel>
+                                            </Expander.Header>
+                                            <ItemsPresenter />
+                                        </Expander>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </GroupStyle.ContainerStyle>
+                    <GroupStyle.Panel>
+                        <ItemsPanelTemplate>
+                            <DataGridRowsPresenter/>
+                        </ItemsPanelTemplate>
+                    </GroupStyle.Panel>
+                </GroupStyle>
+            </DataGrid.GroupStyle>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Tên dịch vụ"
+                                    Width="2*"
+                                    Binding="{Binding Name}" 
+                                    FontSize="16"/>
+                <DataGridTextColumn Header="Đơn giá" 
+                                    Width="*"
+                                    Binding="{Binding Price}"
+                                    FontSize="16"/>
+                <DataGridTextColumn Header="Đơn vị"
+                                    Width="0.8*"
+                                    Binding="{Binding Unit}" 
+                                    FontSize="16"/>
+                <DataGridTemplateColumn Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="X" 
+                                    Click="ButtonBase_OnClick"
+                                    Width="25"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Grid Grid.Column="1">
+            <Grid.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Setter Property="FontSize" Value="14"/>
+                    <Setter Property="Margin" Value="5,20"/>
+                </Style>
+                <Style TargetType="TextBox">
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Setter Property="FontSize" Value="14"/>
+                    <Setter Property="Margin" Value="0,0,10,0"></Setter>
+                </Style>
+            </Grid.Resources>
+            <Grid.Background>
+                    <LinearGradientBrush StartPoint="0,0.3" EndPoint="0, 1.2">
+                        <GradientStop Color="#1E88E5" Offset="0"/>
+                        <GradientStop Color="#EEEEEE" Offset="1.2"/>
+                    </LinearGradientBrush>
+                </Grid.Background>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Tên:"/>
+            <TextBox Grid.Row="0" Grid.Column="1"
+                     Text="{Binding ElementName=DgServices, Path=SelectedItem.Name}"/>
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Loại:"/>
+            <Grid Grid.Row="1" Grid.Column="1"
+                  VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <ComboBox ItemsSource="{Binding ServiceTypes}" 
+                          DisplayMemberPath="SvTypeName"
+                          SelectedIndex="{Binding ElementName=DgServices, Path=SelectedItem.SvTypeId}"
+                          FontSize="14"/>
+                <Button Grid.Column="1"
+                        Width="30"
+                        Height="30"
+                        Style="{DynamicResource MetroCircleButtonStyle}"
+                        ToolTip="Thêm loại dịch vụ mới"
+                        Click="AddNewServiceType_OnClick"
+                        Background="WhiteSmoke">
+                    <Rectangle Width="15"
+                               Height="15">
+                        <Rectangle.Fill>
+                            <VisualBrush Stretch="Fill"
+                                         Visual="{StaticResource appbar_add}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                </Button>
+            </Grid>
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Đơn giá:"/>
+            <TextBox Grid.Row="2" Grid.Column="1"
+                     Text="{Binding ElementName=DgServices, Path=SelectedItem.Price}"/>
+            <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"
+                        VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button Name="ButtonEdit" Grid.Column="0" 
+                        Content="Sửa" Margin="10,20"
+                        IsEnabled="False"/>
+                <Button Name="ButtonAdd" Grid.Column="1"
+                        Content="Thêm" Margin="10,20"
+                        IsEnabled="False"/>
+            </Grid>
+        </Grid>
     </Grid>
 </Page>

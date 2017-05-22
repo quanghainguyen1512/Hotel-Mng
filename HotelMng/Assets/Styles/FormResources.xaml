@@ -50,6 +50,14 @@
                                     Property="TextBlock.Foreground"
                                     Value="{StaticResource HoverButtonBrushInForm}"/>
                         </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="borderBtn"
+                                    Property="Border.BorderBrush"
+                                    Value="DarkGray"/>
+                            <Setter TargetName="content"
+                                    Property="TextBlock.Foreground"
+                                    Value="DarkGray"/>
+                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
