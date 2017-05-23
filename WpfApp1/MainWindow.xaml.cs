@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MahApps.Metro.Controls;
+using HamburgerMenuItem = HamburgerMenu.HamburgerMenuItem;
 
 namespace WpfApp1
 {
@@ -21,24 +23,33 @@ namespace WpfApp1
     /// </summary>
     public partial class MainWindow
     {
-        public List<Food> Foods { get; set; }
-        public ListCollectionView ListCollectionView { get; set; }
+        //public List<Food> Foods { get; set; }
+        //public ListCollectionView ListCollectionView { get; set; }
         public MainWindow()
         {
             InitializeComponent();
-            Foods = new List<Food>
-            {
-                new Food {Name = "Food1", Type = 1},
-                new Food {Name = "Food2", Type = 1},
-                new Food {Name = "Food3", Type = 1},
-                new Food {Name = "Food4", Type = 2},
-                new Food {Name = "Food5", Type = 2},
-                new Food {Name = "Food6", Type = 3},
-                new Food {Name = "Food7", Type = 4}
-            };
-            ListCollectionView = new ListCollectionView(Foods);
-            ListCollectionView.GroupDescriptions?.Add(new PropertyGroupDescription("Type"));
+            //Foods = new List<Food>
+            //{
+            //    new Food {Name = "Food1", Type = 1},
+            //    new Food {Name = "Food2", Type = 1},
+            //    new Food {Name = "Food3", Type = 1},
+            //    new Food {Name = "Food4", Type = 2},
+            //    new Food {Name = "Food5", Type = 2},
+            //    new Food {Name = "Food6", Type = 3},
+            //    new Food {Name = "Food7", Type = 4}
+            //};
+            //ListCollectionView = new ListCollectionView(Foods);
+            //ListCollectionView.GroupDescriptions?.Add(new PropertyGroupDescription("Type"));
 
+        }
+
+        private void ListBoxItem_OnSelected(object sender, RoutedEventArgs e)
+        {
+            var hbgMenuItem = sender as HamburgerMenuItem;
+            if (hbgMenuItem == null)
+                throw new Exception("Unexpected Error..");
+            var targetView = hbgMenuItem.Tag.ToString();
+            Frame.Source = new Uri(targetView, UriKind.Relative);
         }
     }
 

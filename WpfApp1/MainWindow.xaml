@@ -4,37 +4,63 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
+                      xmlns:hamburgerMenu="clr-namespace:HamburgerMenu;assembly=hamburgerMenu"
+
         xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525"
+        Title="MainWindow" Height="513" Width="1138"
                  BorderThickness="0" 
                  GlowBrush="Black"
                  ResizeMode="CanResizeWithGrip"
 
                  WindowTransitionsEnabled="False"
                  WindowStartupLocation="CenterScreen">
-    <StackPanel Orientation="Horizontal"
-                DataContext="{Binding RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
+    <!--<Window.Resources>
+        <DataTemplate x:Key="HamburgerMenuItem" DataType="{x:Type Controls:HamburgerMenuGlyphItem}">
+            <Grid Height="48">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="48" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Margin="12"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Text="{Binding Glyph}" />
+                <TextBlock Grid.Column="1"
+                           VerticalAlignment="Center"
+                           FontSize="16"
+                           Text="{Binding Label}" />
+                <Button Grid.Column="2" Tag="{Binding Tag}">Go</Button>
+            </Grid>
+        </DataTemplate>
+    </Window.Resources>-->
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <!--<Controls:HamburgerMenu ItemTemplate="{StaticResource HamburgerMenuItem}">
+            <Controls:HamburgerMenu.ItemsSource>
+                <Controls:HamburgerMenuItemCollection>
+                    <Controls:HamburgerMenuGlyphItem Glyph="1" Label="Page 1" Tag="Page1.xaml" />
+                    <Controls:HamburgerMenuGlyphItem Glyph="2" Label="Page 2" Tag="Page2.xaml"/>
+                </Controls:HamburgerMenuItemCollection>
+            </Controls:HamburgerMenu.ItemsSource>
+        </Controls:HamburgerMenu>-->
+        <hamburgerMenu:HamburgerMenu Background="DarkCyan" 
+                                     MenuIconColor="White" 
+                                     SelectionIndicatorColor="White" 
+                                     MenuItemForeground="White" 
+                                     HorizontalAlignment="Left"
+                                     IsOpen="True">
+            <hamburgerMenu:HamburgerMenuItem Text="Quản lý phòng ở" Tag="Page1.xaml" Selected="ListBoxItem_OnSelected"/>
+            <hamburgerMenu:HamburgerMenuItem Text="Danh sách dịch vụ" Tag="Page2.xaml" Selected="ListBoxItem_OnSelected"/>
+            <hamburgerMenu:HamburgerMenuItem Text="Danh sách khách hàng"/>
+            <hamburgerMenu:HamburgerMenuItem Text="Điều chỉnh giá phòng"/>
+        </hamburgerMenu:HamburgerMenu>
 
-        <mah:Tile Title="Title"
-                  Count="Room"
-                  TiltFactor="3"></mah:Tile>
-        <ComboBox VerticalAlignment="Center"
-                  ItemsSource="{Binding ListCollectionView}">
-            <ComboBox.GroupStyle>
-                <GroupStyle>
-                    <GroupStyle.HeaderTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Name}"></TextBlock>
-                        </DataTemplate>
-                    </GroupStyle.HeaderTemplate>
-                </GroupStyle>
-            </ComboBox.GroupStyle>
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding Name}"></TextBlock>  
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
-        </ComboBox>
-    </StackPanel>
+
+        <Frame x:Name="Frame" Grid.Column="1" NavigationUIVisibility="Hidden"/>
+        </Grid>
 </mah:MetroWindow>

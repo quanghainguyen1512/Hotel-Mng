@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -26,13 +27,12 @@ namespace DAO
             }
         }
 
-        public List<Room> GetAllRoom()
+        public IEnumerable<Room> GetAllRooms()
         {
-            var query = "SELECT * FROM ROOM";
+            var query = "EXEC USP_GetAllRoomInfo";
             var data = DataProvider.Instance.ExecuteQueries(query);
-            return (from DataRow row in data.Rows
-                    select new Room(row)).ToList();
+            return from DataRow row in data.Rows
+                select new Room(row);
         }
-
     }
 }

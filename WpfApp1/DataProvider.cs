@@ -7,7 +7,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace DAO
+namespace WpfApp1
 {
     public class DataProvider
     {
@@ -16,7 +16,7 @@ namespace DAO
 
         DataProvider() { }
 
-        private readonly string _connString = "Data Source=DESKTOP-L9JNNSC;Initial Catalog=HotelManagement;Integrated Security=True";
+        private readonly string _connString = "Data Source=DESKTOP-L9JNNSC;Initial Catalog=TEST;Integrated Security=True";
 
         public static DataProvider Instance
         {

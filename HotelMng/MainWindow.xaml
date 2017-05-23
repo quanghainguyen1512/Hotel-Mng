@@ -1,18 +1,22 @@
 ﻿<mah:MetroWindow x:Class="HotelMng.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:xceed="http://schemas.xceed.com/wpf/xaml/toolkit"
-        xmlns:local="clr-namespace:HotelMng"
-        xmlns:sys="clr-namespace:System;assembly=mscorlib"
-        xmlns:uc="clr-namespace:HotelMng.Assets.UserControls"
-        xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        xmlns:hamburgerMenu="clr-namespace:HamburgerMenu;assembly=hamburgerMenu"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="700" Width="1000" 
-        WindowState="Maximized">
-    <DockPanel>
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:xceed="http://schemas.xceed.com/wpf/xaml/toolkit"
+                 xmlns:local="clr-namespace:HotelMng"
+                 xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                 xmlns:uc="clr-namespace:HotelMng.Assets.UserControls"
+                 xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                 xmlns:hamburgerMenu="clr-namespace:HamburgerMenu;assembly=hamburgerMenu"
+                 mc:Ignorable="d"
+                 Title="MainWindow" Height="700" Width="1000" 
+                 WindowState="Maximized"
+                 WindowStyle="None"
+                 ShowTitleBar="False"
+                 ShowMaxRestoreButton="False" 
+                 ShowMinButton="False">
+    <DockPanel DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:MainWindow}}}">
         <DockPanel.Resources>
             <ResourceDictionary>
                 <ResourceDictionary.MergedDictionaries>
@@ -24,7 +28,11 @@
             <TabItem Style="{DynamicResource StyleTabItemLeft}">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="Assets/Icon/home-icon-white.png" Style="{StaticResource StyleHeaderImage}"/>
+                        <Rectangle Width="25" Style="{StaticResource StyleHeaderIcon}">
+                            <Rectangle.Fill>
+                                <VisualBrush Visual="{StaticResource HomeIcon}"/>
+                            </Rectangle.Fill>
+                        </Rectangle>
                         <TextBlock Text="TRANG CHỦ" Style="{StaticResource StyleHeaderText}"/>
                     </StackPanel>
                 </TabItem.Header>
@@ -37,9 +45,6 @@
                                        Margin="25,0"></TextBlock>
                         </GroupBox.Header>
                         <Grid>
-                            <Grid.Resources>
-                                <ResourceDictionary Source="Assets/ResourcesStyle/TextBlockStyle.xaml"/>
-                            </Grid.Resources>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="0.5*"/>
                                 <RowDefinition Height="5*"/>
@@ -55,27 +60,100 @@
                                            VerticalAlignment="Center"
                                            FontWeight="DemiBold"
                                            FontStyle="Italic"/>
-                                <Rectangle Width="15" Fill="#64B5F6"/>
-                                <TextBlock Text="Cần dọn (1)"/>
-                                <Rectangle Width="15" Fill="#E0E0E0"/>
-                                <TextBlock Text="Phòng trống (14)"/>
-                                <Rectangle Width="15" Fill="#F48FB1"/>
-                                <TextBlock Text="Có khách (5)"/>
-
+                                <uc:RoomStatusItem StatusBrush="{StaticResource RoomNeedsCleaningBrush}"
+                                                   StatusText="Cần dọn"
+                                                   Margin="45,0,0,0"/>
+                                <uc:RoomStatusItem StatusBrush="{StaticResource RentedRoomBrush}"
+                                                   StatusText="Có khách"
+                                                   Margin="45,0,0,0"/>
+                                <uc:RoomStatusItem StatusBrush="{StaticResource EmptyRoomBrush}"
+                                                   StatusText="Phòng trống"
+                                                   Margin="45,0,0,0"/>
+                                <uc:RoomStatusItem StatusBrush="{StaticResource RoomNeedsFixingBrush}"
+                                                   StatusText="Cần sửa"
+                                                   Margin="45,0,0,0"/>
                             </StackPanel>
-                            <ListView Grid.Row="1">
-                                <ListView.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <WrapPanel/>
-                                    </ItemsPanelTemplate>
-                                </ListView.ItemsPanel>
-                                <uc:RoomItem Height="120" Width="100" RoomNum="101" GuessName="Hải" StatusColor="Aqua"/>
-                                <uc:RoomItem Height="120" Width="100"/>
-                            </ListView>
+                            <ScrollViewer Grid.Row="1">
+                                <ItemsControl ItemsSource="{Binding Rooms}">
+                                    <ItemsControl.GroupStyle>
+                                        <GroupStyle>
+                                            <GroupStyle.HeaderTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel>
+                                                        <TextBlock Text="{Binding Path=Name}" />
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </GroupStyle.HeaderTemplate>
+                                            <GroupStyle.ContainerStyle>
+                                                <Style TargetType="{x:Type GroupItem}">
+                                                    <Setter Property="Template">
+                                                        <Setter.Value>
+                                                            <ControlTemplate TargetType="{x:Type GroupItem}">
+                                                                <Expander>
+                                                                    <Expander.Background>
+                                                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                                                            <GradientStop Color="#CFD8DC" Offset="1"/>
+                                                                            <GradientStop Color="#78909C" Offset="0"/>
+                                                                        </LinearGradientBrush>
+                                                                    </Expander.Background>
+                                                                    <Expander.Header>
+                                                                        <StackPanel Orientation="Horizontal"
+                                                                                    Margin="30,0,0,0">
+                                                                            <TextBlock Text="{Binding Name}" 
+                                                                                       FontSize="18" 
+                                                                                       FontWeight="DemiBold"
+                                                                                       Foreground="White"/>
+                                                                            <StackPanel VerticalAlignment="Center"
+                                                                                        Orientation="Horizontal">
+                                                                                <TextBlock Text=" (" Foreground="White"/>
+                                                                                <TextBlock Text="{Binding ItemCount}" Foreground="White"/>
+                                                                                <TextBlock Text=") " Foreground="White"/>
+                                                                                <TextBlock Text="Item(s)" Foreground="White"/>
+                                                                            </StackPanel>
+                                                                        </StackPanel>
+                                                                    </Expander.Header>
+                                                                    <ItemsPresenter />
+                                                                </Expander>
+                                                            </ControlTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Style>
+                                            </GroupStyle.ContainerStyle>
+                                            <GroupStyle.Panel>
+                                                <ItemsPanelTemplate>
+                                                    <DataGridRowsPresenter/>
+                                                </ItemsPanelTemplate>
+                                            </GroupStyle.Panel>
+                                        </GroupStyle>
+
+                                    </ItemsControl.GroupStyle>
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <mah:Tile Title="{Binding RoomId}"
+                                                      Margin="10"
+                                                      Height="100"
+                                                      Width="100">
+                                                <mah:Tile.Content>
+                                                    <StackPanel>
+                                                        <Image Source="Assets/Icon/roomitem-icon.png" Height="30" Width="60"/>
+                                                        <TextBlock Text="{Binding RoomId}" HorizontalAlignment="Center"/>
+                                                    </StackPanel>
+                                                </mah:Tile.Content>
+                                            </mah:Tile>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+
+                            </ScrollViewer>
                             <StackPanel Grid.Row="2" 
                                         Orientation="Horizontal"
                                         VerticalAlignment="Center">
-                                <TextBlock Text="Thời gian:"
+                                <TextBlock Text="Thời gian khách hàng muốn ở:"
                                            Margin="20,0,10,0"
                                            FontSize="13"
                                            VerticalAlignment="Center"
@@ -83,67 +161,13 @@
                                            FontStyle="Italic"/>
                                 <mah:DateTimePicker Name="TimePicker" 
                                                     Width="200"
-                                                    Margin="20,0"
-                                                    SelectedDate="{x:Static sys:DateTime.Now}"/>
+                                                    Margin="100,0"
+                                                    SelectedDate="{x:Static sys:DateTime.Now}"
+                                                    SelectedDateChanged="TimePicker_OnSelectedDateChanged"/>
                                 <Button Margin="200,0"
-                                        Content="Tìm nâng cao">
-                                    <Button.Style>
-                                        <Style TargetType="Button">
-                                            <Setter Property="Template">
-                                                <Setter.Value>
-                                                    <ControlTemplate>
-                                                        <Border x:Name="outlineBorder"
-                                                                BorderThickness="1"
-                                                                BorderBrush="#1A237E"
-                                                                CornerRadius="4"
-                                                                Cursor="Hand"
-                                                                Background="White">
-                                                            <!--<Border.Effect>
-                                                                <DropShadowEffect ShadowDepth="2"
-                                                                                  Direction="270"/>
-                                                            </Border.Effect>-->
-                                                            <Grid>
-                                                                <Grid.ColumnDefinitions>
-                                                                    <ColumnDefinition Width="Auto"/>
-                                                                    <ColumnDefinition Width="*"/>
-                                                                </Grid.ColumnDefinitions>
-                                                                <ContentPresenter x:Name="contentBtn" 
-                                                                                  Grid.Column="0"
-                                                                                  Content="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}"
-                                                                                  HorizontalAlignment="Center"
-                                                                                  VerticalAlignment="Center"
-                                                                                  Margin="8,2"/>
-                                                                <Grid Grid.Column="1"
-                                                                      Background="#1A237E">
-                                                                    <TextBlock Text=">>"
-                                                                               VerticalAlignment="Center"
-                                                                               HorizontalAlignment="Center"
-                                                                               FontWeight="Heavy"
-                                                                               Margin="5,0,5,2"
-                                                                               Foreground="White"/>
-                                                                </Grid>
-                                                            </Grid>
-                                                        </Border>
-                                                    </ControlTemplate>
-                                                </Setter.Value>
-                                            </Setter>
-                                        </Style>
-                                    </Button.Style>
+                                        Content="Tải lại danh sách"
+                                        Style="{StaticResource StyleButtonReload}">
                                 </Button>
-                                <!--<TextBlock Text="Từ ngày:" 
-                                       Margin="20,0,10,0"
-                                       Style="{StaticResource styleFilterHeadline}"/>
-                            <DatePicker Width="150"
-                                        SelectedDate="{x:Static sys:DateTime.Today}" 
-                                        FirstDayOfWeek="Sunday"
-                                        SelectedDateFormat="Short"/>
-                            <TextBlock Text="Đến ngày:"
-                                       Margin="100,0,10,0"
-                                       Style="{StaticResource styleFilterHeadline}"/>
-                            <DatePicker Width="150"
-                                        SelectedDate="{x:Static sys:DateTime.Today}"  
-                                        FirstDayOfWeek="Sunday"
-                                        />-->
                             </StackPanel>
 
                         </Grid>
@@ -153,41 +177,65 @@
             <TabItem Style="{DynamicResource StyleTabItemDefault}">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="Assets/Icon/management-icon-white.png" Style="{StaticResource StyleHeaderImage}"/>
+                        <Rectangle Width="20" Style="{StaticResource StyleHeaderIcon}">
+                            <Rectangle.Fill>
+                                <VisualBrush Visual="{StaticResource appbar_cogs}"/>
+                            </Rectangle.Fill>
+                        </Rectangle>
                         <TextBlock Text="QUẢN LÝ" Style="{StaticResource StyleHeaderText}"/>
                     </StackPanel>
                 </TabItem.Header>
-                <StackPanel Orientation="Horizontal">
-                    <hamburgerMenu:HamburgerMenu Background="DarkCyan" 
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <hamburgerMenu:HamburgerMenu Grid.Column="0" 
+                                                 Background="DarkCyan" 
                                                  MenuIconColor="White" 
                                                  SelectionIndicatorColor="White" 
                                                  MenuItemForeground="White" 
                                                  HorizontalAlignment="Left"
                                                  IsOpen="True">
-                        <hamburgerMenu:HamburgerMenuItem Text="Quản lý phòng ở"/>
-                        <hamburgerMenu:HamburgerMenuItem Text="Danh sách dịch vụ"/>
-                        <hamburgerMenu:HamburgerMenuItem Text="Danh sách khách hàng"/>
-                        <hamburgerMenu:HamburgerMenuItem Text="Điều chỉnh giá phòng"/>
+                        <hamburgerMenu:HamburgerMenuItem Text="Quản lý phòng" 
+                                                         Icon="Assets/Icon/appbar.key.png"
+                                                         Tag="Pages/RoomMngPage.xaml"
+                                                         Selected="HamburgerMenuItem_OnSelected"/>
+                        <hamburgerMenu:HamburgerMenuItem Text="Danh sách dịch vụ"
+                                                         Icon="Assets/Icon/appbar.social.delicious.png"
+                                                         Tag="Pages/ServicesPage.xaml"
+                                                         Selected="HamburgerMenuItem_OnSelected"/>
+                        <hamburgerMenu:HamburgerMenuItem Text="Danh sách khách hàng" 
+                                                         Icon="Assets/Icon/appbar.people.png"
+                                                         Tag="Pages/RentersPage.xaml"
+                                                         Selected="HamburgerMenuItem_OnSelected"/>
                     </hamburgerMenu:HamburgerMenu>
-                </StackPanel>
+                    <Frame Grid.Column="1"
+                           x:Name="Frame"
+                           NavigationUIVisibility="Hidden"/>
+                </Grid>
             </TabItem>
             <TabItem Style="{DynamicResource StyleTabItemDefault}">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="Assets/Icon/report-icon-white.png" Style="{StaticResource StyleHeaderImage}"/>
+                        <!--<Image Source="Assets/Icon/report-icon-white.png" Style="{StaticResource StyleHeaderImage}"/>-->
+                        <Rectangle Width="15" Style="{StaticResource StyleHeaderIcon}">
+                            <Rectangle.Fill>
+                                <VisualBrush Visual="{StaticResource ReportIcon}"/>
+                            </Rectangle.Fill>
+                        </Rectangle>
                         <TextBlock Text="BÁO CÁO" Style="{StaticResource StyleHeaderText}"/>
                     </StackPanel>
                 </TabItem.Header>
-                <mah:DropDownButton HorizontalAlignment="Center"
-                                    VerticalAlignment="Center" Width="133"
-                                    Icon="{DynamicResource appbar_music}"
-                                    Content="Test"
-                                    VerticalContentAlignment="Center"/>
             </TabItem>
             <TabItem Style="{DynamicResource StyleTabItemRight}">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="Assets/Icon/about-icon-white.png" Style="{StaticResource StyleHeaderImage}"/>
+                        <Rectangle Width="20" Style="{StaticResource StyleHeaderIcon}">
+                            <Rectangle.Fill>
+                                <VisualBrush Visual="{StaticResource appbar_information_circle}"/>
+                            </Rectangle.Fill>
+                        </Rectangle>
                         <TextBlock Text="THÔNG TIN" Style="{StaticResource StyleHeaderText}"/>
                     </StackPanel>
                 </TabItem.Header>
@@ -195,4 +243,6 @@
         </TabControl>
     </DockPanel>
 </mah:MetroWindow>
+
+ 
 

@@ -21,8 +21,8 @@ namespace DTO
             RoomId      = (int) row["RoomId"];
             Description = row["Description"].ToString();
             StatusId    = (int) row["StatusId"];
-            RoomTypeId  = (char) row["RoomTypeId"];
-            Status      = row["StatusName"].ToString();
+            RoomTypeId = Convert.ToChar(row["RoomTypeId"]);
+            Status = row["StatusName"].ToString();
         }
 
         public override string ToString()

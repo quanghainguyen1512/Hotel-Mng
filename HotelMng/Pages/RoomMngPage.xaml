@@ -1,0 +1,46 @@
+﻿<Page x:Class="HotelMng.Pages.RoomMngPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:sys="clr-namespace:System;assembly=mscorlib"
+      xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+      xmlns:local="clr-namespace:HotelMng.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="600"
+      Title="RoomMngPage">
+
+    <Page.Resources>
+        <ResourceDictionary Source="../Assets/Styles/HomePageResources.xaml"/>
+    </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <GroupBox Header="Phân loại phòng">
+            <ListView>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Loại phòng" Width="Auto">
+                        </GridViewColumn>
+                        <GridViewColumn Header="Giá theo ngày" Width="Auto"></GridViewColumn>
+                        <GridViewColumn Header="Giá giờ đầu" Width="Auto"></GridViewColumn>
+                        <GridViewColumn Header="Giá mỗi giờ" Width="Auto"></GridViewColumn>
+                        <GridViewColumn Header="Ghi chú" Width="Auto"></GridViewColumn>
+                        <GridViewColumn>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="x" Margin="0,1"></Button>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </GroupBox>
+        <GroupBox Grid.Row="1" Header="Danh sách phòng">
+            <DataGrid/>
+        </GroupBox>
+    </Grid>
+</Page>
