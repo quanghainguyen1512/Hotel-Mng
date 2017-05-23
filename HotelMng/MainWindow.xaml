@@ -38,6 +38,7 @@
                 </TabItem.Header>
                 
                 <Grid>
+                    <TextBlock>bfdfg</TextBlock>
                     <GroupBox Style="{StaticResource StyleGroupBox}">
                         <GroupBox.Header>
                             <TextBlock Text="Danh sách phòng"
