@@ -24,12 +24,7 @@ namespace HotelMng
     /// </summary>
     public partial class MainWindow 
     {
-        public class StatusInfo
-        {
-            
-        }
         public IEnumerable<Room> Rooms { get; set; }
-        public IEnumerable<StatusInfo> StatusInfos { get; set; }
         public MainWindow()
         {
             InitializeComponent();
@@ -51,6 +46,5 @@ namespace HotelMng
         {
 
         }
-
     }
 }

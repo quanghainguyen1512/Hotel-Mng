@@ -27,13 +27,12 @@ namespace WpfApp1
         public CollectionView CollectionView { get; set; }
         public List<int> Classes { get; set; }
         private DataRowView _rowBeingEdited;
+        private Student _newStudent;
         public Page2()
         {
             InitializeComponent();
 
-            //var data = DataProvider.Instance.ExecuteQueries("SELECT * FROM STUDENT");
-            var ds = new DataSet1();
-            var data = ds.STUDENT;
+            var data = DataProvider.Instance.ExecuteQueries("SELECT * FROM STUDENT");
 
             Students = new ObservableCollection<Student>();
             foreach (System.Data.DataRow row in data.Rows)
@@ -55,12 +54,17 @@ namespace WpfApp1
 
         private void Grid_OnCellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
-            _rowBeingEdited = e.Row.Item as DataRowView;
-            var d = new DataSet1();
+            //_rowBeingEdited = e.Row.Item as DataRowView;
+            MessageBox.Show("Cell editing");
         }
 
         private void Grid_OnCurrentCellChanged(object sender, EventArgs e)
         {
+            //var dataGridCellEditEndingEventArgs = e as DataGridCellEditEndingEventArgs;
+            //if (dataGridCellEditEndingEventArgs != null)
+            //    _newStudent = dataGridCellEditEndingEventArgs.Row.Item as Student;
+            ////MessageBox.Show(_newStudent?.Id.ToString());
+            MessageBox.Show("Current cell changed");
             _rowBeingEdited?.EndEdit();
         }
     }

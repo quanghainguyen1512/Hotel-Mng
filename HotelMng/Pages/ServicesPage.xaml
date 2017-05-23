@@ -166,14 +166,14 @@
                         Width="30"
                         Height="30"
                         Style="{DynamicResource MetroCircleButtonStyle}"
-                        ToolTip="Thêm loại dịch vụ mới"
+                        ToolTip="Danh sách "
                         Click="AddNewServiceType_OnClick"
                         Background="WhiteSmoke">
-                    <Rectangle Width="15"
-                               Height="15">
+                    <Rectangle Width="5"
+                               Height="12">
                         <Rectangle.Fill>
                             <VisualBrush Stretch="Fill"
-                                         Visual="{StaticResource appbar_add}" />
+                                         Visual="{StaticResource appbar_information}" />
                         </Rectangle.Fill>
                     </Rectangle>
                 </Button>

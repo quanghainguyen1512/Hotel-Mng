@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using DTO;
 
 namespace HotelMng.Pages
 {
@@ -20,6 +22,8 @@ namespace HotelMng.Pages
     /// </summary>
     public partial class RoomMngPage : Page
     {
+        public ObservableCollection<Room> Rooms { get; set; }
+        public ObservableCollection<RoomType> RoomTypes { get; set; }
         public RoomMngPage()
         {
             InitializeComponent();

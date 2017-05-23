@@ -6,7 +6,7 @@
                  xmlns:local="clr-namespace:HotelMng.SubWindows"
                  xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
                  mc:Ignorable="d"
-                 Title="AddNewServiceTypeWindow" Height="200" Width="300"
+                 Title="Thêm dịch vụ" Height="200" Width="300"
                  WindowStartupLocation="CenterScreen"
                  ResizeMode="NoResize"
                  GlowBrush="{DynamicResource BlackBrush}">

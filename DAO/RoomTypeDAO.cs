@@ -34,7 +34,15 @@ namespace DAO
                 select new RoomType(row)).ToList();
         }
 
-        public bool UpdateRoomTypes(IEnumerable<RoomType> roomTypes)
+        public bool AddRoomTypes(char roomTypeId, int priceByDay, int price1StDay, int pricePerHour, string note = null)
+        {
+            var query =
+                $"INSERT INTO dbo.ROOM_TYPE VALUES ({roomTypeId}, {priceByDay}, {price1StDay}, {pricePerHour}, N'{note}'";
+            var result = DataProvider.Instance.ExecuteNonQuery(query);
+            return result > 0;
+        }
+
+        public bool UpdateRoomTypes()
         {
 
             return false;

@@ -10,7 +10,7 @@
 
     <StackPanel DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:Page2}}}">
         <DataGrid Name="dg" 
-                  ItemsSource="{Binding Students}"
+                  ItemsSource="{Binding Students, UpdateSourceTrigger=PropertyChanged}"
                   AutoGenerateColumns="False" 
                   SelectionUnit="FullRow"
                   SelectionMode="Single" Height="234"
@@ -19,7 +19,7 @@
                   CanUserDeleteRows="False"
                   CellEditEnding="Grid_OnCellEditEnding"
                   CurrentCellChanged="Grid_OnCurrentCellChanged">
-            <DataGrid.GroupStyle>
+            <!--<DataGrid.GroupStyle>
                 <GroupStyle>
                     <GroupStyle.HeaderTemplate>
                         <DataTemplate>
@@ -49,7 +49,7 @@
                         </Style>
                     </GroupStyle.ContainerStyle>
                 </GroupStyle>
-            </DataGrid.GroupStyle>
+            </DataGrid.GroupStyle>-->
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
