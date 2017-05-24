@@ -105,7 +105,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
-                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition/>
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
@@ -127,18 +127,12 @@
                              Name="RbtnReservation"/>
             </StackPanel>
             <TextBlock Grid.Row="1" Grid.Column="0"
-                       Text="Thời điểm vào:"/>
+                       Text="Thời điểm nhận phòng:"/>
             <mah:DateTimePicker Grid.Row="1" Grid.Column="1"
                                 Orientation="Horizontal"
                                 VerticalAlignment="Center"
                                 Name="CheckInTime"
                                 IsTodayHighlighted="True"/>
-            <TextBlock Grid.Row="2" Grid.Column="0"
-                       Text="Thời điểm ra:"/>
-            <mah:DateTimePicker Grid.Row="2" Grid.Column="1"
-                                Orientation="Horizontal"
-                                VerticalAlignment="Center"
-                                Name="CheckOutTime"/>
             <TextBlock Grid.Row="3" Grid.Column="0" 
                        Text="Trả trước:"/>
             <xctk:WatermarkTextBox Grid.Row="3" Grid.Column="1"
