@@ -19,25 +19,9 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <GroupBox Header="Phân loại phòng">
-            <ListView>
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="Loại phòng" Width="Auto">
-                        </GridViewColumn>
-                        <GridViewColumn Header="Giá theo ngày" Width="Auto"></GridViewColumn>
-                        <GridViewColumn Header="Giá giờ đầu" Width="Auto"></GridViewColumn>
-                        <GridViewColumn Header="Giá mỗi giờ" Width="Auto"></GridViewColumn>
-                        <GridViewColumn Header="Ghi chú" Width="Auto"></GridViewColumn>
-                        <GridViewColumn>
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Button Content="x" Margin="0,1"></Button>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                    </GridView>
-                </ListView.View>
-            </ListView>
+            <DataGrid Name="DgRoomType">
+                <DataGridTextColumn></DataGridTextColumn>
+            </DataGrid>
         </GroupBox>
         <GroupBox Grid.Row="1" Header="Danh sách phòng">
             <DataGrid/>

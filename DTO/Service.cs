@@ -26,5 +26,13 @@ namespace DTO
             Unit = row["Unit"].ToString();
             SvTypeName = row["SvTypeName"].ToString();
         }
+
+        public void UpdateProperties(string name, int price, string unit, int svTypeId)
+        {
+            Name = name;
+            Price = price;
+            Unit = unit;
+            SvTypeId = svTypeId;
+        }
     }
 }

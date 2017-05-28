@@ -1,0 +1,72 @@
+﻿<mah:MetroWindow x:Class="HotelMng.SubWindows.EditServiceDialog"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:local="clr-namespace:HotelMng.SubWindows"
+                 xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                 mc:Ignorable="d"
+                 Title="Chỉnh sửa thông tin dịch vụ" Height="300" Width="300"
+                 WindowStartupLocation="CenterScreen"
+                 ResizeMode="NoResize"
+                 GlowBrush="{DynamicResource BlackBrush}"
+                 Loaded="EditServiceDialog_OnLoaded">
+    <mah:MetroWindow.Resources>
+        <ResourceDictionary Source="../Assets/Styles/FormResources.xaml"></ResourceDictionary>
+    </mah:MetroWindow.Resources>
+    <mah:MetroWindow.Background>
+        <SolidColorBrush Color="{StaticResource FormBackgroundColor}"></SolidColorBrush>
+    </mah:MetroWindow.Background>
+
+    <Grid Margin="5,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Tên:" Grid.Row="0" Grid.Column="0"/>
+        <TextBox Grid.Row="0" Grid.Column="1"
+                 Name="TxbName"/>
+        <TextBlock Text="Đơn giá:" Grid.Row="1" Grid.Column="0"/>
+        <mah:NumericUpDown Grid.Row="1" Grid.Column="1" 
+                           VerticalAlignment="Center"
+                           InterceptMouseWheel="False"
+                           Interval="1000"
+                           Minimum="0"
+                           Value="0" Name="NumbUpDownPrice"
+                           HorizontalContentAlignment="Left"/>
+        <TextBlock Text="Đơn vị tính:" Grid.Row="2" Grid.Column="0"/>
+        <TextBox Grid.Row="2" Grid.Column="1" Name="TxbUnit"/>
+        <TextBlock Text="Loại:" Grid.Row="3" Grid.Column="0"/>
+        <ComboBox Grid.Row="3" Grid.Column="1" 
+                  VerticalAlignment="Center"
+                  Name="CbbServType">
+            <ComboBox.ItemContainerStyle>
+                <Style TargetType="ComboBoxItem" BasedOn="{StaticResource MetroComboBoxItem}">
+                    <Setter Property="Tag" Value=""/>
+                </Style>
+            </ComboBox.ItemContainerStyle>
+        </ComboBox>
+        <Separator Grid.Row="4" Grid.ColumnSpan="2"
+                   Margin="0,15,0,5"/>
+        <StackPanel Grid.Row="5"
+                    HorizontalAlignment="Right"
+                    Orientation="Horizontal"
+                    Grid.ColumnSpan="2">
+            <Button Content="ÁP DỤNG" 
+                    Style="{DynamicResource StyleBtnInForm}"
+                    Click="ButtonApply_OnClick"/>
+            <Button Content="ĐÓNG" 
+                    Style="{DynamicResource StyleBtnInForm}"
+                    Click="ButtonBase_OnClick"/>
+        </StackPanel>
+
+    </Grid>
+</mah:MetroWindow>

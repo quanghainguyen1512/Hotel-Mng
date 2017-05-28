@@ -36,11 +36,11 @@ namespace DAO
             return result;
         }
 
-        public bool AddNewService(string svName, int price, int svTypeId, string unit)
+        public bool AddNewService(Service service)
         {
             var query =
                 "INSERT INTO dbo.SERVICE (Name, Price, SvTypeId, Unit) " +
-                $"VALUES(N'{svName}', {price}, {svTypeId}, N'{unit}')";
+                $"VALUES(N'{service.Name}', {service.Price}, {service.SvTypeId}, N'{service.Unit}')";
             var result = DataProvider.Instance.ExecuteNonQuery(query);
             return result > 0;
         }
@@ -48,6 +48,15 @@ namespace DAO
         public bool DelService(int svId)
         {
             var query = $"DELETE FROM dbo.SERVICE WHERE ServId = {svId}";
+            var result = DataProvider.Instance.ExecuteNonQuery(query);
+            return result > 0;
+        }
+
+        public bool UpdateService(Service service)
+        {
+            var query = $"UPDATE dbo.SERVICE " +
+                        $"SET Name = '{service.Name}', Price = {service.Price}, Unit = '{service.Unit}', SvTypeId = {service.SvTypeId}" +
+                        $"WHERE ServId = {service.ServId}";
             var result = DataProvider.Instance.ExecuteNonQuery(query);
             return result > 0;
         }

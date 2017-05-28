@@ -173,6 +173,6 @@ AS
 	
 	SELECT	@total = SUM(t.Income)
 	FROM	@temptable AS t
-	SELECT	t.RoomTypeId, t.Income, t.Income / @total
+	SELECT	t.RoomTypeId, t.Income, t.Income / @total AS Proportion
 	FROM	@temptable AS t
 GO

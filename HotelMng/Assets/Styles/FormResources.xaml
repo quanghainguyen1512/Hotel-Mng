@@ -3,25 +3,16 @@
                     xmlns:local="clr-namespace:HotelMng.Assets.ResourcesStyle"
                     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
                     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit">
-    <SolidColorBrush x:Key="NormalButtonBrushInForm">#2196F3</SolidColorBrush>
-    <SolidColorBrush x:Key="HoverButtonBrushInForm">#F9A825</SolidColorBrush>
+    <SolidColorBrush x:Key="NormalButtonBrushInForm" Color="#2196F3"/>
+    <SolidColorBrush x:Key="HoverButtonBrushInForm" Color="#F9A825"/>
     <Color x:Key="FormBackgroundColor">#EEEEEE</Color>
     <Style TargetType="{x:Type TextBlock}">
         <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="Margin" Value="5,2"></Setter>
+        <Setter Property="Margin" Value="5,2"/>
     </Style>
-    <Style TargetType="xctk:WatermarkTextBox">
+    <Style TargetType="TextBox">
         <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="WatermarkTemplate">
-            <Setter.Value>
-                <DataTemplate>
-                    <ContentControl Content="{Binding}" 
-                                    Foreground="Gray" 
-                                    FontStyle="Italic"
-                                    FontSize="11"/>
-                </DataTemplate>
-            </Setter.Value>
-        </Setter>
+        <Setter Property="Padding" Value="3"/>
     </Style>
     <Style TargetType="Button" x:Key="StyleBtnInForm">
         <Setter Property="Cursor" Value="Hand"/>
@@ -57,6 +48,16 @@
                             <Setter TargetName="content"
                                     Property="TextBlock.Foreground"
                                     Value="DarkGray"/>
+                        </Trigger>
+                        <Trigger Property="Button.IsPressed" Value="True">
+                            <Setter Property="RenderTransform">
+                                <Setter.Value>
+                                    <ScaleTransform ScaleX="0.98"
+                                                    ScaleY="0.98"
+                                                    CenterX="0.5"
+                                                    CenterY="0.5" />
+                                </Setter.Value>
+                            </Setter>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
