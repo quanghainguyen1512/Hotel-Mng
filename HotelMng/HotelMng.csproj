@@ -109,6 +109,9 @@
     <Compile Include="SubWindows\ChangeRoomWindow.xaml.cs">
       <DependentUpon>ChangeRoomWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SubWindows\EditRoomTypeDialog.xaml.cs">
+      <DependentUpon>EditRoomTypeDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SubWindows\EditServiceDialog.xaml.cs">
       <DependentUpon>EditServiceDialog.xaml</DependentUpon>
     </Compile>
@@ -182,6 +185,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="SubWindows\ChangeRoomWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SubWindows\EditRoomTypeDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

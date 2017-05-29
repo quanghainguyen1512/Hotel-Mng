@@ -184,4 +184,3 @@ AS
 		ON ST.SvTypeId = S.SvTypeId
 	ORDER BY S.ServId DESC
 GO
-EXEC dbo.USP_GetNewestServiceInfo

@@ -18,7 +18,7 @@
         <SolidColorBrush Color="{StaticResource FormBackgroundColor}"></SolidColorBrush>
     </mah:MetroWindow.Background>
 
-    <Grid Margin="5,0">
+    <Grid Margin="10,0" DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:EditServiceDialog}}}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition Width="2*"/>
@@ -41,19 +41,15 @@
                            Interval="1000"
                            Minimum="0"
                            Value="0" Name="NumbUpDownPrice"
-                           HorizontalContentAlignment="Left"/>
+                           HorizontalContentAlignment="Center"/>
         <TextBlock Text="Đơn vị tính:" Grid.Row="2" Grid.Column="0"/>
         <TextBox Grid.Row="2" Grid.Column="1" Name="TxbUnit"/>
         <TextBlock Text="Loại:" Grid.Row="3" Grid.Column="0"/>
         <ComboBox Grid.Row="3" Grid.Column="1" 
                   VerticalAlignment="Center"
-                  Name="CbbServType">
-            <ComboBox.ItemContainerStyle>
-                <Style TargetType="ComboBoxItem" BasedOn="{StaticResource MetroComboBoxItem}">
-                    <Setter Property="Tag" Value=""/>
-                </Style>
-            </ComboBox.ItemContainerStyle>
-        </ComboBox>
+                  Name="CbbServType"
+                  ItemsSource="{Binding ServiceTypes}"
+                  DisplayMemberPath="SvTypeName"/>
         <Separator Grid.Row="4" Grid.ColumnSpan="2"
                    Margin="0,15,0,5"/>
         <StackPanel Grid.Row="5"
@@ -65,7 +61,7 @@
                     Click="ButtonApply_OnClick"/>
             <Button Content="ĐÓNG" 
                     Style="{DynamicResource StyleBtnInForm}"
-                    Click="ButtonBase_OnClick"/>
+                    Click="ButtonCancel_OnClick"/>
         </StackPanel>
 
     </Grid>

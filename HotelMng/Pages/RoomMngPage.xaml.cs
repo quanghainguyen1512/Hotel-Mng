@@ -1,19 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using DAO;
 using DTO;
+using HotelMng.SubWindows;
 
 namespace HotelMng.Pages
 {
@@ -27,6 +19,49 @@ namespace HotelMng.Pages
         public RoomMngPage()
         {
             InitializeComponent();
+            RoomTypes = RoomTypeDAO.Instance.GetAllRoomTypes();
+        }
+
+        private void ButtonEditRoomType_OnClick(object sender, RoutedEventArgs e)
+        {
+            var btn = sender as Button;
+            var id = ((RoomType)btn?.DataContext).RoomTypeId;
+            var rowBeingEdited = RoomTypes.FirstOrDefault(r => r.RoomTypeId == id);
+            if (rowBeingEdited != null)
+            {
+                var editor = new EditRoomTypeDialog()
+                {
+                    UpdateRoomTypeAction = roomtype =>
+                    {
+                        rowBeingEdited = roomtype;
+                        RoomTypeDAO.Instance.UpdateRoomTypes(rowBeingEdited);
+                    },
+                    PassParameterToDialogFunc = () => rowBeingEdited
+                };
+                editor.ShowDialog();
+            }
+        }
+
+        private void ButtonAddRoomType_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(TxtRoomTypeId.Text))
+            {
+                MessageBox.Show("Vui lòng nhập đầy đủ thông tin");
+                return;
+            }
+            var rt = new RoomType
+            {
+                RoomTypeId = Convert.ToChar(TxtNote.Text),
+                Price1StHour = (int) NumUpDownPrice1StHour.Value,
+                PriceByDay = (int) NumUpDownPriceByDay.Value,
+                PricePerHour = (int) NumUpDownPricePerHour.Value,
+                Note = TxtNote.Text
+            };
+            if (RoomTypeDAO.Instance.AddRoomTypes(rt))
+            {
+                RoomTypes.Add(rt);
+                MessageBox.Show("Thêm thành công");
+            }
         }
     }
 }

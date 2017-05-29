@@ -190,13 +190,13 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <hamburgerMenu:HamburgerMenu Grid.Column="0" 
-                                                 Background="DarkCyan" 
+                    <hamburgerMenu:HamburgerMenu Grid.Column="0"  
                                                  MenuIconColor="White" 
                                                  SelectionIndicatorColor="White" 
                                                  MenuItemForeground="White" 
                                                  HorizontalAlignment="Left"
-                                                 IsOpen="True">
+                                                 IsOpen="True"
+                                                 Background="{StaticResource ToolBoxBrush}">
                         <hamburgerMenu:HamburgerMenuItem Text="Quản lý phòng" 
                                                          Icon="Assets/Icon/appbar.key.png"
                                                          Tag="Pages/RoomMngPage.xaml"

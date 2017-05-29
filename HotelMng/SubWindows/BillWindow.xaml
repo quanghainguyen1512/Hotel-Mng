@@ -163,13 +163,7 @@
                 </Grid>
             </Grid>
         </Border>
-        <Grid Grid.Column="1">
-            <Grid.Background>
-                <LinearGradientBrush StartPoint="0,0.3" EndPoint="0, 1.2">
-                    <GradientStop Color="#1E88E5" Offset="0"/>
-                    <GradientStop Color="#EEEEEE" Offset="1.2"/>
-                </LinearGradientBrush>
-            </Grid.Background>
+        <Grid Grid.Column="1" Background="{StaticResource ToolBoxBrush}">
             <Grid.Resources>
                 <Style TargetType="TextBlock">
                     <Setter Property="Foreground" Value="White"/>
@@ -221,7 +215,7 @@
                           SelectedIndex="0"/>
                 <TextBlock Grid.Row="3" Grid.Column="0"
                            Text="Trị giá hóa đơn:"
-                           Foreground="Red"
+                           Foreground="#FFEB3B"
                            FontSize="15"
                            FontWeight="Bold"
                            TextWrapping="Wrap"/>
@@ -229,7 +223,8 @@
                                  Foreground="Red"
                                  FontSize="15"
                                  FontWeight="Bold"
-                                 HorizontalAlignment="Right"/>
+                                 HorizontalAlignment="Right"
+                                 Margin="5,0"/>
             </Grid>
             <StackPanel Grid.Row="2" Grid.ColumnSpan="2"
                         HorizontalAlignment="Right"

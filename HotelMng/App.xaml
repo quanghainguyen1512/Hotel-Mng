@@ -13,14 +13,20 @@
 
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedTabControl.xaml" />
                 <ResourceDictionary Source="/Resources/Icons.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <!--#region My resources -->
             <Style BasedOn="{StaticResource MetroDataGridColumnHeader}"
                    TargetType="{x:Type DataGridColumnHeader}">
                 <Setter Property="HorizontalContentAlignment"
                         Value="Center"/>
-            </Style>    
+            </Style>
+            <LinearGradientBrush x:Key="ToolBoxBrush" StartPoint="0,0.3" EndPoint="0, 1.2">
+                <GradientStop Color="#1E88E5" Offset="0"/>
+                <GradientStop Color="#0D47A1" Offset="1.2"/>
+            </LinearGradientBrush>
+            <!--#endregion -->
         </ResourceDictionary>
     </Application.Resources>
 </Application>

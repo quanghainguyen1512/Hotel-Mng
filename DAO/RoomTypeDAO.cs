@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -27,26 +28,34 @@ namespace DAO
             }
         }
 
-        public List<RoomType> GetAllRoomTypes()
+        public ObservableCollection<RoomType> GetAllRoomTypes()
         {
+            var result = new ObservableCollection<RoomType>();
             _query = "SELECT * FROM ROOM_TYPE";
             var data = DataProvider.Instance.ExecuteQueries(_query);
-            return (from DataRow row in data.Rows
-                select new RoomType(row)).ToList();
+            foreach (DataRow row in data.Rows)
+            {
+                result.Add(new RoomType(row));
+            }
+            return result;
         }
 
-        public bool AddRoomTypes(char roomTypeId, int priceByDay, int price1StDay, int pricePerHour, string note = null)
+        public bool AddRoomTypes(RoomType roomType)
         {
             _query =
-                $"INSERT INTO dbo.ROOM_TYPE VALUES ({roomTypeId}, {priceByDay}, {price1StDay}, {pricePerHour}, N'{note}'";
+                $"INSERT INTO dbo.ROOM_TYPE VALUES ({roomType.RoomTypeId}, {roomType.PriceByDay}, {roomType.Price1StHour}, {roomType.PricePerHour}, N'{roomType.Note}'";
             var result = DataProvider.Instance.ExecuteNonQuery(_query);
             return result > 0;
         }
 
-        public bool UpdateRoomTypes()
+        public bool UpdateRoomTypes(RoomType roomType)
         {
-
-            return false;
+            _query =
+                "UPDATE dbo.ROOM_TYPE " +
+                $"SET PriceByDay = {roomType.PriceByDay}, Price1stHour = {roomType.Price1StHour}, PricePerHour = {roomType.PricePerHour}, Note = '{roomType.Note}' " +
+                $"WHERE RoomTypeId = '{roomType.RoomTypeId}'";
+            var result = DataProvider.Instance.ExecuteNonQuery(_query);
+            return result > 0;
         }
     }
 }
