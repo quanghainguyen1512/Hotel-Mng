@@ -12,6 +12,7 @@ namespace DAO
     {
         private static ServiceTypeDAO _instance;
         private static readonly object Padlock = new object();
+        private string _query;
         private ServiceTypeDAO() { }
         public static ServiceTypeDAO Instance
         {
@@ -29,8 +30,8 @@ namespace DAO
         public ObservableCollection<ServiceType> GetAllServiceTypes()
         {
             var result = new ObservableCollection<ServiceType>();
-            var query = "SELECT * FROM dbo.SERVICE_TYPE";
-            var data = DataProvider.Instance.ExecuteQueries(query);
+            _query = "SELECT * FROM dbo.SERVICE_TYPE";
+            var data = DataProvider.Instance.ExecuteQueries(_query);
             foreach (System.Data.DataRow row in data.Rows)
             {
                 result.Add(new ServiceType(row));
@@ -40,8 +41,8 @@ namespace DAO
 
         public bool AddNewType(string typeName)
         {
-            var query = $"INSERT INTO dbo.SERVICE_TYPE ( SvTypeName ) VALUES  ( N'{typeName}')";
-            var result = DataProvider.Instance.ExecuteNonQuery(query);
+            _query = $"INSERT INTO dbo.SERVICE_TYPE ( SvTypeName ) VALUES  ( N'{typeName}')";
+            var result = DataProvider.Instance.ExecuteNonQuery(_query);
             return result > 0;
         }
 
@@ -51,10 +52,18 @@ namespace DAO
                 $"UPDATE dbo.SERVICE SET SvTypeId = 4 WHERE SvTypeId = {id}");
             if (result > 0)
             {
-                var query = $"DELETE FROM dbo.SERVICE_TYPE WHERE SvTypeId = {id}";
-                result = DataProvider.Instance.ExecuteNonQuery(query);
+                _query = $"DELETE FROM dbo.SERVICE_TYPE WHERE SvTypeId = {id}";
+                result = DataProvider.Instance.ExecuteNonQuery(_query);
             }
             return result > 0;
         }
+
+        public int NewestServiceTypeId()
+        {
+            _query = "SELECT TOP 1 ServId FROM dbo.SERVICE_TYPE ORDER BY ServId DESC";
+            var data = DataProvider.Instance.ExecuteScalar(_query);
+            return (int)data;
+        }
+
     }
 }

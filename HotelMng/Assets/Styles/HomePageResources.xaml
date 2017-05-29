@@ -362,12 +362,8 @@
                 <ControlTemplate TargetType="mah:Tile">
                     <Border CornerRadius="3"
                             BorderBrush="#B0BEC5"
-                            BorderThickness="2">
-                        <Border.Effect>
-                            <DropShadowEffect BlurRadius="5" 
-                                              ShadowDepth="3" 
-                                              Direction="270"/>
-                        </Border.Effect>
+                            BorderThickness="2"
+                            x:Name="TileBorder">
                         <Grid Background="{TemplateBinding Background}"
                               x:Name="TileBackground">
                             <StackPanel VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -401,6 +397,15 @@
                                                     ScaleY="0.98"
                                                     CenterX="0.5"
                                                     CenterY="0.5" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="TileBorder" Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect BlurRadius="5" 
+                                                      ShadowDepth="3" 
+                                                      Direction="270"/>
                                 </Setter.Value>
                             </Setter>
                         </Trigger>

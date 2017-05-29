@@ -20,8 +20,9 @@ namespace HotelMng.SubWindows
     /// </summary>
     public partial class EditServiceDialog
     {
-        public Action<string, int, string, int> UpdateServiceAction;
+        public Action<Service> UpdateServiceAction;
         public Func<Service> PassParameterToDialogAction;
+        private Service _serviceBeingUpdated;
         public EditServiceDialog()
         {
             InitializeComponent();
@@ -37,15 +38,24 @@ namespace HotelMng.SubWindows
             var serviceType = CbbServType.SelectedItem as ServiceType;
             if (serviceType != null)
                 if (NumbUpDownPrice.Value != null)
-                    UpdateServiceAction(TxbName.Text, (int) NumbUpDownPrice.Value, TxbUnit.Text, serviceType.SvTypeId);
+                {
+                    _serviceBeingUpdated = new Service()
+                    {
+                        Name = TxbName.Text,
+                        Price = (int)NumbUpDownPrice.Value,
+                        Unit = TxbUnit.Text,
+                        SvTypeId = serviceType.SvTypeId
+                    };
+                }
+            UpdateServiceAction(_serviceBeingUpdated);
         }
 
         private void EditServiceDialog_OnLoaded(object sender, RoutedEventArgs e)
         {
-            var parameter = PassParameterToDialogAction();
-            TxbName.Text = parameter.Name;
-            NumbUpDownPrice.Value = parameter.Price;
-            TxbUnit.Text = parameter.Unit;
+            _serviceBeingUpdated = PassParameterToDialogAction();
+            TxbName.Text = _serviceBeingUpdated.Name;
+            NumbUpDownPrice.Value = _serviceBeingUpdated.Price;
+            TxbUnit.Text = _serviceBeingUpdated.Unit;
         }
     }
 }

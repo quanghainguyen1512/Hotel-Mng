@@ -9,6 +9,7 @@ namespace DAO
     {
         private static RenterDAO _instance;
         private static readonly object Padlock = new object();
+        private string _query;
         private RenterDAO() { }
         public static RenterDAO Instance
         {
@@ -25,16 +26,16 @@ namespace DAO
 
         public List<Renter> GetAllRenters()
         {
-            var query = "SELECT * FROM RENTER";
-            var data = DataProvider.Instance.ExecuteQueries(query);
+            _query = "SELECT * FROM RENTER";
+            var data = DataProvider.Instance.ExecuteQueries(_query);
             return (from DataRow row in data.Rows
                     select new Renter(row)).ToList();
         }
 
         public bool AddRenter(string name, bool gender, string phoneNum, int typeId, string identityNum, string address)
         {
-            var query = $"INSERT RENTER VALUES (N'{name}, {gender}, {phoneNum}, {typeId}, {identityNum}, {address})";
-            var result = DataProvider.Instance.ExecuteNonQuery(query);
+            _query = $"INSERT RENTER VALUES (N'{name}, {gender}, {phoneNum}, {typeId}, {identityNum}, {address})";
+            var result = DataProvider.Instance.ExecuteNonQuery(_query);
             return result > 0;
         }
     }

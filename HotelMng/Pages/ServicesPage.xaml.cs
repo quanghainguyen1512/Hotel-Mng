@@ -55,32 +55,58 @@ namespace HotelMng.Pages
             var rowBeingEdited = Services.FirstOrDefault(s => s.ServId == id);
             if (rowBeingEdited != null)
             {
-                var edit = new EditServiceDialog
+                var editor = new EditServiceDialog
                 {
-                    UpdateServiceAction = (name, price, unit) =>
+                    UpdateServiceAction = service =>
                     {
-                        rowBeingEdited.UpdateProperties(name, price, unit);
+                        rowBeingEdited = service;
                         ServiceDAO.Instance.UpdateService(rowBeingEdited);
                     },
                     PassParameterToDialogAction = () => rowBeingEdited
                 };
-                edit.ShowDialog();
+                editor.ShowDialog();
             }
         }
 
-        private void AddNewServiceType_OnClick(object sender, RoutedEventArgs e)
+        private void AddServiceTypeInfo_OnClick(object sender, RoutedEventArgs e)
         {
             var window = new SubWindows.AddNewServiceTypeDialog
             {
                 AddServiceAction = s =>
                 {
-                    ServiceTypeDAO.Instance.AddNewType(s);
-                    ServiceTypes.Clear();
-                    ServiceTypes = ServiceTypeDAO.Instance.GetAllServiceTypes();
+                    if (ServiceTypeDAO.Instance.AddNewType(s))
+                    {
+                        ServiceTypes.Add(new ServiceType {SvTypeName = s, SvTypeId = ServiceTypeDAO.Instance.NewestServiceTypeId()});
+                    }
                 }
             };
             window.ShowDialog();
         }
 
+        private void ButtonAdd_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(TxtName.Text) || string.IsNullOrEmpty(TxtUnit.Text))
+            {
+                MessageBox.Show("Vui lòng nhập đầy đủ thông tin");
+                return;
+            }
+            var serviceType = CbbSvType.SelectedItem as ServiceType;
+            if (NumUpDownPrice.Value is null || serviceType is null) return;
+            var sv = new Service()
+            {
+                Name = TxtName.Text,
+                Price = (int)NumUpDownPrice.Value,
+                SvTypeId = serviceType.SvTypeId,
+                Unit =  TxtUnit.Text
+            };
+            if (ServiceDAO.Instance.AddNewService(sv))
+            {
+                var data = ServiceDAO.Instance.NewestServiceInfo();
+                sv.ServId = data.Item1;
+                sv.SvTypeName = data.Item2;
+                Services.Add(sv);                             
+                MessageBox.Show("Thêm thành công");
+            }
+        }
     }
 }

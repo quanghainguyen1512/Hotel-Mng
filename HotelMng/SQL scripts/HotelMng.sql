@@ -176,3 +176,12 @@ AS
 	SELECT	t.RoomTypeId, t.Income, t.Income / @total AS Proportion
 	FROM	@temptable AS t
 GO
+CREATE PROC USP_GetNewestServiceInfo
+AS
+	SELECT TOP 1 S.ServId, ST.SvTypeName
+	FROM dbo.SERVICE AS S 
+	JOIN dbo.SERVICE_TYPE AS ST
+		ON ST.SvTypeId = S.SvTypeId
+	ORDER BY S.ServId DESC
+GO
+EXEC dbo.USP_GetNewestServiceInfo

@@ -12,6 +12,7 @@ namespace DAO
     {
         private static RoomTypeDAO _instance;
         private static readonly object Padlock = new object();
+        private string _query;
         private RoomTypeDAO() { }
         public static RoomTypeDAO Instance
         {
@@ -28,17 +29,17 @@ namespace DAO
 
         public List<RoomType> GetAllRoomTypes()
         {
-            var query = "SELECT * FROM ROOM_TYPE";
-            var data = DataProvider.Instance.ExecuteQueries(query);
+            _query = "SELECT * FROM ROOM_TYPE";
+            var data = DataProvider.Instance.ExecuteQueries(_query);
             return (from DataRow row in data.Rows
                 select new RoomType(row)).ToList();
         }
 
         public bool AddRoomTypes(char roomTypeId, int priceByDay, int price1StDay, int pricePerHour, string note = null)
         {
-            var query =
+            _query =
                 $"INSERT INTO dbo.ROOM_TYPE VALUES ({roomTypeId}, {priceByDay}, {price1StDay}, {pricePerHour}, N'{note}'";
-            var result = DataProvider.Instance.ExecuteNonQuery(query);
+            var result = DataProvider.Instance.ExecuteNonQuery(_query);
             return result > 0;
         }
 
