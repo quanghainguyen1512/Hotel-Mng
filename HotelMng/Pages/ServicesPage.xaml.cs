@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using DAO;
 using DTO;
+using HotelMng.SubWindows;
 
 namespace HotelMng.Pages
 {
@@ -35,7 +36,7 @@ namespace HotelMng.Pages
             view.GroupDescriptions?.Add(new PropertyGroupDescription("SvTypeName"));
         }
 
-        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        private void ButtonDelItem_OnClick(object sender, RoutedEventArgs e)
         {
             if (MessageBox.Show("Chắc chắn xóa mục này ?", "", MessageBoxButton.YesNo, MessageBoxImage.Warning) ==
                 MessageBoxResult.Yes)
@@ -47,18 +48,65 @@ namespace HotelMng.Pages
             }
         }
 
-        private void AddNewServiceType_OnClick(object sender, RoutedEventArgs e)
+        private void ButtonEditItem_OnClick(object sender, RoutedEventArgs e)
+        {
+            var btn = sender as Button;
+            var id = ((Service)btn?.DataContext).ServId;
+            var rowBeingEdited = Services.FirstOrDefault(s => s.ServId == id);
+            if (rowBeingEdited != null)
+            {
+                var editor = new EditServiceDialog
+                {
+                    UpdateServiceAction = service =>
+                    {
+                        rowBeingEdited = service;
+                        ServiceDAO.Instance.UpdateService(rowBeingEdited);
+                    },
+                    PassParameterToDialogAction = () => rowBeingEdited
+                };
+                editor.ShowDialog();
+            }
+        }
+
+        private void AddServiceTypeInfo_OnClick(object sender, RoutedEventArgs e)
         {
             var window = new SubWindows.AddNewServiceTypeDialog
             {
                 AddServiceAction = s =>
                 {
-                    ServiceTypeDAO.Instance.AddNewType(s);
-                    ServiceTypes = ServiceTypeDAO.Instance.GetAllServiceTypes();
+                    if (ServiceTypeDAO.Instance.AddNewType(s))
+                    {
+                        ServiceTypes.Add(new ServiceType {SvTypeName = s, SvTypeId = ServiceTypeDAO.Instance.NewestServiceTypeId()});
+                    }
                 }
             };
             window.ShowDialog();
         }
 
+        private void ButtonAdd_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(TxtName.Text) || string.IsNullOrEmpty(TxtUnit.Text))
+            {
+                MessageBox.Show("Vui lòng nhập đầy đủ thông tin");
+                return;
+            }
+            var serviceType = CbbSvType.SelectedItem as ServiceType;
+            if (NumUpDownPrice.Value is null || serviceType is null) return;
+            var sv = new Service()
+            {
+                Name = TxtName.Text,
+                Price = (int)NumUpDownPrice.Value,
+                SvTypeId = serviceType.SvTypeId,
+                Unit =  TxtUnit.Text
+            };
+            if (ServiceDAO.Instance.AddNewService(sv))
+            {
+                var data = ServiceDAO.Instance.NewestServiceInfo();
+                sv.ServId = data.Item1;
+                sv.SvTypeName = data.Item2;
+                Services.Add(sv);                             
+                MessageBox.Show("Thêm thành công");
+            }
+        }
     }
 }

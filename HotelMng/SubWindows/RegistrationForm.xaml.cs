@@ -45,7 +45,7 @@ namespace HotelMng
             
         }
 
-        private void WatermarkComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             TxbOtherNat.Visibility = CbbNationality.SelectedIndex == CbbNationality.Items.Count - 1
                 ? Visibility.Visible 

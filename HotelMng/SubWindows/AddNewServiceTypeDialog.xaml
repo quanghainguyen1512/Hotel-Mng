@@ -36,11 +36,11 @@
         <StackPanel Grid.Row="2"
                     HorizontalAlignment="Right"
                     Orientation="Horizontal">
-            <Button Content="OK" 
+            <Button Content="Add" 
                     Style="{DynamicResource StyleBtnInForm}"
                     Name="ButtonOk"
                     IsEnabled="False"
-                    Click="ButtonOk_OnClick">
+                    Click="ButtonAdd_OnClick">
             </Button>
             <Button Content="ĐÓNG" 
                     Style="{DynamicResource StyleBtnInForm}"

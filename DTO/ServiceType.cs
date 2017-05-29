@@ -15,6 +15,10 @@ namespace DTO
 
         #endregion
 
+        public ServiceType()
+        {
+            
+        }
         public ServiceType(System.Data.DataRow row)
         {
             SvTypeId = (int) row["SvTypeId"];

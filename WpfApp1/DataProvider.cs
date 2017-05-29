@@ -16,7 +16,7 @@ namespace WpfApp1
 
         DataProvider() { }
 
-        private readonly string _connString = "Data Source=DESKTOP-L9JNNSC;Initial Catalog=TEST;Integrated Security=True";
+        private readonly string _connString = "Data Source=DESKTOP-L9JNNSC;Initial Catalog=MyClassCodeFirst;Integrated Security=True";
 
         public static DataProvider Instance
         {
@@ -115,7 +115,7 @@ namespace WpfApp1
         /// <param name="query"></param>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        public async Task<object> ExecuteScalarAsync(string query, object[] parameters = null)
+        public object ExecuteScalar(string query, object[] parameters = null)
         {
             object data;
 
@@ -137,7 +137,7 @@ namespace WpfApp1
                         }
                     }
                 }
-                data = await command.ExecuteScalarAsync();
+                data = command.ExecuteScalar();
 
                 sqlConnection.Close();
             }

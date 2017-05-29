@@ -115,7 +115,7 @@ namespace DAO
         /// <param name="query"></param>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        public async Task<object> ExecuteScalarAsync(string query, object[] parameters = null)
+        public object ExecuteScalar(string query, object[] parameters = null)
         {
             object data;
 
@@ -137,7 +137,7 @@ namespace DAO
                         }
                     }
                 }
-                data = await command.ExecuteScalarAsync();
+                data = command.ExecuteScalar();
 
                 sqlConnection.Close();
             }

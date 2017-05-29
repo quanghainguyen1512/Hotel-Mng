@@ -13,6 +13,7 @@ namespace DAO
     {
         private static RoomDAO _instance;
         private static readonly object Padlock = new object();
+        private string _query;
         private RoomDAO() { }
         public static RoomDAO Instance
         {
@@ -29,8 +30,8 @@ namespace DAO
 
         public IEnumerable<Room> GetAllRooms()
         {
-            var query = "EXEC USP_GetAllRoomInfo";
-            var data = DataProvider.Instance.ExecuteQueries(query);
+            _query = "EXEC USP_GetAllRoomInfo";
+            var data = DataProvider.Instance.ExecuteQueries(_query);
             return from DataRow row in data.Rows
                 select new Room(row);
         }

@@ -51,8 +51,7 @@
 
                 <TextBlock Grid.Row="0" Grid.Column="0"
                            Text="Họ tên:"/>
-                <xctk:WatermarkTextBox Watermark="Tên khách hàng"
-                         Grid.Row="0" Grid.Column="1"/>
+                <TextBox Grid.Row="0" Grid.Column="1" Margin="0,0,5,0"/>
                 <TextBlock Grid.Row="1" Grid.Column="0"
                            Text="Giới tính:"/>
                 <StackPanel Grid.Row="1" Grid.Column="1"
@@ -64,40 +63,23 @@
                 </StackPanel>
                 <TextBlock Grid.Row="2" Grid.Column="0"
                            Text="CMND:"/>
-                <xctk:WatermarkTextBox Grid.Row="2" Grid.Column="1"
-                                       Watermark="CMND"/>
+                <TextBox Grid.Row="2" Grid.Column="1" Margin="0,0,5,0"/>
                 <TextBlock Grid.Row="3" Grid.Column="0"
                            Text="SĐT:"/>
-                <xctk:WatermarkTextBox Grid.Row="3" Grid.Column="1"
-                                        Watermark="SĐT"/>
+                <TextBox Grid.Row="3" Grid.Column="1" Margin="0,0,5,0"/>
                 <TextBlock Grid.Row="4" Grid.Column="0"
                            Text="Quốc tịch:"/>
                 <StackPanel Grid.Row="4" Grid.Column="1"
                             Orientation="Horizontal">
-                    <xctk:WatermarkComboBox VerticalAlignment="Center"
-                                            Width="Auto" Name="CbbNationality"
-                                            Watermark="Chọn quốc tịch" 
-                                            SelectionChanged="WatermarkComboBox_SelectionChanged">
-                        <xctk:WatermarkComboBox.WatermarkTemplate>
-                            <DataTemplate>
-                                <ContentControl Content="{Binding}"
-                                                FontSize="11"
-                                                FontStyle="Italic"
-                                                Foreground="Gray"></ContentControl>
-                            </DataTemplate>
-                        </xctk:WatermarkComboBox.WatermarkTemplate>
-                        <ComboBoxItem Content="Việt Nam"/>
-                        <ComboBoxItem Content="Mỹ"/>
-                        <ComboBoxItem Content="Trung Quốc"/>
-                        <ComboBoxItem Content="Pháp"/>
-                        <ComboBoxItem Content="Hàn Quốc"/>
-                        <ComboBoxItem Content="Khác"/>
-                    </xctk:WatermarkComboBox>
-                    <xctk:WatermarkTextBox Margin="20,0"
-                                           Width="100"
-                                           Watermark="Nhập quốc tịch"
-                                           Visibility="Collapsed"
-                                           Name="TxbOtherNat"/>
+                    <ComboBox VerticalAlignment="Center"
+                              Width="Auto" Name="CbbNationality"
+                              SelectionChanged="ComboBox_SelectionChanged">
+                        
+                    </ComboBox>
+                    <TextBox Margin="20,0"
+                             Width="100"
+                             Visibility="Collapsed"
+                             Name="TxbOtherNat"/>
                 </StackPanel>
             </Grid>
         </GroupBox>
@@ -105,7 +87,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
-                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition/>
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
@@ -127,29 +109,21 @@
                              Name="RbtnReservation"/>
             </StackPanel>
             <TextBlock Grid.Row="1" Grid.Column="0"
-                       Text="Thời điểm vào:"/>
+                       Text="Thời điểm nhận phòng:"/>
             <mah:DateTimePicker Grid.Row="1" Grid.Column="1"
                                 Orientation="Horizontal"
                                 VerticalAlignment="Center"
                                 Name="CheckInTime"
                                 IsTodayHighlighted="True"/>
-            <TextBlock Grid.Row="2" Grid.Column="0"
-                       Text="Thời điểm ra:"/>
-            <mah:DateTimePicker Grid.Row="2" Grid.Column="1"
-                                Orientation="Horizontal"
-                                VerticalAlignment="Center"
-                                Name="CheckOutTime"/>
             <TextBlock Grid.Row="3" Grid.Column="0" 
                        Text="Trả trước:"/>
-            <xctk:WatermarkTextBox Grid.Row="3" Grid.Column="1"
-                                   Watermark="Nhập số tiền trả trước khi đặt phòng"/>
+            <TextBox Grid.Row="3" Grid.Column="1"/>
             <TextBlock Grid.Row="4" Grid.Column="0"
                        Text="Ghi chú:" VerticalAlignment="Top"/>
-            <xctk:WatermarkTextBox Grid.Row="4" Grid.Column="1"
-                                   TextWrapping="Wrap"
-                                   VerticalAlignment="Stretch"
-                                   VerticalScrollBarVisibility="Auto"
-                                   Watermark="Ghi chú"/>
+            <TextBox Grid.Row="4" Grid.Column="1"
+                     TextWrapping="Wrap"
+                     VerticalAlignment="Stretch"
+                     VerticalScrollBarVisibility="Auto"/>
         </Grid>
         <Separator Grid.Row="2"
                    Margin="0,15,0,5"/>

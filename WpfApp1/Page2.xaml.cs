@@ -32,7 +32,7 @@ namespace WpfApp1
         {
             InitializeComponent();
 
-            var data = DataProvider.Instance.ExecuteQueries("SELECT * FROM STUDENT");
+            var data = DataProvider.Instance.ExecuteQueries("SELECT * FROM Students");
 
             Students = new ObservableCollection<Student>();
             foreach (System.Data.DataRow row in data.Rows)
@@ -41,21 +41,20 @@ namespace WpfApp1
                 {
                     Id = (int) row["Id"],
                     Name = row["Name"].ToString(),
-                    Class = (int) row["ClassId"]
                 });
             }
         }
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
-            var btn = sender as Button;
-            Students.Remove((Student) btn?.DataContext);
+            int a = (int)DataProvider.Instance.ExecuteScalar("SELECT TOP 1 * FROM Students ORDER BY Id DESC");
+            MessageBox.Show(a.ToString());
         }
 
         private void Grid_OnCellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
             //_rowBeingEdited = e.Row.Item as DataRowView;
-            MessageBox.Show("Cell editing");
+            //MessageBox.Show("Cell editing");
         }
 
         private void Grid_OnCurrentCellChanged(object sender, EventArgs e)

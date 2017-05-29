@@ -30,7 +30,7 @@ namespace HotelMng.SubWindows
             this.Close();
         }
 
-        private void ButtonOk_OnClick(object sender, RoutedEventArgs e)
+        private void ButtonAdd_OnClick(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrEmpty(TextBoxNewService.Text))
             {
@@ -38,6 +38,7 @@ namespace HotelMng.SubWindows
                 return;
             }
             AddServiceAction(TextBoxNewService.Text);
+            this.Close();
         }
 
         private void TextBoxNewService_OnTextChanged(object sender, TextChangedEventArgs e)

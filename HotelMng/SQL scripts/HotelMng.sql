@@ -88,6 +88,7 @@ CREATE TABLE REG_FORM														--phiếu thuê phòng
 	RenterId	VARCHAR(20),
 	RoomId		INT,
 	BillId		VARCHAR(20),
+	Rental		MONEY,
 
 	FOREIGN KEY (RenterId) REFERENCES RENTER(RenterId),
 	FOREIGN KEY (RoomId) REFERENCES ROOM(RoomId),
@@ -117,12 +118,6 @@ CREATE TABLE ROOMMATE
 	FOREIGN KEY (FormId) REFERENCES REG_FORM(FormId),
 	FOREIGN KEY (RenterId) REFERENCES RENTER(RenterId),
 	FOREIGN KEY (NatId) REFERENCES TABLE_NATIONALITY(NatId)
-)
-GO
-CREATE TABLE REPORT
-(
-	RoomTypeId	CHAR(1),
-
 )
 GO
 --Procedure--
@@ -157,3 +152,36 @@ AS
 	RIGHT JOIN dbo.ROOM_STATUS AS RS
 		ON RS.StatusID = R.StatusId
 	GROUP BY RS.StatusId, RS.StatusName
+GO
+CREATE PROC USP_GetDataForReporting
+	@month SMALLINT
+AS
+	DECLARE @temptable TABLE
+	(RoomTypeId CHAR(1),
+	Income		MONEY)
+	DECLARE @total MONEY
+
+	INSERT INTO @temptable ( RoomTypeId, Income )
+		SELECT	RT.RoomTypeId, SUM(RF.Rental) AS Income
+		FROM	dbo.ROOM_TYPE AS RT
+		JOIN	dbo.ROOM AS R
+			ON	R.RoomTypeId = RT.RoomTypeId
+		JOIN	dbo.REG_FORM AS RF
+			ON	RF.RoomId = R.RoomId
+		WHERE	MONTH(RF.CheckOut) = @month
+		GROUP BY RT.RoomTypeId
+	
+	SELECT	@total = SUM(t.Income)
+	FROM	@temptable AS t
+	SELECT	t.RoomTypeId, t.Income, t.Income / @total AS Proportion
+	FROM	@temptable AS t
+GO
+CREATE PROC USP_GetNewestServiceInfo
+AS
+	SELECT TOP 1 S.ServId, ST.SvTypeName
+	FROM dbo.SERVICE AS S 
+	JOIN dbo.SERVICE_TYPE AS ST
+		ON ST.SvTypeId = S.SvTypeId
+	ORDER BY S.ServId DESC
+GO
+EXEC dbo.USP_GetNewestServiceInfo
