@@ -132,11 +132,11 @@
                 </Style>
             </Grid.Resources>
             <Grid.Background>
-                    <LinearGradientBrush StartPoint="0,0.3" EndPoint="0, 1.2">
-                        <GradientStop Color="#1E88E5" Offset="0"/>
-                        <GradientStop Color="#EEEEEE" Offset="1.2"/>
-                    </LinearGradientBrush>
-                </Grid.Background>
+                <LinearGradientBrush StartPoint="0,0.3" EndPoint="0, 1.2">
+                    <GradientStop Color="#1E88E5" Offset="0"/>
+                    <GradientStop Color="#EEEEEE" Offset="1.2"/>
+                </LinearGradientBrush>
+            </Grid.Background>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
