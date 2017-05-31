@@ -24,12 +24,14 @@ namespace DAO
             }
         }
 
-        public List<Renter> GetAllRenters()
+        public IEnumerable<Renter> GetAllRenters()
         {
             _query = "SELECT * FROM RENTER";
             var data = DataProvider.Instance.ExecuteQueries(_query);
-            return (from DataRow row in data.Rows
-                    select new Renter(row)).ToList();
+            foreach (DataRow row in data.Rows)
+            {
+                yield return new Renter(row);
+            }
         }
 
         public bool AddRenter(string name, bool gender, string phoneNum, int typeId, string identityNum, string address)

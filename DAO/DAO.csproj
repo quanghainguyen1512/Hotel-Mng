@@ -45,6 +45,7 @@
     <Compile Include="RenterDAO.cs" />
     <Compile Include="RoomDAO.cs" />
     <Compile Include="RoommateDAO.cs" />
+    <Compile Include="RoomStatusDAO.cs" />
     <Compile Include="RoomTypeDAO.cs" />
     <Compile Include="ServiceDAO.cs" />
     <Compile Include="ServiceTypeDAO.cs" />

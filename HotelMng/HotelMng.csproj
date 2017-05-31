@@ -91,6 +91,7 @@
     <Compile Include="Assets\UserControls\RoomStatusItem.xaml.cs">
       <DependentUpon>RoomStatusItem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converter\RoomTypeConverter.cs" />
     <Compile Include="Pages\RentersPage.xaml.cs">
       <DependentUpon>RentersPage.xaml</DependentUpon>
     </Compile>
@@ -108,6 +109,9 @@
     </Compile>
     <Compile Include="SubWindows\ChangeRoomWindow.xaml.cs">
       <DependentUpon>ChangeRoomWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SubWindows\EditRoomDialog.xaml.cs">
+      <DependentUpon>EditRoomDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="SubWindows\EditRoomTypeDialog.xaml.cs">
       <DependentUpon>EditRoomTypeDialog.xaml</DependentUpon>
@@ -188,6 +192,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="SubWindows\EditRoomDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SubWindows\EditRoomTypeDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -242,9 +250,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Icon\roomitem-icon.png" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\DAO\DAO.csproj">
       <Project>{f4e6b66c-1767-445d-9246-6d523949f784}</Project>
       <Name>DAO</Name>
@@ -261,11 +266,12 @@
     <Resource Include="Resources\Entypo-license.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Assets\Icon\appbar.currency.dollar.png" />
+    <Resource Include="Assets\Icon\appbar.social.delicious.png" />
     <Content Include="SQL scripts\main_scripts.sql" />
     <Resource Include="Assets\Icon\appbar.people.png" />
     <Resource Include="Assets\Icon\appbar.key.png" />
     <Resource Include="Assets\Icon\appbar.math.plus.minus.png" />
-    <Resource Include="Assets\Icon\appbar.social.delicious.png" />
     <Resource Include="AppIcon.ico" />
     <Content Include="SQL scripts\HotelMng.sql" />
   </ItemGroup>

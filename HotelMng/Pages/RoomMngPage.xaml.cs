@@ -12,34 +12,33 @@ namespace HotelMng.Pages
     /// <summary>
     /// Interaction logic for RoomMngPage.xaml
     /// </summary>
-    public partial class RoomMngPage : Page
+    public partial class RoomMngPage
     {
-        public ObservableCollection<Room> Rooms { get; set; }
         public ObservableCollection<RoomType> RoomTypes { get; set; }
+        public RoomType RoomTypeBeingAdded { get; set; }
         public RoomMngPage()
         {
             InitializeComponent();
-            RoomTypes = RoomTypeDAO.Instance.GetAllRoomTypes();
+            RoomTypes = new ObservableCollection<RoomType>(RoomTypeDAO.Instance.GetAllRoomTypes()); 
         }
 
         private void ButtonEditRoomType_OnClick(object sender, RoutedEventArgs e)
         {
             var btn = sender as Button;
-            var id = ((RoomType)btn?.DataContext).RoomTypeId;
-            var rowBeingEdited = RoomTypes.FirstOrDefault(r => r.RoomTypeId == id);
-            if (rowBeingEdited != null)
+            if (btn is null) return;
+
+            var rowBeingEdited = RoomTypes.FirstOrDefault(r => r.RoomTypeId == ((RoomType)btn.DataContext).RoomTypeId);
+
+            var dialog = new EditRoomTypeDialog()
             {
-                var editor = new EditRoomTypeDialog()
+                UpdateRoomTypeAction = roomtype =>
                 {
-                    UpdateRoomTypeAction = roomtype =>
-                    {
-                        rowBeingEdited = roomtype;
-                        RoomTypeDAO.Instance.UpdateRoomTypes(rowBeingEdited);
-                    },
-                    PassParameterToDialogFunc = () => rowBeingEdited
-                };
-                editor.ShowDialog();
-            }
+                    rowBeingEdited = roomtype;
+                    RoomTypeDAO.Instance.UpdateRoomTypes(rowBeingEdited);
+                },
+                PassParameterToDialogFunc = () => rowBeingEdited
+            };
+            dialog.ShowDialog();
         }
 
         private void ButtonAddRoomType_OnClick(object sender, RoutedEventArgs e)
@@ -49,19 +48,20 @@ namespace HotelMng.Pages
                 MessageBox.Show("Vui lòng nhập đầy đủ thông tin");
                 return;
             }
-            var rt = new RoomType
+            //var rt = new RoomType
+            //{
+            //    RoomTypeId = Convert.ToChar(TxtNote.Text),
+            //    PriceFirstHour = (int) NumUpDownPrice1StHour.Value,
+            //    PriceByDay = (int) NumUpDownPriceByDay.Value,
+            //    PricePerHour = (int) NumUpDownPricePerHour.Value,
+            //    Note = TxtNote.Text
+            //};
+            if (RoomTypeDAO.Instance.AddRoomTypes(RoomTypeBeingAdded))
             {
-                RoomTypeId = Convert.ToChar(TxtNote.Text),
-                Price1StHour = (int) NumUpDownPrice1StHour.Value,
-                PriceByDay = (int) NumUpDownPriceByDay.Value,
-                PricePerHour = (int) NumUpDownPricePerHour.Value,
-                Note = TxtNote.Text
-            };
-            if (RoomTypeDAO.Instance.AddRoomTypes(rt))
-            {
-                RoomTypes.Add(rt);
+                RoomTypes.Add(RoomTypeBeingAdded);
                 MessageBox.Show("Thêm thành công");
             }
         }
+
     }
 }

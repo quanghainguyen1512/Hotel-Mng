@@ -6,7 +6,7 @@
                  xmlns:local="clr-namespace:HotelMng.SubWindows"
                  xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
                  mc:Ignorable="d"
-                 Title="EditRoomTypeDialog" Height="300" Width="300"
+                 Title="Chỉnh sửa thông tin loại phòng" Height="300" Width="300"
                  WindowStartupLocation="CenterScreen"
                  ResizeMode="NoResize"
                  GlowBrush="{DynamicResource BlackBrush}"
@@ -17,64 +17,65 @@
     <mah:MetroWindow.Background>
         <SolidColorBrush Color="{StaticResource FormBackgroundColor}"/>
     </mah:MetroWindow.Background>
-    <Grid>
-        <Grid Margin="10,0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="2*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <TextBlock Text="Giá theo ngày:" Grid.Row="0" Grid.Column="0"/>
-            <mah:NumericUpDown Grid.Row="0" Grid.Column="1" 
-                               VerticalAlignment="Center"
-                               InterceptMouseWheel="False"
-                               Interval="1000"
-                               Minimum="0"
-                               Value="0" Name="NumbUpDownPriceByDay"
-                               HorizontalContentAlignment="Center"/>
-            <TextBlock Text="Giá giờ đầu:" Grid.Row="1" Grid.Column="0"/>
-            <mah:NumericUpDown Grid.Row="1" Grid.Column="1" 
-                               VerticalAlignment="Center"
-                               InterceptMouseWheel="False"
-                               Interval="1000"
-                               Minimum="0"
-                               Value="0" Name="NumbUpDownPrice1StHour"
-                               HorizontalContentAlignment="Center"/>
-            <TextBlock Text="Giá mỗi giờ sau:" Grid.Row="2" Grid.Column="0"/>
-            <mah:NumericUpDown Grid.Row="2" Grid.Column="1" 
-                               VerticalAlignment="Center"
-                               InterceptMouseWheel="False"
-                               Interval="1000"
-                               Minimum="0"
-                               Value="0" Name="NumbUpDownPricePerHour"
-                               HorizontalContentAlignment="Center"/>
-            <TextBlock Text="Ghi chú:" Grid.Row="3" Grid.Column="0"/>
-            <TextBox Grid.Row="3" Grid.Column="1" 
-                     TextWrapping="Wrap"
-                     Height="60"
-                     Name="TxtNote"/>
-            <Separator Grid.Row="4" Grid.ColumnSpan="2"
-                       Margin="0,15,0,5"/>
-            <StackPanel Grid.Row="5"
-                        HorizontalAlignment="Right"
-                        Orientation="Horizontal"
-                        Grid.ColumnSpan="2">
-                <Button Content="ÁP DỤNG" 
-                        Style="{DynamicResource StyleBtnInForm}"
-                        Click="ButtonApply_OnClick"/>
-                <Button Content="ĐÓNG" 
-                        Style="{DynamicResource StyleBtnInForm}"
-                        Click="ButtonBase_OnClick"/>
-            </StackPanel>
-
-        </Grid>
+    <Grid Margin="10,0" DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:EditRoomTypeDialog}}}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Giá theo ngày:" Grid.Row="0" Grid.Column="0"/>
+        <mah:NumericUpDown Grid.Row="0" Grid.Column="1" 
+                           VerticalAlignment="Center"
+                           InterceptMouseWheel="False"
+                           Interval="1000"
+                           Minimum="0"
+                           Value="{Binding RoomTypeBeingEdited.PriceByDay}" 
+                           Name="NumbUpDownPriceByDay"
+                           HorizontalContentAlignment="Center"/>
+        <TextBlock Text="Giá giờ đầu:" Grid.Row="1" Grid.Column="0"/>
+        <mah:NumericUpDown Grid.Row="1" Grid.Column="1" 
+                           VerticalAlignment="Center"
+                           InterceptMouseWheel="False"
+                           Interval="1000"
+                           Minimum="0"
+                           Value="{Binding RoomTypeBeingEdited.PriceFirstHour}" 
+                           Name="NumbUpDownPrice1StHour"
+                           HorizontalContentAlignment="Center"/>
+        <TextBlock Text="Giá mỗi giờ sau:" Grid.Row="2" Grid.Column="0"/>
+        <mah:NumericUpDown Grid.Row="2" Grid.Column="1" 
+                           VerticalAlignment="Center"
+                           InterceptMouseWheel="False"
+                           Interval="1000"
+                           Minimum="0"
+                           Value="{Binding RoomTypeBeingEdited.PricePerHour}" 
+                           Name="NumbUpDownPricePerHour"
+                           HorizontalContentAlignment="Center"/>
+        <TextBlock Text="Ghi chú:" Grid.Row="3" Grid.Column="0"/>
+        <TextBox Grid.Row="3" Grid.Column="1" 
+                 TextWrapping="Wrap"
+                 Height="60"
+                 Name="TxtNote"
+                 Text="{Binding RoomTypeBeingEdited.Note}"/>
+        <Separator Grid.Row="4" Grid.ColumnSpan="2"
+                   Margin="0,15,0,5"/>
+        <StackPanel Grid.Row="5"
+                    HorizontalAlignment="Right"
+                    Orientation="Horizontal"
+                    Grid.ColumnSpan="2">
+            <Button Content="ÁP DỤNG" 
+                    Style="{DynamicResource StyleBtnInForm}"
+                    Click="ButtonApply_OnClick"/>
+            <Button Content="ĐÓNG" 
+                    Style="{DynamicResource StyleBtnInForm}"
+                    Click="ButtonBase_OnClick"/>
+        </StackPanel>
 
     </Grid>
 </mah:MetroWindow>

@@ -1,20 +1,15 @@
-﻿using System.ComponentModel;
-using System.Globalization;
-using System.Runtime.CompilerServices;
-using DTO.Annotations;
+﻿using System.Globalization;
 
 namespace DTO
 {
-    public class Service : INotifyPropertyChanged
+    public class Service : Base
     {
         #region Properties
 
         private string _name;
         private int _price;
-        private int _svTypeId;
         private string _unit;
-        private string _svTypeName;
-
+        private ServiceType _svType;
         public int ServId { get; set; }
 
         public string Name
@@ -22,7 +17,7 @@ namespace DTO
             get => _name;
             set
             {
-                _name = value; 
+                _name = value;
                 OnPropertyChanged(nameof(Name));
             }
         }
@@ -32,69 +27,49 @@ namespace DTO
             get => _price;
             set
             {
-                _price = value; 
+                _price = value;
                 OnPropertyChanged(nameof(Price));
             }
         }
 
-        public int SvTypeId
-        {
-            get => _svTypeId;
-            set
-            {
-                _svTypeId = value; 
-                OnPropertyChanged(nameof(SvTypeId));
-            }
-        }
 
         public string Unit
         {
             get => _unit;
             set
             {
-                _unit = value; 
+                _unit = value;
                 OnPropertyChanged(nameof(Unit));
             }
         }
 
-        public string SvTypeName
+        public ServiceType SvType
         {
-            get => _svTypeName;
+            get => _svType;
             set
             {
-                _svTypeName = value;
-                OnPropertyChanged(nameof(SvTypeName));
+                _svType = value;
+                OnPropertyChanged(nameof(SvType));
             }
         }
 
         #endregion
 
-        public Service() { }
+        public Service()
+        {
+        }
 
         public Service(System.Data.DataRow row)
         {
             ServId = (int) row["ServId"];
             Name = row["Name"].ToString();
             Price = int.Parse(row["Price"].ToString(), NumberStyles.Currency);
-            SvTypeId = (int) row["SvTypeId"];
             Unit = row["Unit"].ToString();
-            SvTypeName = row["SvTypeName"].ToString();
-        }
-
-        public void UpdateProperties(string name, int price, string unit, int svTypeId)
-        {
-            Name = name;
-            Price = price;
-            Unit = unit;
-            SvTypeId = svTypeId;
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            SvType = new ServiceType
+            {
+                SvTypeId = (int) row["SvTypeId"],
+                SvTypeName = row["SvTypeName"].ToString()
+            };
         }
     }
 }

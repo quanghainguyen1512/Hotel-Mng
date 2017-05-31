@@ -27,28 +27,26 @@ namespace DAO
             }
         }
 
-        public ObservableCollection<Service> GetAllServices()
+        public IEnumerable<Service> GetAllServices()
         {
-            var result = new ObservableCollection<Service>();
             _query = "EXEC dbo.USP_GetAllServicesInfo";
             var data = DataProvider.Instance.ExecuteQueries(_query);
             foreach (DataRow row in data.Rows)
             {
-                result.Add(new Service(row));
+                yield return new Service(row);
             }
-            return result;
         }
 
         public bool AddNewService(Service service)
         {
             _query =
                 "INSERT INTO dbo.SERVICE (Name, Price, SvTypeId, Unit) " +
-                $"VALUES(N'{service.Name}', {service.Price}, {service.SvTypeId}, N'{service.Unit}')";
+                $"VALUES(N'{service.Name}', {service.Price}, {service.SvType.SvTypeId}, N'{service.Unit}')";
             var result = DataProvider.Instance.ExecuteNonQuery(_query);
             return result > 0;
         }
 
-        public bool DelService(int svId)
+        public bool DeleteService(int svId)
         {
             _query = $"DELETE FROM dbo.SERVICE WHERE ServId = {svId}";
             var result = DataProvider.Instance.ExecuteNonQuery(_query);
@@ -58,7 +56,7 @@ namespace DAO
         public bool UpdateService(Service service)
         {
             _query = $"UPDATE dbo.SERVICE " +
-                        $"SET Name = '{service.Name}', Price = {service.Price}, Unit = '{service.Unit}', SvTypeId = {service.SvTypeId}" +
+                        $"SET Name = '{service.Name}', Price = {service.Price}, Unit = '{service.Unit}', SvTypeId = {service.SvType.SvTypeId}" +
                         $"WHERE ServId = {service.ServId}";
             var result = DataProvider.Instance.ExecuteNonQuery(_query);
             return result > 0;

@@ -13,140 +13,140 @@
     <Page.Resources>
         <ResourceDictionary Source="../Assets/Styles/HomePageResources.xaml"/>
     </Page.Resources>
-    <TabControl DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:RoomMngPage}}}">
-        <TabItem Header="Phân loại phòng">
-            <Grid Background="{StaticResource ToolBoxBrush}">
+    <Grid Background="{StaticResource ToolBoxBrush}"
+          DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:RoomMngPage}}}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <DataGrid Name="DgRoomType" Grid.Column="0"
+                  ItemsSource="{Binding RoomTypes}"
+                  AutoGenerateColumns="False"
+                  SelectionMode="Single"
+                  SelectionUnit="FullRow"
+                  CanUserAddRows="False"
+                  CanUserDeleteRows="False"
+                  GridLinesVisibility="All"
+                  IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Mã phòng" 
+                                    Binding="{Binding RoomTypeId}"
+                                    Width=".8*"
+                                    FontSize="18"/>
+                <DataGridTextColumn Header="Giá theo ngày" 
+                                    Binding="{Binding PriceByDay}"
+                                    Width="*"
+                                    FontSize="15"/>
+                <DataGridTextColumn Header="Giá giờ đầu" 
+                                    Binding="{Binding Price1StHour}"
+                                    Width="*"
+                                    FontSize="15"/>
+                <DataGridTextColumn Header="Giá mỗi giờ sau"
+                                    Binding="{Binding PricePerHour}"
+                                    Width="*"
+                                    FontSize="15"/>
+                <DataGridTextColumn Header="Ghi chú" 
+                                    Binding="{Binding Note}"
+                                    Width="*"/>
+                <DataGridTemplateColumn Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Click="ButtonEditRoomType_OnClick"
+                                    Width="25"
+                                    Margin="5,0">
+                                <Button.ContentTemplate>
+                                    <DataTemplate>
+                                        <Rectangle Width="10" Height="10">
+                                            <Rectangle.Fill>
+                                                <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_edit}"/>
+                                            </Rectangle.Fill>
+                                        </Rectangle>
+                                    </DataTemplate>
+                                </Button.ContentTemplate>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Grid Grid.Column="1" Background="{StaticResource ToolBoxBrush}">
+            <Grid.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Setter Property="FontSize" Value="14"/>
+                    <Setter Property="Margin" Value="5,20"/>
+                </Style>
+                <Style TargetType="TextBox">
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Setter Property="FontSize" Value="14"/>
+                    <Setter Property="Margin" Value="0,0,10,0"/>
+                    <Setter Property="Padding" Value="3"></Setter>
+                </Style>
+            </Grid.Resources>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Mã loại phòng:" TextWrapping="Wrap"/>
+            <TextBox Name="TxtRoomTypeId" 
+                     VerticalAlignment="Center"
+                     Grid.Row="0" Grid.Column="1" 
+                     Text="{Binding RoomTypeBeingAdded.RoomTypeId}"/>
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Giá theo ngày:" TextWrapping="Wrap"/>
+            <mah:NumericUpDown Grid.Row="1" Grid.Column="1"
+                               Value="{Binding RoomTypeBeingAdded.PriceByDay}"
+                               HorizontalContentAlignment="Center"
+                               VerticalAlignment="Center"
+                               Margin="0,0,10,0"
+                               Interval="1000"
+                               Minimum="0"
+                               Name="NumUpDownPriceByDay"/>
+
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Giá giờ đầu:" TextWrapping="Wrap"/>
+            <mah:NumericUpDown Grid.Row="2" Grid.Column="1"
+                               Value="{Binding RoomTypeBeingAdded.PriceFirstHour}"
+                               HorizontalContentAlignment="Center"
+                               VerticalAlignment="Center"
+                               Margin="0,0,10,0"
+                               Interval="1000"
+                               Minimum="0"
+                               Name="NumUpDownPrice1StHour"/>
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="Giá mỗi giờ sau:" TextWrapping="Wrap"/>
+            <mah:NumericUpDown Grid.Row="3" Grid.Column="1"
+                               Value="{Binding RoomTypeBeingAdded.PricePerHour}"
+                               HorizontalContentAlignment="Center"
+                               VerticalAlignment="Center"
+                               Margin="0,0,10,0"
+                               Interval="1000"
+                               Minimum="0"
+                               Name="NumUpDownPricePerHour"/>
+            <TextBlock Text="Ghi chú:" Grid.Row="4" Grid.Column="0"/>
+            <TextBox Grid.Row="4" Grid.Column="1"
+                     TextWrapping="Wrap"
+                     Height="70"
+                     Name="TxtNote"
+                     Text="{Binding RoomTypeBeingAdded.Note}"/>
+            <Grid Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2"
+                  VerticalAlignment="Top">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <DataGrid Name="DgRoomType" Grid.Column="0"
-                          ItemsSource="{Binding RoomTypes}"
-                          AutoGenerateColumns="False"
-                          SelectionMode="Single"
-                          SelectionUnit="FullRow"
-                          CanUserAddRows="False"
-                          CanUserDeleteRows="False"
-                          GridLinesVisibility="All"
-                          IsReadOnly="True">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Mã phòng" 
-                                            Binding="{Binding RoomTypeId}"
-                                            Width=".6*"/>
-                        <DataGridTextColumn Header="Giá theo ngày" 
-                                            Binding="{Binding PriceByDay}"
-                                            Width="*"/>
-                        <DataGridTextColumn Header="Giá giờ đầu" 
-                                            Binding="{Binding Price1StHour}"
-                                            Width="*"/>
-                        <DataGridTextColumn Header="Giá mỗi giờ sau"
-                                            Binding="{Binding PricePerHour}"
-                                            Width="*"/>
-                        <DataGridTextColumn Header="Ghi chú" 
-                                            Binding="{Binding Note}"
-                                            Width="*"/>
-                        <DataGridTemplateColumn Width="Auto">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Button Click="ButtonEditRoomType_OnClick"
-                                            Width="25"
-                                            Margin="5,0">
-                                        <Button.ContentTemplate>
-                                            <DataTemplate>
-                                                <Rectangle Width="10" Height="10">
-                                                    <Rectangle.Fill>
-                                                        <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_edit}"/>
-                                                    </Rectangle.Fill>
-                                                </Rectangle>
-                                            </DataTemplate>
-                                        </Button.ContentTemplate>
-                                    </Button>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
-                <Grid Grid.Column="1" Background="{StaticResource ToolBoxBrush}">
-                    <Grid.Resources>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="Foreground" Value="White"/>
-                            <Setter Property="VerticalAlignment" Value="Center"/>
-                            <Setter Property="FontSize" Value="14"/>
-                            <Setter Property="Margin" Value="5,20"/>
-                        </Style>
-                        <Style TargetType="TextBox">
-                            <Setter Property="VerticalAlignment" Value="Center"/>
-                            <Setter Property="FontSize" Value="14"/>
-                            <Setter Property="Margin" Value="0,0,10,0"/>
-                            <Setter Property="Padding" Value="3"></Setter>
-                        </Style>
-                    </Grid.Resources>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition Width="2*"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Mã loại phòng:" TextWrapping="Wrap"/>
-                    <TextBox Name="TxtRoomTypeId" 
-                             VerticalAlignment="Center"
-                             Grid.Row="0" Grid.Column="1" />
-                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Giá theo ngày:" TextWrapping="Wrap"/>
-                    <mah:NumericUpDown Grid.Row="1" Grid.Column="1"
-                                       Value="0"
-                                       HorizontalContentAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       Margin="0,0,10,0"
-                                       Interval="1000"
-                                       Minimum="0"
-                                       Name="NumUpDownPriceByDay"/>
-
-                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Giá giờ đầu:" TextWrapping="Wrap"/>
-                    <mah:NumericUpDown Grid.Row="2" Grid.Column="1"
-                                       Value="0"
-                                       HorizontalContentAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       Margin="0,0,10,0"
-                                       Interval="1000"
-                                       Minimum="0"
-                                       Name="NumUpDownPrice1StHour"/>
-                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Giá mỗi giờ sau:" TextWrapping="Wrap"/>
-                    <mah:NumericUpDown Grid.Row="3" Grid.Column="1"
-                                       Value="0"
-                                       HorizontalContentAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       Margin="0,0,10,0"
-                                       Interval="1000"
-                                       Minimum="0"
-                                       Name="NumUpDownPricePerHour"/>
-                    <TextBlock Text="Ghi chú:" Grid.Row="4" Grid.Column="0"/>
-                    <TextBox Grid.Row="4" Grid.Column="1"
-                             TextWrapping="Wrap"
-                             Height="70"
-                             Name="TxtNote"/>
-                    <Grid Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2"
-                          VerticalAlignment="Center">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <Button Name="ButtonAdd" Grid.Column="1"
-                                Content="Thêm" Margin="10,16"
-                                Click="ButtonAddRoomType_OnClick"/>
-                    </Grid>
-                </Grid>
-
+                <Button Name="ButtonAdd" Grid.Column="1"
+                        Content="Thêm" Margin="10,16"
+                        Click="ButtonAddRoomType_OnClick"/>
             </Grid>
-        </TabItem>
-        <TabItem Header="Danh sách phòng">
-            
-        </TabItem>
-    </TabControl>
+        </Grid>
+    </Grid>
+
 </Page>
 

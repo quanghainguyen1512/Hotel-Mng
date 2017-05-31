@@ -1,23 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Globalization;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using DTO.Annotations;
 
 namespace DTO
 {
-    public class RoomType : INotifyPropertyChanged
+    public class RoomType : Base
     {
+        #region Properties
+
         private int _priceByDay;
-        private int _price1StHour;
+        private int _priceFirstHour;
         private int _pricePerHour;
         private string _note;
 
-        #region Properties
 
         public char RoomTypeId { get; set; }
 
@@ -31,13 +25,13 @@ namespace DTO
             }
         }
 
-        public int Price1StHour
+        public int PriceFirstHour
         {
-            get => _price1StHour;
+            get => _priceFirstHour;
             set
             {
-                _price1StHour = value; 
-                OnPropertyChanged(nameof(Price1StHour));
+                _priceFirstHour = value; 
+                OnPropertyChanged(nameof(PriceFirstHour));
             }
         }
 
@@ -69,17 +63,10 @@ namespace DTO
         {
             RoomTypeId = Convert.ToChar(row["RoomTypeId"]);
             PriceByDay = int.Parse(row["PriceByDay"].ToString(), NumberStyles.Currency);
-            Price1StHour = int.Parse(row["Price1StHour"].ToString(), NumberStyles.Currency);
+            PriceFirstHour = int.Parse(row["PriceFirstHour"].ToString(), NumberStyles.Currency);
             PricePerHour = int.Parse(row["PricePerHour"].ToString(), NumberStyles.Currency);
             Note = row["Note"].ToString();
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
     }
 }

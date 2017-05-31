@@ -27,16 +27,14 @@ namespace DAO
             }
         }
 
-        public ObservableCollection<ServiceType> GetAllServiceTypes()
+        public IEnumerable<ServiceType> GetAllServiceTypes()
         {
-            var result = new ObservableCollection<ServiceType>();
             _query = "SELECT * FROM dbo.SERVICE_TYPE";
             var data = DataProvider.Instance.ExecuteQueries(_query);
             foreach (System.Data.DataRow row in data.Rows)
             {
-                result.Add(new ServiceType(row));
+                yield return new ServiceType(row);
             }
-            return result;
         }
 
         public bool AddNewType(string typeName)

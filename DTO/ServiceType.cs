@@ -1,17 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DTO
+﻿namespace DTO
 {
-    public class ServiceType
+    public class ServiceType : Base
     {
         #region Properties
+        private int _svTypeId;
+        private string _svTypeName;
 
-        public int SvTypeId { get; set; }
-        public string SvTypeName { get; set; }
+        public int SvTypeId
+        {
+            get => _svTypeId;
+            set
+            {
+                _svTypeId = value; 
+                OnPropertyChanged(nameof(SvTypeId));
+            }
+        }
+
+        public string SvTypeName
+        {
+            get => _svTypeName;
+            set
+            {
+                _svTypeName = value; 
+                OnPropertyChanged(nameof(SvTypeName));
+            }
+        }
 
         #endregion
 

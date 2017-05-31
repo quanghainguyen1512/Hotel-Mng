@@ -1,19 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using DAO;
 using DTO;
+using DTO.Annotations;
+using HotelMng.SubWindows;
 using MahApps.Metro.Controls;
 using HamburgerMenuItem = HamburgerMenu.HamburgerMenuItem;
 
@@ -22,21 +19,37 @@ namespace HotelMng
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow 
+    public partial class MainWindow : INotifyPropertyChanged
     {
-        public IEnumerable<Room> Rooms { get; set; }
+        private ObservableCollection<Room> _rooms;
+        private readonly CollectionView _view;
+
+        public IEnumerable<RoomStatus> AllRoomStatus { get; set; }
+        public ObservableCollection<Room> Rooms
+        {
+            get => _rooms;
+            set
+            {
+                _rooms = value; 
+                OnPropertyChanged(nameof(Rooms));
+            }
+        }
+
         public MainWindow()
         {
             InitializeComponent();
-            Rooms = RoomDAO.Instance.GetAllRooms();
-            var view = (CollectionView) CollectionViewSource.GetDefaultView(Rooms);
-            view.GroupDescriptions.Add(new PropertyGroupDescription("RoomTypeId"));
+            Rooms = new ObservableCollection<Room>(RoomDAO.Instance.GetAllRooms());
+
+            AllRoomStatus = RoomStatusDAO.Instance.GetAllRoomStatus();
+
+            _view = (CollectionView) CollectionViewSource.GetDefaultView(Rooms);
+            _view.GroupDescriptions.Add(new PropertyGroupDescription("RoomTypeId"));
         }
 
         private void HamburgerMenuItem_OnSelected(object sender, RoutedEventArgs e)
         {
             var hbgMenuItem = sender as HamburgerMenuItem;
-            if (hbgMenuItem == null)
+            if (hbgMenuItem is null)
                 throw new Exception("Unexpected Error..");
             var targetView = hbgMenuItem.Tag.ToString();
             Frame.Source = new Uri(targetView, UriKind.Relative);
@@ -46,5 +59,60 @@ namespace HotelMng
         {
 
         }
+
+        private void Tile_OnClick(object sender, RoutedEventArgs e)
+        {
+            var cm = this.FindResource("TileCMenu") as ContextMenu;
+            if (cm is null) return;
+
+            cm.PlacementTarget = sender as Tile;
+            cm.IsOpen = true;
+        }
+
+        private void MenuItemDelRoom_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Chắc chắn xóa?", "", MessageBoxButton.YesNo, MessageBoxImage.Warning) ==
+                MessageBoxResult.Yes)
+            {
+                var menuItem = sender as MenuItem;
+                if (menuItem is null) return;
+
+                var room = (Room)menuItem.DataContext;
+
+                if (RoomDAO.Instance.DeleteRoom(room.RoomId))
+                    Rooms.Remove(room);
+            }
+        }
+
+        private void MenuItemEditRoom_OnClick(object sender, RoutedEventArgs e)
+        {
+            var menuItem = sender as MenuItem;
+            if (menuItem is null) return;
+
+            var itemBeingEdited = Rooms.FirstOrDefault(r => r.RoomId == ((Room) menuItem.DataContext).RoomId);
+
+            var dialog = new EditRoomDialog
+            {
+                PassParameterToDialogFunc = () => itemBeingEdited,
+                UpdateRoomTypeAction = room =>
+                {
+                    if (RoomDAO.Instance.UpdateRoom(room))
+                    {
+                        itemBeingEdited = room;
+                    }
+                    _view.Refresh();
+                }
+            };
+            dialog.ShowDialog();
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
     }
 }

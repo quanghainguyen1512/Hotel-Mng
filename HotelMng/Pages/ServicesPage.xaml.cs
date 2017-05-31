@@ -20,11 +20,11 @@ namespace HotelMng.Pages
         public ServicesPage()
         {
             InitializeComponent();
-            ServiceTypes = ServiceTypeDAO.Instance.GetAllServiceTypes();
-            Services = ServiceDAO.Instance.GetAllServices();
+            ServiceTypes = new ObservableCollection<ServiceType>(ServiceTypeDAO.Instance.GetAllServiceTypes()); 
+            Services = new ObservableCollection<Service>(ServiceDAO.Instance.GetAllServices());
 
             _view = (CollectionView) CollectionViewSource.GetDefaultView(Services);
-            _view.GroupDescriptions?.Add(new PropertyGroupDescription("SvTypeName"));
+            _view.GroupDescriptions?.Add(new PropertyGroupDescription("SvType.SvTypeName"));
         }
 
         private void ButtonDelItem_OnClick(object sender, RoutedEventArgs e)
@@ -33,8 +33,11 @@ namespace HotelMng.Pages
                 MessageBoxResult.Yes)
             {
                 var btn = sender as Button;
-                var rowBeingDeleted = (Service)btn?.DataContext;
-                if (ServiceDAO.Instance.DelService(rowBeingDeleted.ServId))
+                if (btn is null) return;
+
+                var rowBeingDeleted = (Service)btn.DataContext;
+
+                if (ServiceDAO.Instance.DeleteService(rowBeingDeleted.ServId))
                     Services.Remove(rowBeingDeleted);
             }
         }
@@ -42,24 +45,24 @@ namespace HotelMng.Pages
         private void ButtonEditItem_OnClick(object sender, RoutedEventArgs e)
         {
             var btn = sender as Button;
-            var id = ((Service)btn?.DataContext).ServId;
-            var rowBeingEdited = Services.FirstOrDefault(s => s.ServId == id);
-            if (rowBeingEdited != null)
+            if (btn is null) return;
+
+            var rowBeingEdited = Services.FirstOrDefault(s => s.ServId == ((Service)btn.DataContext).ServId);
+
+            var dialog = new EditServiceDialog
             {
-                var editor = new EditServiceDialog
+                UpdateServiceAction = service =>
                 {
-                    UpdateServiceAction = service =>
+                    if (ServiceDAO.Instance.UpdateService(rowBeingEdited))
                     {
-                        if (ServiceDAO.Instance.UpdateService(rowBeingEdited))
-                        {
-                            rowBeingEdited = service;
-                        }
-                        _view.Refresh();
-                    },
-                    PassParameterToDialogFunc = () => rowBeingEdited
-                };
-                editor.ShowDialog();
-            }
+                        rowBeingEdited = service;
+                    }
+                    _view.Refresh();
+                },
+                PassParameterToDialogFunc = () => rowBeingEdited,
+                PassServiceTypeFunc = () => ServiceTypes
+            };
+            dialog.ShowDialog();
         }
 
         private void AddServiceTypeInfo_OnClick(object sender, RoutedEventArgs e)
@@ -86,21 +89,21 @@ namespace HotelMng.Pages
             }
             var serviceType = CbbSvType.SelectedItem as ServiceType;
             if (NumUpDownPrice.Value is null || serviceType is null) return;
-            var sv = new Service
-            {
-                Name = TxtName.Text,
-                Price = (int)NumUpDownPrice.Value,
-                SvTypeId = serviceType.SvTypeId,
-                Unit =  TxtUnit.Text
-            };
-            if (ServiceDAO.Instance.AddNewService(sv))
-            {
-                var data = ServiceDAO.Instance.NewestServiceInfo();
-                sv.ServId = data.Item1;
-                sv.SvTypeName = data.Item2;
-                Services.Add(sv);                             
-                MessageBox.Show("Thêm thành công");
-            }
+            //var sv = new Service
+            //{
+            //    Name = TxtName.Text,
+            //    Price = (int)NumUpDownPrice.Value,
+            //    SvTypeId = serviceType.SvTypeId,
+            //    Unit =  TxtUnit.Text
+            //};
+            //if (ServiceDAO.Instance.AddNewService(sv))
+            //{
+            //    var data = ServiceDAO.Instance.NewestServiceInfo();
+            //    sv.ServId = data.Item1;
+            //    sv.SvTypeName = data.Item2;
+            //    Services.Add(sv);                             
+            //    MessageBox.Show("Thêm thành công");
+            //}
         }
     }
 }

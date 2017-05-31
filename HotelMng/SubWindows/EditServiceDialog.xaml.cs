@@ -1,24 +1,50 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using DAO;
 using DTO;
+using DTO.Annotations;
 
 namespace HotelMng.SubWindows
 {
     /// <summary>
     /// Interaction logic for EditServiceDialog.xaml
     /// </summary>
-    public partial class EditServiceDialog
+    public partial class EditServiceDialog : INotifyPropertyChanged
     {
         public Action<Service> UpdateServiceAction;
         public Func<Service> PassParameterToDialogFunc;
-        public IEnumerable<ServiceType> ServiceTypes { get; set; }
+        public Func<IEnumerable<ServiceType>> PassServiceTypeFunc;
+
+
         private Service _serviceBeingUpdated;
+        private IEnumerable<ServiceType> _serviceTypes;
+
+        public IEnumerable<ServiceType> ServiceTypes
+        {
+            get => _serviceTypes;
+            set
+            {
+                _serviceTypes = value; 
+                OnPropertyChanged(nameof(ServiceTypes));
+            }
+        }
+
+        public Service ServiceBeingUpdated
+        {
+            get => _serviceBeingUpdated;
+            set
+            {
+                _serviceBeingUpdated = value; 
+                OnPropertyChanged(nameof(ServiceBeingUpdated));
+            }
+        }
+
         public EditServiceDialog()
         {
             InitializeComponent();
-            ServiceTypes = ServiceTypeDAO.Instance.GetAllServiceTypes();
         }
 
         private void ButtonCancel_OnClick(object sender, RoutedEventArgs e)
@@ -28,37 +54,32 @@ namespace HotelMng.SubWindows
 
         private void ButtonApply_OnClick(object sender, RoutedEventArgs e)
         {
-            var serviceType = CbbServType.SelectedItem as ServiceType;
-
-            _serviceBeingUpdated.UpdateProperties(TxbName.Text, (int)NumbUpDownPrice.Value, TxbUnit.Text, serviceType.SvTypeId);
-            _serviceBeingUpdated.SvTypeName = DataProvider.Instance.
-                ExecuteScalar($"SELECT SvTypeName FROM dbo.SERVICE_TYPE WHERE SvTypeId = '{serviceType.SvTypeId}'").ToString();
-
-            UpdateServiceAction(_serviceBeingUpdated);
-
+            ServiceBeingUpdated.SvType = CbbServType.SelectedItem as ServiceType;
+            UpdateServiceAction(ServiceBeingUpdated);
             this.Close();
         }
 
         private void EditServiceDialog_OnLoaded(object sender, RoutedEventArgs e)
         {
-            _serviceBeingUpdated = PassParameterToDialogFunc();
-
-            TxbName.Text = _serviceBeingUpdated.Name;
-            NumbUpDownPrice.Value = _serviceBeingUpdated.Price;
-            TxbUnit.Text = _serviceBeingUpdated.Unit;
-
-            var selectedIndex = 0;
+            ServiceTypes = PassServiceTypeFunc();
+            ServiceBeingUpdated = PassParameterToDialogFunc();
+            
             for (var i = 0; i < CbbServType.Items.Count; i++)
             {
-                var item = CbbServType.Items[i];
-                if ((item as ServiceType).SvTypeId == _serviceBeingUpdated.SvTypeId)
+                if ((CbbServType.Items[i] as ServiceType).SvTypeId == ServiceBeingUpdated.SvType.SvTypeId)
                 {
-                    selectedIndex = i;
+                    CbbServType.SelectedIndex = i;
                     break;
                 }
             }
+        }
 
-            CbbServType.SelectedIndex = selectedIndex;
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

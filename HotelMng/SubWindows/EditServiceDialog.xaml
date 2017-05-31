@@ -5,6 +5,7 @@
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                  xmlns:local="clr-namespace:HotelMng.SubWindows"
                  xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                 xmlns:converter="clr-namespace:HotelMng.Converter"
                  mc:Ignorable="d"
                  Title="Chỉnh sửa thông tin dịch vụ" Height="300" Width="300"
                  WindowStartupLocation="CenterScreen"
@@ -19,6 +20,9 @@
     </mah:MetroWindow.Background>
 
     <Grid Margin="10,0" DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:EditServiceDialog}}}">
+        <Grid.Resources>
+            <converter:RoomTypeConverter x:Key="RoomTypeConverter"/>
+        </Grid.Resources>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition Width="2*"/>
@@ -33,6 +37,7 @@
         </Grid.RowDefinitions>
         <TextBlock Text="Tên:" Grid.Row="0" Grid.Column="0"/>
         <TextBox Grid.Row="0" Grid.Column="1"
+                 Text="{Binding ServiceBeingUpdated.Name}"
                  Name="TxbName"/>
         <TextBlock Text="Đơn giá:" Grid.Row="1" Grid.Column="0"/>
         <mah:NumericUpDown Grid.Row="1" Grid.Column="1" 
@@ -40,15 +45,20 @@
                            InterceptMouseWheel="False"
                            Interval="1000"
                            Minimum="0"
-                           Value="0" Name="NumbUpDownPrice"
+                           Value="{Binding ServiceBeingUpdated.Price}"
+                           Name="NumbUpDownPrice"
                            HorizontalContentAlignment="Center"/>
         <TextBlock Text="Đơn vị tính:" Grid.Row="2" Grid.Column="0"/>
-        <TextBox Grid.Row="2" Grid.Column="1" Name="TxbUnit"/>
+        <TextBox Grid.Row="2" Grid.Column="1" 
+                 Name="TxbUnit"
+                 Text="{Binding ServiceBeingUpdated.Unit}"/>
         <TextBlock Text="Loại:" Grid.Row="3" Grid.Column="0"/>
         <ComboBox Grid.Row="3" Grid.Column="1" 
                   VerticalAlignment="Center"
                   Name="CbbServType"
                   ItemsSource="{Binding ServiceTypes}"
+                  SelectedValue="{Binding ServiceBeingUpdated.SvType}"
+                  SelectedValuePath="SvType"
                   DisplayMemberPath="SvTypeName"/>
         <Separator Grid.Row="4" Grid.ColumnSpan="2"
                    Margin="0,15,0,5"/>
@@ -63,6 +73,5 @@
                     Style="{DynamicResource StyleBtnInForm}"
                     Click="ButtonCancel_OnClick"/>
         </StackPanel>
-
     </Grid>
 </mah:MetroWindow>

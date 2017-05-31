@@ -20,10 +20,11 @@ CREATE TABLE ROOM_TYPE												--Loại phòng
 (
 	RoomTypeId		CHAR(1) NOT NULL PRIMARY KEY,		--QD1--
 	PriceByDay		MONEY NOT NULL,
-	Price1stHour	MONEY NOT NULL,
+	PriceFirstHour	MONEY NOT NULL,
 	PricePerHour	MONEY NOT NULL,
 	Note			NVARCHAR(100)
-)												
+)
+--EXEC sp_rename 'ROOM_TYPE.[[Price1stHour]]]', 'PriceFirstHour', 'COLUMN'
 GO
 CREATE TABLE ROOM_STATUS
 (
@@ -36,7 +37,8 @@ CREATE TABLE ROOM													--Phòng
 	RoomId		INT NOT NULL PRIMARY KEY,
 	RoomTypeId	CHAR(1),
 	Description	NVARCHAR(200),
-	StatusId	INT 
+	StatusId	INT,
+	Capacity	SMALLINT
 	FOREIGN KEY (RoomTypeId) REFERENCES ROOM_TYPE(RoomTypeId),
 	FOREIGN KEY (StatusId) REFERENCES ROOM_STATUS(StatusId)
 )
@@ -120,7 +122,14 @@ CREATE TABLE ROOMMATE
 	FOREIGN KEY (NatId) REFERENCES TABLE_NATIONALITY(NatId)
 )
 GO
---Procedure--
+CREATE TABLE FEE
+(
+	Id	INT IDENTITY PRIMARY KEY,
+	FeeForEachMoreGuest	FLOAT NOT NULL,
+	FeeForForeigner FLOAT NOT NULL
+)
+GO
+------------------------Procedure--
 CREATE PROC USP_GetAllRoommatesByRenterId
 	@renterid VARCHAR(20)
 AS
@@ -140,7 +149,7 @@ AS
 GO
 CREATE PROC USP_GetAllRoomInfo
 AS
-	SELECT R.RoomId, R.RoomTypeId, R.StatusId, RS.StatusName, R.Description
+	SELECT R.RoomId, R.RoomTypeId, R.StatusId, R.Capacity ,RS.StatusName, R.Description
 	FROM dbo.ROOM AS R
 	JOIN dbo.ROOM_STATUS AS RS
 		ON RS.StatusID = R.StatusId
@@ -154,7 +163,8 @@ AS
 	GROUP BY RS.StatusId, RS.StatusName
 GO
 CREATE PROC USP_GetDataForReporting
-	@month SMALLINT
+	@month SMALLINT,
+	@year  INT
 AS
 	DECLARE @temptable TABLE
 	(RoomTypeId CHAR(1),
@@ -168,12 +178,12 @@ AS
 			ON	R.RoomTypeId = RT.RoomTypeId
 		JOIN	dbo.REG_FORM AS RF
 			ON	RF.RoomId = R.RoomId
-		WHERE	MONTH(RF.CheckOut) = @month
+		WHERE	MONTH(RF.CheckOut) = @month AND YEAR(RF.CheckOut) = @year
 		GROUP BY RT.RoomTypeId
 	
 	SELECT	@total = SUM(t.Income)
 	FROM	@temptable AS t
-	SELECT	t.RoomTypeId, t.Income, t.Income / @total AS Proportion
+	SELECT	t.RoomTypeId AS N'Loại phòng', t.Income N'Thu nhập', t.Income / @total AS N'Tỉ lệ'
 	FROM	@temptable AS t
 GO
 CREATE PROC USP_GetNewestServiceInfo
