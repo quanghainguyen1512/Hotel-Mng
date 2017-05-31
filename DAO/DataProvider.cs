@@ -16,7 +16,7 @@ namespace DAO
 
         DataProvider() { }
 
-        private readonly string _connString = "Data Source=DESKTOP-L9JNNSC;Initial Catalog=HotelManagement;Integrated Security=True";
+        private readonly string _connString = @"Data Source=DESKTOP-TKMUG3F\SIR;Initial Catalog=HotelManagement;Integrated Security=True";
 
         public static DataProvider Instance
         {

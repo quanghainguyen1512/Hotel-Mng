@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HotelMng.Properties {
+namespace DAO.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -26,22 +26,11 @@ namespace HotelMng.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=DESKTOP-L9JNNSC;Initial Catalog=HotelManagement;Integrated Security=T" +
-            "rue")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=DESKTOP-TKMUG3F\\SIR;Initial Catalog=HotelManagement;Integrated Securi" +
+            "ty=True")]
         public string HotelManagementConnectionString {
             get {
                 return ((string)(this["HotelManagementConnectionString"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=DESKTOP-TKMUG3F\\SIR;Initial Catalog=HotelManagement;Integrated Securi" +
-            "ty=True")]
-        public string HotelManagementConnectionString1 {
-            get {
-                return ((string)(this["HotelManagementConnectionString1"]));
             }
         }
     }

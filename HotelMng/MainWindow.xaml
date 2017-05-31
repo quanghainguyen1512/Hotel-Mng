@@ -9,8 +9,9 @@
                  xmlns:uc="clr-namespace:HotelMng.Assets.UserControls"
                  xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                  xmlns:hamburgerMenu="clr-namespace:HamburgerMenu;assembly=hamburgerMenu"
+                 xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
                  mc:Ignorable="d"
-                 Title="MainWindow" Height="700" Width="1000" 
+                 Title="MainWindow" Height="823" Width="1000" 
                  WindowState="Maximized"
                  WindowStyle="None"
                  ShowTitleBar="False"
@@ -228,6 +229,24 @@
                         <TextBlock Text="BÁO CÁO" Style="{StaticResource StyleHeaderText}"/>
                     </StackPanel>
                 </TabItem.Header>
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <Button VerticalAlignment="Top" Height="30" Width="100" Content="Show" Margin="683,6,189,0" Click="Button_Click"/>
+                        <TextBlock Height="40" FontSize="24" Foreground="#1E88E5" Text="Báo Cáo Doanh Thu Theo Loại Phòng" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="214,0,339,0"/>
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <WindowsFormsHost Name="Reporting" Margin="160,10">
+                            <rv:ReportViewer x:Name="_repor"/>
+                        </WindowsFormsHost>
+
+                    </Grid>
+
+                </Grid>
+
             </TabItem>
             <TabItem Style="{DynamicResource StyleTabItemRight}">
                 <TabItem.Header>
@@ -240,6 +259,53 @@
                         <TextBlock Text="THÔNG TIN" Style="{StaticResource StyleHeaderText}"/>
                     </StackPanel>
                 </TabItem.Header>
+                <Grid Margin="10">
+                    <StackPanel Margin="10,0,10,0">
+                        <TextBlock HorizontalAlignment="Center" FontSize="16" ><Bold><Run Text="ĐẠI HỌC QUỐC GIA THÀNH PHỐ HCM"/></Bold></TextBlock>
+                        <TextBlock HorizontalAlignment="Center" FontSize="16" ><Bold><Run Text="TRƯỜNG ĐẠI HỌC CÔNG NGHỆ THÔNG TIN"/></Bold></TextBlock>
+                        <TextBlock HorizontalAlignment="Center" FontSize="16" Text="********"/>
+                        <TextBlock HorizontalAlignment="Center" FontSize="16" ><Italic>ĐỒ ÁN NHẬP MÔN CÔNG NGHỆ PHẦN MỀM</Italic></TextBlock>
+                        <TextBlock Margin="10" FontSize="22" ><Bold><Run Text="About"/></Bold></TextBlock>
+                        <WrapPanel>
+                            <Image Margin="10" HorizontalAlignment="Left" Height="100" Source="C:\Users\Sir\Desktop\hotel-md.png"/>
+                            <Image Height="100" Source="C:\Users\Sir\Desktop\2017_05_16_21_25_25_Document1_Word.png"/>
+                        </WrapPanel>
+                    </StackPanel>
+                    <Grid Margin="0,240,0,135">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="69*" />
+                            <ColumnDefinition Width="145*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="240*"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel>
+                            <TextBlock Margin="10" FontSize="18" Text="Tên chương trình:" FontWeight="Bold"/>
+                            <TextBlock Margin="10" FontSize="18" Text="Chức năng:"/>
+                            <TextBlock Margin="10" FontSize="18" Text="Thiết kế:"/>
+                            <TextBlock Margin="10" FontSize="18" Text="Thành viên:"/>
+                            <TextBlock Margin="10,60,0,10" FontSize="18" Text="Giảng viên:"/>
+                            <TextBlock Margin="10" FontSize="18" Text="Thời gian hoàn thành:"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Margin="10" FontSize="18" Text="Hotel Manager" FontWeight="Bold"/>
+                            <TextBlock Margin="10" FontSize="18" Text="Quản lý đặt nhận phòng, báo cáo thu chi"/>
+                            <TextBlock Margin="10" FontSize="18" Text="Nhóm 7"/>
+                            <!--<ListView>
+                    <TextBlock FontSize="18" Text="Quang Hải    15520187" />
+                    <TextBlock FontSize="18" Text="Đức Huy        15520295" />
+                    <TextBlock FontSize="18" Text="Trung Hào    15520?" />
+                </ListView>-->
+                            <StackPanel Margin="10">
+                                <TextBlock FontSize="18" Text="Quang Hải    15520187" />
+                                <TextBlock FontSize="18" Text="Đức Huy        15520295" />
+                                <TextBlock FontSize="18" Text="Trung Hào    15520?" />
+                            </StackPanel>
+                            <TextBlock Margin="10,10,0,13" FontSize="18" Text="Giảng viên"/>
+                            <TextBlock Margin="10" FontSize="18" Text="Thời gian hoàn thành:"/>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
             </TabItem>
         </TabControl>
     </DockPanel>

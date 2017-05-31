@@ -12,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Data;
+using System.Data.SqlClient;
+using Microsoft.Reporting.WinForms;
 using DAO;
 using DTO;
 using MahApps.Metro.Controls;
@@ -45,6 +48,21 @@ namespace HotelMng
         private void TimePicker_OnSelectedDateChanged(object sender, TimePickerBaseSelectionChangedEventArgs<DateTime?> e)
         {
 
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            string connStr = @"Data Source=DESKTOP-TKMUG3F\SIR;Initial Catalog=HotelManagement;Integrated Security=True";
+            SqlConnection cn = new SqlConnection(connStr);
+
+            string query = "EXEC dbo.USP_GetDataForReporting @year";
+
+            var dt = DataProvider.Instance.ExecuteQueries(query, new object[] { 8 });
+
+            ReportDataSource ds = new ReportDataSource("DataSet1", dt);
+            _repor.LocalReport.DataSources.Add(ds);
+            _repor.LocalReport.ReportEmbeddedResource = "HotelMng.Report1.rdlc";
+            _repor.RefreshReport();
         }
     }
 }

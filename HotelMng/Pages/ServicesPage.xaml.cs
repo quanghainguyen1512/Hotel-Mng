@@ -32,7 +32,7 @@ namespace HotelMng.Pages
             ServiceTypes = ServiceTypeDAO.Instance.GetAllServiceTypes();
             Services = ServiceDAO.Instance.GetAllServices();
 
-            var view = (CollectionView) CollectionViewSource.GetDefaultView(Services);
+            var view = (CollectionView)CollectionViewSource.GetDefaultView(Services);
             view.GroupDescriptions?.Add(new PropertyGroupDescription("SvTypeName"));
         }
 

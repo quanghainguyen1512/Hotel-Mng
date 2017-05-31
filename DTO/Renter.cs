@@ -17,6 +17,8 @@ namespace DTO
         public string   Address { get; set; }
         #endregion
 
+        public Renter() { }
+
         public Renter(System.Data.DataRow row)
         {
             RenterId    = row["RenterId"].ToString();
