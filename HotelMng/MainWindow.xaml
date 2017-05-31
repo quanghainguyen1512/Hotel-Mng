@@ -17,6 +17,16 @@
                  ShowTitleBar="False"
                  ShowMaxRestoreButton="False" 
                  ShowMinButton="False">
+    <mah:MetroWindow.Resources>
+        <ContextMenu x:Key="TileCMenu">
+            <MenuItem Header="Danh sách khách đang ở"/>
+            <MenuItem Header="Xem/Thêm dịch vụ"/>
+            <MenuItem Header="Chuyển phòng"/>
+            <Separator/>
+            <MenuItem Header="Xem/Chỉnh sửa thông tin" Click="MenuItemEditRoom_OnClick"/>
+            <MenuItem Header="Xóa phòng" Click="MenuItemDelRoom_OnClick"/>
+        </ContextMenu>
+    </mah:MetroWindow.Resources>
     <DockPanel DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:MainWindow}}}">
         <DockPanel.Resources>
             <ResourceDictionary>
@@ -62,21 +72,36 @@
                                            VerticalAlignment="Center"
                                            FontWeight="DemiBold"
                                            FontStyle="Italic"/>
-                                <uc:RoomStatusItem StatusBrush="{StaticResource RoomNeedsCleaningBrush}"
-                                                   StatusText="Cần dọn"
-                                                   Margin="45,0,0,0"/>
-                                <uc:RoomStatusItem StatusBrush="{StaticResource RentedRoomBrush}"
-                                                   StatusText="Có khách"
-                                                   Margin="45,0,0,0"/>
-                                <uc:RoomStatusItem StatusBrush="{StaticResource EmptyRoomBrush}"
-                                                   StatusText="Phòng trống"
-                                                   Margin="45,0,0,0"/>
-                                <uc:RoomStatusItem StatusBrush="{StaticResource RoomNeedsFixingBrush}"
-                                                   StatusText="Cần sửa"
-                                                   Margin="45,0,0,0"/>
+                                <ItemsControl ItemsSource="{Binding AllRoomStatus}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal"/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <uc:RoomStatusItem StatusText="{Binding StatusName}"
+                                                               ItemsCount="{Binding ItemCount}"
+                                                               Style="{StaticResource RoomStatusItemStyle}"/>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                    <!--<uc:RoomStatusItem StatusBrush="{StaticResource RoomNeedsCleaningBrush}"
+                                                       StatusText="Cần dọn"
+                                                       Margin="45,0,0,0"/>
+                                    <uc:RoomStatusItem StatusBrush="{StaticResource RentedRoomBrush}"
+                                                       StatusText="Có khách"
+                                                       Margin="45,0,0,0"/>
+                                    <uc:RoomStatusItem StatusBrush="{StaticResource EmptyRoomBrush}"
+                                                       StatusText="Phòng trống"
+                                                       Margin="45,0,0,0"/>
+                                    <uc:RoomStatusItem StatusBrush="{StaticResource RoomNeedsFixingBrush}"
+                                                       StatusText="Cần sửa"
+                                                       Margin="45,0,0,0"/>-->
+                                </ItemsControl>
                             </StackPanel>
                             <ScrollViewer Grid.Row="1">
-                                <ItemsControl ItemsSource="{Binding Rooms}">
+                                <ItemsControl ItemsSource="{Binding Rooms}"
+                                              Name="RoomContainer">
                                     <ItemsControl.GroupStyle>
                                         <GroupStyle>
                                             <GroupStyle.HeaderTemplate>
@@ -139,18 +164,24 @@
                                             <mah:Tile Title="{Binding RoomId}"
                                                       Margin="10"
                                                       Height="100"
-                                                      Width="100">
+                                                      Width="100"
+                                                      Click="Tile_OnClick"
+                                                      Count="{Binding Capacity}"
+                                                      TitleFontSize="18"
+                                                      CountFontSize="12"
+                                                      VerticalContentAlignment="Stretch"
+                                                      HorizontalContentAlignment="Stretch">
                                                 <mah:Tile.Content>
-                                                    <StackPanel>
-                                                        <Image Source="Assets/Icon/roomitem-icon.png" Height="30" Width="60"/>
-                                                        <TextBlock Text="{Binding RoomId}" HorizontalAlignment="Center"/>
-                                                    </StackPanel>
+                                                    <Rectangle Height="30" Width="60" HorizontalAlignment="Center">
+                                                        <Rectangle.Fill>
+                                                            <VisualBrush Visual="{StaticResource appbar_bed}"/>
+                                                        </Rectangle.Fill>
+                                                    </Rectangle>
                                                 </mah:Tile.Content>
                                             </mah:Tile>
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
-
                             </ScrollViewer>
                             <StackPanel Grid.Row="2" 
                                         Orientation="Horizontal"
@@ -171,7 +202,6 @@
                                         Style="{StaticResource StyleButtonReload}">
                                 </Button>
                             </StackPanel>
-
                         </Grid>
                     </GroupBox>
                 </Grid>
@@ -192,13 +222,13 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <hamburgerMenu:HamburgerMenu Grid.Column="0" 
-                                                 Background="DarkCyan" 
+                    <hamburgerMenu:HamburgerMenu Grid.Column="0"  
                                                  MenuIconColor="White" 
                                                  SelectionIndicatorColor="White" 
                                                  MenuItemForeground="White" 
                                                  HorizontalAlignment="Left"
-                                                 IsOpen="True">
+                                                 IsOpen="True"
+                                                 Background="{StaticResource ToolBoxBrush}">
                         <hamburgerMenu:HamburgerMenuItem Text="Quản lý phòng" 
                                                          Icon="Assets/Icon/appbar.key.png"
                                                          Tag="Pages/RoomMngPage.xaml"
@@ -211,6 +241,8 @@
                                                          Icon="Assets/Icon/appbar.people.png"
                                                          Tag="Pages/RentersPage.xaml"
                                                          Selected="HamburgerMenuItem_OnSelected"/>
+                        <hamburgerMenu:HamburgerMenuItem Text="Thay đổi phí phụ thu"
+                                                         Icon="Assets/Icon/appbar.currency.dollar.png"/>
                     </hamburgerMenu:HamburgerMenu>
                     <Frame Grid.Column="1"
                            x:Name="Frame"

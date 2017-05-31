@@ -1,18 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using DAO;
 using DTO;
 using HotelMng.SubWindows;
@@ -22,18 +12,19 @@ namespace HotelMng.Pages
     /// <summary>
     /// Interaction logic for ServicesPage.xaml
     /// </summary>
-    public partial class ServicesPage : Page
+    public partial class ServicesPage
     {
         public ObservableCollection<ServiceType> ServiceTypes { get; set; }
         public ObservableCollection<Service> Services { get; set; }
+        private readonly CollectionView _view;
         public ServicesPage()
         {
             InitializeComponent();
-            ServiceTypes = ServiceTypeDAO.Instance.GetAllServiceTypes();
-            Services = ServiceDAO.Instance.GetAllServices();
+            ServiceTypes = new ObservableCollection<ServiceType>(ServiceTypeDAO.Instance.GetAllServiceTypes()); 
+            Services = new ObservableCollection<Service>(ServiceDAO.Instance.GetAllServices());
 
-            var view = (CollectionView)CollectionViewSource.GetDefaultView(Services);
-            view.GroupDescriptions?.Add(new PropertyGroupDescription("SvTypeName"));
+            _view = (CollectionView) CollectionViewSource.GetDefaultView(Services);
+            _view.GroupDescriptions?.Add(new PropertyGroupDescription("SvType.SvTypeName"));
         }
 
         private void ButtonDelItem_OnClick(object sender, RoutedEventArgs e)
@@ -42,35 +33,41 @@ namespace HotelMng.Pages
                 MessageBoxResult.Yes)
             {
                 var btn = sender as Button;
-                var rowBeingDeleted = (Service)btn?.DataContext;
-                Services.Remove(rowBeingDeleted);
-                ServiceDAO.Instance.DelService(rowBeingDeleted.ServId);
+                if (btn is null) return;
+
+                var rowBeingDeleted = (Service)btn.DataContext;
+
+                if (ServiceDAO.Instance.DeleteService(rowBeingDeleted.ServId))
+                    Services.Remove(rowBeingDeleted);
             }
         }
 
         private void ButtonEditItem_OnClick(object sender, RoutedEventArgs e)
         {
             var btn = sender as Button;
-            var id = ((Service)btn?.DataContext).ServId;
-            var rowBeingEdited = Services.FirstOrDefault(s => s.ServId == id);
-            if (rowBeingEdited != null)
+            if (btn is null) return;
+
+            var rowBeingEdited = Services.FirstOrDefault(s => s.ServId == ((Service)btn.DataContext).ServId);
+
+            var dialog = new EditServiceDialog
             {
-                var editor = new EditServiceDialog
+                UpdateServiceAction = service =>
                 {
-                    UpdateServiceAction = service =>
+                    if (ServiceDAO.Instance.UpdateService(rowBeingEdited))
                     {
                         rowBeingEdited = service;
-                        ServiceDAO.Instance.UpdateService(rowBeingEdited);
-                    },
-                    PassParameterToDialogAction = () => rowBeingEdited
-                };
-                editor.ShowDialog();
-            }
+                    }
+                    _view.Refresh();
+                },
+                PassParameterToDialogFunc = () => rowBeingEdited,
+                PassServiceTypeFunc = () => ServiceTypes
+            };
+            dialog.ShowDialog();
         }
 
         private void AddServiceTypeInfo_OnClick(object sender, RoutedEventArgs e)
         {
-            var window = new SubWindows.AddNewServiceTypeDialog
+            var window = new AddNewServiceTypeDialog
             {
                 AddServiceAction = s =>
                 {
@@ -92,21 +89,21 @@ namespace HotelMng.Pages
             }
             var serviceType = CbbSvType.SelectedItem as ServiceType;
             if (NumUpDownPrice.Value is null || serviceType is null) return;
-            var sv = new Service()
-            {
-                Name = TxtName.Text,
-                Price = (int)NumUpDownPrice.Value,
-                SvTypeId = serviceType.SvTypeId,
-                Unit =  TxtUnit.Text
-            };
-            if (ServiceDAO.Instance.AddNewService(sv))
-            {
-                var data = ServiceDAO.Instance.NewestServiceInfo();
-                sv.ServId = data.Item1;
-                sv.SvTypeName = data.Item2;
-                Services.Add(sv);                             
-                MessageBox.Show("Thêm thành công");
-            }
+            //var sv = new Service
+            //{
+            //    Name = TxtName.Text,
+            //    Price = (int)NumUpDownPrice.Value,
+            //    SvTypeId = serviceType.SvTypeId,
+            //    Unit =  TxtUnit.Text
+            //};
+            //if (ServiceDAO.Instance.AddNewService(sv))
+            //{
+            //    var data = ServiceDAO.Instance.NewestServiceInfo();
+            //    sv.ServId = data.Item1;
+            //    sv.SvTypeName = data.Item2;
+            //    Services.Add(sv);                             
+            //    MessageBox.Show("Thêm thành công");
+            //}
         }
     }
 }

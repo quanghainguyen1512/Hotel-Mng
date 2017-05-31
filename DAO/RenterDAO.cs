@@ -2,7 +2,7 @@
 using System.Data;
 using System.Linq;
 using DTO;
-using System.Collections.ObjectModel;
+
 namespace DAO
 {
     public class RenterDAO
@@ -24,52 +24,21 @@ namespace DAO
             }
         }
 
-        public ObservableCollection<Renter> GetAllRenters()
+        public IEnumerable<Renter> GetAllRenters()
         {
-            _query = "SELECT * FROM dbo.RENTER";
-            var result = new ObservableCollection<Renter>();
+            _query = "SELECT * FROM RENTER";
             var data = DataProvider.Instance.ExecuteQueries(_query);
-            foreach (DataRow item in data.Rows)
+            foreach (DataRow row in data.Rows)
             {
-                result.Add(new Renter(item));
+                yield return new Renter(row);
             }
-            return result;
         }
 
-        public bool DelRenter(string Id)
+        public bool AddRenter(string name, bool gender, string phoneNum, int typeId, string identityNum, string address)
         {
-            _query = $"DELETE FROM dbo.RENTER WHERE RenterId = {Id}";
+            _query = $"INSERT RENTER VALUES (N'{name}, {gender}, {phoneNum}, {typeId}, {identityNum}, {address})";
             var result = DataProvider.Instance.ExecuteNonQuery(_query);
             return result > 0;
         }
-        //public bool AddRenter(string name, bool gender, string phoneNum, int typeId, string identityNum, string address)
-        //{
-        //    _query = $"INSERT RENTER VALUES (N'{name}, {gender}, {phoneNum}, {typeId}, {identityNum}, {address})";
-        //    var result = DataProvider.Instance.ExecuteNonQuery(_query);
-        //    return result > 0;
-        //}
-        public bool AddNewRenter(Renter renter)
-        {
-            _query =
-                "INSERT INTO dbo.RENTER (RenterId, Name, Gender, PhoneNum, IdentityNum, Address) " +
-                $"VALUES(N'{renter.RenterId}', N'{renter.Name}', {renter.Gender}, {renter.PhoneNum},N'{renter.IdentityNum}', N'{renter.Address}')";
-            var result = DataProvider.Instance.ExecuteNonQuery(_query);
-            return result > 0;
-        }
-
-        public bool UpdateRenter(Renter renter)
-        {
-            _query = $"UPDATE dbo.RENTER " +
-                        $"SET RenterId = '{renter.RenterId}', Name = {renter.Name}, Gerder = '{renter.Gender}', PhoneNum = {renter.PhoneNum}, IdentityNum={renter.IdentityNum}, Address={renter.Address}" +
-                        $"WHERE RenterId = {renter.RenterId}";
-            var result = DataProvider.Instance.ExecuteNonQuery(_query);
-            return result > 0;
-        }
-        //public bool AddRenter(Renter renter)
-        //{
-        //    _query = $"INSERT RENTER VALUES (N'{renter.Name}, {renter.Gender}, {renter.PhoneNum}, {renter.RenterId}, {renter.IdentityNum}, {renter.Address})";
-        //    var result = DataProvider.Instance.ExecuteNonQuery(_query);
-        //    return result > 0;
-        //}
     }
 }

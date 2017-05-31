@@ -1,61 +1,85 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using DAO;
 using DTO;
+using DTO.Annotations;
 
 namespace HotelMng.SubWindows
 {
     /// <summary>
     /// Interaction logic for EditServiceDialog.xaml
     /// </summary>
-    public partial class EditServiceDialog
+    public partial class EditServiceDialog : INotifyPropertyChanged
     {
         public Action<Service> UpdateServiceAction;
-        public Func<Service> PassParameterToDialogAction;
+        public Func<Service> PassParameterToDialogFunc;
+        public Func<IEnumerable<ServiceType>> PassServiceTypeFunc;
+
+
         private Service _serviceBeingUpdated;
+        private IEnumerable<ServiceType> _serviceTypes;
+
+        public IEnumerable<ServiceType> ServiceTypes
+        {
+            get => _serviceTypes;
+            set
+            {
+                _serviceTypes = value; 
+                OnPropertyChanged(nameof(ServiceTypes));
+            }
+        }
+
+        public Service ServiceBeingUpdated
+        {
+            get => _serviceBeingUpdated;
+            set
+            {
+                _serviceBeingUpdated = value; 
+                OnPropertyChanged(nameof(ServiceBeingUpdated));
+            }
+        }
+
         public EditServiceDialog()
         {
             InitializeComponent();
         }
 
-        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        private void ButtonCancel_OnClick(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
 
         private void ButtonApply_OnClick(object sender, RoutedEventArgs e)
         {
-            var serviceType = CbbServType.SelectedItem as ServiceType;
-            if (serviceType != null)
-                if (NumbUpDownPrice.Value != null)
-                {
-                    _serviceBeingUpdated = new Service()
-                    {
-                        Name = TxbName.Text,
-                        Price = (int)NumbUpDownPrice.Value,
-                        Unit = TxbUnit.Text,
-                        SvTypeId = serviceType.SvTypeId
-                    };
-                }
-            UpdateServiceAction(_serviceBeingUpdated);
+            ServiceBeingUpdated.SvType = CbbServType.SelectedItem as ServiceType;
+            UpdateServiceAction(ServiceBeingUpdated);
+            this.Close();
         }
 
         private void EditServiceDialog_OnLoaded(object sender, RoutedEventArgs e)
         {
-            _serviceBeingUpdated = PassParameterToDialogAction();
-            TxbName.Text = _serviceBeingUpdated.Name;
-            NumbUpDownPrice.Value = _serviceBeingUpdated.Price;
-            TxbUnit.Text = _serviceBeingUpdated.Unit;
+            ServiceTypes = PassServiceTypeFunc();
+            ServiceBeingUpdated = PassParameterToDialogFunc();
+            
+            for (var i = 0; i < CbbServType.Items.Count; i++)
+            {
+                if ((CbbServType.Items[i] as ServiceType).SvTypeId == ServiceBeingUpdated.SvType.SvTypeId)
+                {
+                    CbbServType.SelectedIndex = i;
+                    break;
+                }
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

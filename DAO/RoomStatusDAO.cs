@@ -8,34 +8,33 @@ using DTO;
 
 namespace DAO
 {
-    public class RoommateDAO
+    public class RoomStatusDAO
     {
-        private static RoommateDAO _instance;
+        private static RoomStatusDAO _instance;
         private static readonly object Padlock = new object();
         private string _query;
-        private RoommateDAO() { }
-        public static RoommateDAO Instance
+        private RoomStatusDAO() { }
+        public static RoomStatusDAO Instance
         {
             get
             {
                 lock (Padlock)
                 {
                     if (_instance == null)
-                        _instance = new RoommateDAO();
+                        _instance = new RoomStatusDAO();
                 }
                 return _instance;
             }
         }
 
-        public IEnumerable<Roommate> GetRoommates(string renterId)
+        public IEnumerable<RoomStatus> GetAllRoomStatus()
         {
-            _query = "EXEC dbo.USP_GetAllRoommatesByRenterId";
-            var data = DataProvider.Instance.ExecuteQueries(_query, new object[] {renterId});
+            _query = "EXEC USP_GetRoomStatusInfo";
+            var data = DataProvider.Instance.ExecuteQueries(_query);
             foreach (DataRow row in data.Rows)
             {
-                yield return new Roommate(row);
+                yield return new RoomStatus(row);
             }
         }
-
     }
 }
