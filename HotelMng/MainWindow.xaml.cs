@@ -10,6 +10,9 @@ using System.Windows.Data;
 using DAO;
 using DTO;
 using DTO.Annotations;
+using System.Data;
+using System.Data.SqlClient;
+using Microsoft.Reporting.WinForms;
 using HotelMng.SubWindows;
 using MahApps.Metro.Controls;
 using HamburgerMenuItem = HamburgerMenu.HamburgerMenuItem;
@@ -91,19 +94,19 @@ namespace HotelMng
 
             var itemBeingEdited = Rooms.FirstOrDefault(r => r.RoomId == ((Room) menuItem.DataContext).RoomId);
 
-            var dialog = new EditRoomDialog
-            {
-                PassParameterToDialogFunc = () => itemBeingEdited,
-                UpdateRoomTypeAction = room =>
-                {
-                    if (RoomDAO.Instance.UpdateRoom(room))
-                    {
-                        itemBeingEdited = room;
-                    }
-                    _view.Refresh();
-                }
-            };
-            dialog.ShowDialog();
+            //var dialog = new EditRoomDialog
+            //{
+            //    PassParameterToDialogFunc = () => itemBeingEdited,
+            //    UpdateRoomTypeAction = room =>
+            //    {
+            //        if (RoomDAO.Instance.UpdateRoom(room))
+            //        {
+            //            itemBeingEdited = room;
+            //        }
+            //        _view.Refresh();
+            //    }
+            //};
+            //dialog.ShowDialog();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -114,5 +117,20 @@ namespace HotelMng
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            string conStr = @"Data Source=DESKTOP-TKMUG3F\SIR;Initial Catalog=HotelManagement;Integrated Security=True";
+            SqlConnection cn = new SqlConnection(conStr);
+            var query = "EXEC dbo.USP_GetDataForReporting @month, @year";
+            var data = DataProvider.Instance.ExecuteQueries(query);
+
+
+
+            ReportDataSource ds = new ReportDataSource("DataSet1",data);
+            _repor.LocalReport.DataSources.Add(ds);
+            _repor.LocalReport.ReportEmbeddedResource = "HotelMng.Report1.rdlc";
+            _repor.RefreshReport();
+
+        }
     }
 }

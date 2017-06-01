@@ -20,9 +20,9 @@
     </mah:MetroWindow.Background>
 
     <Grid Margin="10,0" DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:EditServiceDialog}}}">
-        <Grid.Resources>
+        <!--<Grid.Resources>
             <converter:RoomTypeConverter x:Key="RoomTypeConverter"/>
-        </Grid.Resources>
+        </Grid.Resources>-->
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition Width="2*"/>
