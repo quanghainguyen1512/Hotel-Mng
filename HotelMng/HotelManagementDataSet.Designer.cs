@@ -817,7 +817,7 @@ namespace HotelMng.HotelManagementDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = global::HotelMng.Properties.Settings.Default.HotelManagementConnectionString1;
+            this._connection.ConnectionString = global::HotelMng.Properties.Settings.Default.HotelManagementConnectionString;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -830,19 +830,26 @@ namespace HotelMng.HotelManagementDataSetTableAdapters {
             this._commandCollection[0].CommandType = global::System.Data.CommandType.StoredProcedure;
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@RETURN_VALUE", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.ReturnValue, 10, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@month", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 5, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@year", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 10, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(HotelManagementDataSet.USP_GetDataForReportingDataTable dataTable, global::System.Nullable<short> month) {
+        public virtual int Fill(HotelManagementDataSet.USP_GetDataForReportingDataTable dataTable, global::System.Nullable<short> month, global::System.Nullable<int> year) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             if ((month.HasValue == true)) {
                 this.Adapter.SelectCommand.Parameters[1].Value = ((short)(month.Value));
             }
             else {
                 this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
+            }
+            if ((year.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[2].Value = ((int)(year.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[2].Value = global::System.DBNull.Value;
             }
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
@@ -855,13 +862,19 @@ namespace HotelMng.HotelManagementDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual HotelManagementDataSet.USP_GetDataForReportingDataTable GetData(global::System.Nullable<short> month) {
+        public virtual HotelManagementDataSet.USP_GetDataForReportingDataTable GetData(global::System.Nullable<short> month, global::System.Nullable<int> year) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             if ((month.HasValue == true)) {
                 this.Adapter.SelectCommand.Parameters[1].Value = ((short)(month.Value));
             }
             else {
                 this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
+            }
+            if ((year.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[2].Value = ((int)(year.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[2].Value = global::System.DBNull.Value;
             }
             HotelManagementDataSet.USP_GetDataForReportingDataTable dataTable = new HotelManagementDataSet.USP_GetDataForReportingDataTable();
             this.Adapter.Fill(dataTable);

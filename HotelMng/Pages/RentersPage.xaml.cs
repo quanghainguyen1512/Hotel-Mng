@@ -31,7 +31,7 @@ namespace HotelMng.Pages
         {
             InitializeComponent();
 
-            Renters = RenterDAO.Instance.GetAllRenters();
+            Renters = new ObservableCollection<Renter>(RenterDAO.Instance.GetAllRenters()); 
 
             //var view = (CollectionView)CollectionViewSource.GetDefaultView(Renters);
             //view.GroupDescriptions?.Add(new PropertyGroupDescription("Renters"));
@@ -50,7 +50,7 @@ namespace HotelMng.Pages
                     UpdateRenterAction =renter =>
                     {
                         rowBeingEdited = renter;
-                        RenterDAO.Instance.UpdateRenter(rowBeingEdited);
+                        //RenterDAO.Instance.UpdateRenter(rowBeingEdited);
                     },
                     PassParameterToDialogAction = () => rowBeingEdited
                 };
@@ -67,7 +67,7 @@ namespace HotelMng.Pages
                 var btn = sender as Button;
                 var rowBeingDeleted = (Renter)btn?.DataContext;
                 Renters.Remove(rowBeingDeleted);
-                RenterDAO.Instance.DelRenter(rowBeingDeleted.RenterId);
+                //RenterDAO.Instance.DelRenter(rowBeingDeleted.RenterId);
             }
         }
 
@@ -87,10 +87,10 @@ namespace HotelMng.Pages
                 IdentityNum = txtIdentityNum.Text,
                 Address = txtAddress.Text
             };
-            if (RenterDAO.Instance.AddNewRenter(rt))
-            {
-                MessageBox.Show("Thêm thành công");
-            }
+            //if (RenterDAO.Instance.AddNewRenter(rt))
+            //{
+            //    MessageBox.Show("Thêm thành công");
+            //}
         }
     }
 }
