@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -12,6 +13,7 @@ using DTO;
 using DTO.Annotations;
 using HotelMng.SubWindows;
 using MahApps.Metro.Controls;
+using Microsoft.Reporting.WinForms;
 using HamburgerMenuItem = HamburgerMenu.HamburgerMenuItem;
 
 namespace HotelMng
@@ -114,5 +116,16 @@ namespace HotelMng
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var query = "EXEC dbo.USP_GetDataForReporting @month, @year";
+            var data = DataProvider.Instance.ExecuteQueries(query, new object[] {8, 2017});
+
+            var ds = new ReportDataSource("DataSet1", data);
+            _repo.LocalReport.DataSources.Add(ds);
+            _repo.LocalReport.ReportEmbeddedResource = "HotelMng.Report1.rdlc";
+            _repo.RefreshReport();
+
+        }
     }
 }

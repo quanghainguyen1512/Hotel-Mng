@@ -10,6 +10,7 @@
                  xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                  xmlns:hamburgerMenu="clr-namespace:HamburgerMenu;assembly=hamburgerMenu"
                  mc:Ignorable="d"
+                 xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
                  Title="MainWindow" Height="700" Width="1000" 
                  WindowState="Maximized"
                  WindowStyle="None"
@@ -46,7 +47,7 @@
                         <TextBlock Text="TRANG CHỦ" Style="{StaticResource StyleHeaderText}"/>
                     </StackPanel>
                 </TabItem.Header>
-                
+
                 <Grid>
                     <GroupBox Style="{StaticResource StyleGroupBox}">
                         <GroupBox.Header>
@@ -241,6 +242,7 @@
                                                          Selected="HamburgerMenuItem_OnSelected"/>
                         <hamburgerMenu:HamburgerMenuItem Text="Thay đổi phí phụ thu"
                                                          Icon="Assets/Icon/appbar.currency.dollar.png"/>
+
                     </hamburgerMenu:HamburgerMenu>
                     <Frame Grid.Column="1"
                            x:Name="Frame"
@@ -250,7 +252,6 @@
             <TabItem Style="{DynamicResource StyleTabItemDefault}">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
-                        <!--<Image Source="Assets/Icon/report-icon-white.png" Style="{StaticResource StyleHeaderImage}"/>-->
                         <Rectangle Width="15" Style="{StaticResource StyleHeaderIcon}">
                             <Rectangle.Fill>
                                 <VisualBrush Visual="{StaticResource ReportIcon}"/>
@@ -259,6 +260,14 @@
                         <TextBlock Text="BÁO CÁO" Style="{StaticResource StyleHeaderText}"/>
                     </StackPanel>
                 </TabItem.Header>
+                <StackPanel>
+                    <Button Content="Show" Click="Button_Click"></Button>
+                    <WindowsFormsHost Margin="0,74,0,0" Height="453">
+                        <rv:ReportViewer x:Name="_repo"></rv:ReportViewer>
+                    </WindowsFormsHost>
+                </StackPanel>
+
+
             </TabItem>
             <TabItem Style="{DynamicResource StyleTabItemRight}">
                 <TabItem.Header>
@@ -272,6 +281,7 @@
                     </StackPanel>
                 </TabItem.Header>
             </TabItem>
+
         </TabControl>
     </DockPanel>
 </mah:MetroWindow>
