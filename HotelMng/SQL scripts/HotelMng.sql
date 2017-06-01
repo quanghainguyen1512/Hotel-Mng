@@ -162,7 +162,7 @@ AS
 		ON RS.StatusID = R.StatusId
 	GROUP BY RS.StatusId, RS.StatusName
 GO
-CREATE PROC USP_GetDataForReporting
+ALTER PROC USP_GetDataForReporting
 	@month SMALLINT,
 	@year  INT
 AS
@@ -183,7 +183,7 @@ AS
 	
 	SELECT	@total = SUM(t.Income)
 	FROM	@temptable AS t
-	SELECT	t.RoomTypeId AS N'Loại phòng', t.Income N'Thu nhập', t.Income / @total AS N'Tỉ lệ'
+	SELECT	t.RoomTypeId, t.Income, (t.Income / @total * 100) AS Proportion
 	FROM	@temptable AS t
 GO
 CREATE PROC USP_GetNewestServiceInfo

@@ -17,12 +17,15 @@ namespace DTO
         public string   Address { get; set; }
         #endregion
 
-        public Renter() { }
+        public Renter()
+        {
+            
+        }
 
         public Renter(System.Data.DataRow row)
         {
             RenterId    = row["RenterId"].ToString();
-            Name        = row["Name"].ToString();
+            Name        = row["Name"].ToString();   
             Gender      = row["Gender"].Equals(true) ? "Male" : "Female";
             PhoneNum    = row["PhoneNum"].ToString();
             IdentityNum = row["IdentityNum"].ToString();

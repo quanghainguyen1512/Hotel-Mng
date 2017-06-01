@@ -46,12 +46,6 @@
     <Reference Include="MahApps.Metro.IconPacks, Version=1.9.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.IconPacks.1.9.0\lib\net45\MahApps.Metro.IconPacks.dll</HintPath>
     </Reference>
-    <Reference Include="MahApps.Metro.IconPacks.Fakes">
-      <HintPath>FakesAssemblies\MahApps.Metro.IconPacks.Fakes.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
     <Reference Include="Microsoft.ReportViewer.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ReportViewer.Common.10.0.40219.1\lib\Microsoft.ReportViewer.Common.dll</HintPath>
     </Reference>
@@ -63,9 +57,15 @@
     </Reference>
     <Reference Include="Microsoft.ReportViewer.WebForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Report.Viewer.11.0.0.0\lib\net\Microsoft.ReportViewer.WebForms.DLL</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.ReportViewer.WinForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.ReportViewer.WinForms.10.0.40219.1\lib\Microsoft.ReportViewer.WinForms.dll</HintPath>
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportViewer.Windows.11.0.3452\lib\net40\Microsoft.ReportViewer.WinForms.DLL</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Types, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SqlServer.Types.11.0.2\lib\net20\Microsoft.SqlServer.Types.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -116,6 +116,7 @@
     <Compile Include="Assets\UserControls\RoomStatusItem.xaml.cs">
       <DependentUpon>RoomStatusItem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converter\RoomTypeConverter.cs" />
     <Compile Include="HotelManagementDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -130,6 +131,7 @@
     <Compile Include="Pages\ServicesPage.xaml.cs">
       <DependentUpon>ServicesPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SqlServerTypes\Loader.cs" />
     <Compile Include="SubWindows\AddNewServiceTypeDialog.xaml.cs">
       <DependentUpon>AddNewServiceTypeDialog.xaml</DependentUpon>
     </Compile>
@@ -141,6 +143,12 @@
     </Compile>
     <Compile Include="SubWindows\EditRenter.xaml.cs">
       <DependentUpon>EditRenter.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SubWindows\EditRoomDialog.xaml.cs">
+      <DependentUpon>EditRoomDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SubWindows\EditRoomTypeDialog.xaml.cs">
+      <DependentUpon>EditRoomTypeDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="SubWindows\EditServiceDialog.xaml.cs">
       <DependentUpon>EditServiceDialog.xaml</DependentUpon>
@@ -219,6 +227,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SubWindows\EditRenter.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SubWindows\EditRoomDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SubWindows\EditRoomTypeDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -284,9 +300,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Icon\roomitem-icon.png" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\DAO\DAO.csproj">
       <Project>{f4e6b66c-1767-445d-9246-6d523949f784}</Project>
       <Name>DAO</Name>
@@ -303,11 +316,29 @@
     <Resource Include="Resources\Entypo-license.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\packages\Microsoft.SqlServer.Types.11.0.2\nativeBinaries\x64\msvcr100.dll">
+      <Link>SqlServerTypes\x64\msvcr100.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Microsoft.SqlServer.Types.11.0.2\nativeBinaries\x64\SqlServerSpatial110.dll">
+      <Link>SqlServerTypes\x64\SqlServerSpatial110.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Microsoft.SqlServer.Types.11.0.2\nativeBinaries\x86\msvcr100.dll">
+      <Link>SqlServerTypes\x86\msvcr100.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Microsoft.SqlServer.Types.11.0.2\nativeBinaries\x86\SqlServerSpatial110.dll">
+      <Link>SqlServerTypes\x86\SqlServerSpatial110.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\readme.htm" />
+    <Resource Include="Assets\Icon\appbar.currency.dollar.png" />
+    <Resource Include="Assets\Icon\appbar.social.delicious.png" />
     <Content Include="SQL scripts\main_scripts.sql" />
     <Resource Include="Assets\Icon\appbar.people.png" />
     <Resource Include="Assets\Icon\appbar.key.png" />
     <Resource Include="Assets\Icon\appbar.math.plus.minus.png" />
-    <Resource Include="Assets\Icon\appbar.social.delicious.png" />
     <Resource Include="AppIcon.ico" />
     <Content Include="SQL scripts\HotelMng.sql" />
   </ItemGroup>
