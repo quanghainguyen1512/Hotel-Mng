@@ -11,56 +11,59 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Runtime.CompilerServices;
 using DTO;
+using DAO;
+using DTO.Annotations;
+using System.ComponentModel;
 
 namespace HotelMng.SubWindows
 {
     /// <summary>
     /// Interaction logic for EditRenter.xaml
     /// </summary>
-    public partial class EditRenter : Window
+    public partial class EditRenter : INotifyPropertyChanged
     {
         public Action<Renter> UpdateRenterAction;
         public Func<Renter> PassParameterToDialogAction;
+
         private Renter _renterBeingUpdated;
+
+        public Renter RenterBeingUpdated
+        {
+            get => _renterBeingUpdated;
+            set
+            {
+                _renterBeingUpdated = value;
+                OnPropertyChanged(nameof(RenterBeingUpdated));
+            }
+        }
+
         public EditRenter()
         {
             InitializeComponent();
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        private void EditRenter_OnLoaded(object sender, RoutedEventArgs e)
         {
-            _renterBeingUpdated = PassParameterToDialogAction();
-
-
-            txtRenterId.Text = _renterBeingUpdated.RenterId;
-            txtName.Text = _renterBeingUpdated.Name;
-            txtGender.Text = _renterBeingUpdated.Gender;
-            txtPhoneNum.Text = _renterBeingUpdated.PhoneNum;
-            txtIdentityNum.Text = _renterBeingUpdated.IdentityNum;
-            txtAddress.Text = _renterBeingUpdated.Address;
-
+            RenterBeingUpdated = PassParameterToDialogAction();
         }
 
         private void ButtonApply_OnClick(object sender, RoutedEventArgs e)
         {
-            _renterBeingUpdated = new Renter()
-            {
-                RenterId = txtRenterId.Text,
-                Name = txtName.Text,
-                Gender = txtGender.Text,
-                PhoneNum = txtPhoneNum.Text,
-                IdentityNum = txtIdentityNum.Text,
-                Address = txtAddress.Text
-
-            };
-            UpdateRenterAction(_renterBeingUpdated);
-
+            UpdateRenterAction(RenterBeingUpdated);
+            this.Close();
         }
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

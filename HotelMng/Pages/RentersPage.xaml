@@ -6,6 +6,7 @@
       xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
       xmlns:local="clr-namespace:HotelMng.Pages"
       mc:Ignorable="d"
+      d:DesignHeight="500" d:DesignWidth="800"
       Title="RentersPage" Height="550" Width="1000">
 
     <Grid DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:RentersPage}}}">
@@ -16,7 +17,7 @@
 
         <DataGrid Grid.Column="0" 
                   ItemsSource="{Binding Renters}"
-                  Name="DgServices"
+                  Name="DgRenters"
                   AutoGenerateColumns="False"
                   SelectionMode="Single"
                   SelectionUnit="FullRow"
@@ -42,11 +43,11 @@
                                     Binding="{Binding PhoneNum}" 
                                     FontSize="16"/>
                 <DataGridTextColumn Header="CMND"
-                                    Width="105"
+                                    Width="80"
                                     Binding="{Binding IdentityNum}" 
                                     FontSize="16"/>
                 <DataGridTextColumn Header="Địa Chỉ"
-                                    Width="190"
+                                    Width="180"
                                     Binding="{Binding Address}" 
                                     FontSize="16"/>
                 <DataGridTemplateColumn Width="Auto">
@@ -59,7 +60,8 @@
                                     <DataTemplate>
                                         <Rectangle Width="10" Height="10">
                                             <Rectangle.Fill>
-                                                <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_edit}"/>
+                                                <VisualBrush Stretch="Fill" 
+                                                             Visual="{StaticResource appbar_edit}"/>
                                             </Rectangle.Fill>
                                         </Rectangle>
                                     </DataTemplate>
@@ -79,7 +81,8 @@
                                     <DataTemplate>
                                         <Rectangle Width="10" Height="10">
                                             <Rectangle.Fill>
-                                                <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_axis_x_letter}"/>
+                                                <VisualBrush Stretch="Fill" 
+                                                             Visual="{StaticResource appbar_axis_x_letter}"/>
                                             </Rectangle.Fill>
                                         </Rectangle>
                                     </DataTemplate>
@@ -125,24 +128,55 @@
                 <ColumnDefinition/>
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Row="0" Grid.Column="0" Text="ID:" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,5,18,5" Width="30" Foreground="White" FontSize="14"/>
-            <TextBox x:Name="txtID" Grid.Row="0" Grid.Column="1"
-                     Text="{Binding ElementName=DgServices, Path=SelectedItem.RenterId}" Background="White" MinHeight="0" FontSize="14" Margin="0,19,10,10"/>
-            <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Tên:"  Foreground="White" FontSize="14" Margin="10,20,17,20" Width="31"/>
-            <TextBox x:Name="txtName" Grid.Row="1" Grid.Column="1"
-                     Text="{Binding ElementName=DgServices, Path=SelectedItem.Name}" Background="White" MinHeight="0" FontSize="14" Margin="0,19,10,10"/>
-            <TextBlock Grid.Row="2" Grid.Column="0" TextWrapping="Wrap" Text="Giới Tính:" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10" Width="38" Foreground="White" FontSize="14" Height="39"/>
-            <TextBox x:Name="txtGender" Grid.Row="2" Grid.Column="1"
-                     Text="{Binding ElementName=DgServices, Path=SelectedItem.Gender}" Background="White" MinHeight="0" FontSize="14" Margin="0,19,50,10"/>
-            <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Phone:" Foreground="White" FontSize="14" Width="42" Margin="10,20,6,20"/>
-            <TextBox x:Name="txtPhoneNum" Grid.Row="3" Grid.Column="1"
-                     Text="{Binding ElementName=DgServices, Path=SelectedItem.PhoneNum}" Background="White" MinHeight="0" FontSize="14" Margin="0,19,10,10"/>
-            <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Text="CMND:" Foreground="White" FontSize="14" Width="42" Margin="10,20,6,20"/>
-            <TextBox x:Name="txtIdentityNum" Grid.Row="4" Grid.Column="1"
-                     Text="{Binding ElementName=DgServices, Path=SelectedItem.IdentityNum}" Background="White" MinHeight="0" FontSize="14" Margin="0,19,10,10"/>
-            <TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Địa chỉ:" Foreground="White" FontSize="14" Width="42" Margin="10,20,6,20"/>
-            <TextBox x:Name="txtAddress" Grid.Row="5" Grid.Column="1" TextWrapping="Wrap"
-                     Text="{Binding ElementName=DgServices, Path=SelectedItem.Address}" Background="White" MinHeight="0" FontSize="14" Margin="0,19,10,10"/>
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="ID:" 
+                       VerticalAlignment="Center" HorizontalAlignment="Center" 
+                       Margin="10,5,18,5" Width="30"
+                       Foreground="White" FontSize="14"/>
+            <TextBox Name="txtID" Grid.Row="0" Grid.Column="1"
+                     Text="{Binding RenterBeingAdded.RenterId}" 
+                     Background="White" MinHeight="0" 
+                     FontSize="14" Margin="0,19,10,10" Width="100" HorizontalAlignment="Left"/>
+            <TextBlock Grid.Row="1" Grid.Column="0" 
+                       VerticalAlignment="Center" HorizontalAlignment="Center" 
+                       Text="Tên:"  Foreground="White" 
+                       FontSize="14" Margin="10,20,17,20" Width="31"/>
+            <TextBox Name="txtName" Grid.Row="1" Grid.Column="1"
+                     Text="{Binding RenterBeingAdded.Name}" 
+                     Background="White" MinHeight="0" FontSize="14" Margin="0,19,10,10"
+                     Width="150" HorizontalAlignment="Left"/>
+            <TextBlock Grid.Row="2" Grid.Column="0" TextWrapping="Wrap" Text="Giới Tính:" 
+                       VerticalAlignment="Center" HorizontalAlignment="Center" 
+                       Margin="10" Width="38" Foreground="White" FontSize="14" Height="39"/>
+            <StackPanel Grid.Row="2" Grid.Column="1"  Orientation="Horizontal"
+                            VerticalAlignment="Center" >
+                <RadioButton Content="Nam" Margin="3" IsChecked="{Binding RenterBeingUpdated.Gender}"/>
+                <RadioButton Content="Nữ" Margin="3"/>
+                <RadioButton Content="Khác" Margin="3" IsChecked="{x:Null}"/>
+            </StackPanel>
+            <TextBlock Grid.Row="3" Grid.Column="0" 
+                       VerticalAlignment="Center" HorizontalAlignment="Center" 
+                       Text="Phone:" Foreground="White" FontSize="14" 
+                       Width="42" Margin="10,20,6,20"/>
+            <TextBox Name="txtPhoneNum" Grid.Row="3" Grid.Column="1"
+                     Text="{Binding RenterBeingAdded.PhoneNum}" 
+                     Background="White" MinHeight="0" FontSize="14"
+                     Margin="0,19,10,10" Width="130" HorizontalAlignment="Left"/>
+            <TextBlock Grid.Row="4" Grid.Column="0" 
+                       VerticalAlignment="Center" HorizontalAlignment="Center" 
+                       Text="CMND:" Foreground="White" 
+                       FontSize="14" Width="42" Margin="10,20,6,20"/>
+            <TextBox Name="txtIdentityNum" Grid.Row="4" Grid.Column="1"
+                     Text="{Binding RenterBeingAdded.IdentityNum}" 
+                     Background="White" MinHeight="0" FontSize="14" 
+                     Margin="0,19,10,10" Width="130" HorizontalAlignment="Left"/>
+            <TextBlock Grid.Row="5" Grid.Column="0" 
+                       VerticalAlignment="Center" HorizontalAlignment="Center"
+                       Text="Địa chỉ:" Foreground="White" 
+                       FontSize="14" Width="42" Margin="10,20,6,20"/>
+            <TextBox Name="txtAddress" Grid.Row="5" Grid.Column="1" TextWrapping="Wrap"
+                     Text="{Binding RenterBeingAdded.Address}" 
+                     Background="White" MinHeight="0" FontSize="14" 
+                     Margin="0,19,10,10"/>
             <Grid Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2"
                         VerticalAlignment="Top">
                 <Grid.ColumnDefinitions>

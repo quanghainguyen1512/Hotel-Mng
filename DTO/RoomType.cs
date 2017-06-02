@@ -63,7 +63,7 @@ namespace DTO
         {
             RoomTypeId = Convert.ToChar(row["RoomTypeId"]);
             PriceByDay = int.Parse(row["PriceByDay"].ToString(), NumberStyles.Currency);
-            PriceFirstHour = int.Parse(row["PriceFirstHour"].ToString(), NumberStyles.Currency);
+            //PriceFirstHour = int.Parse(row["PriceFirstHour"].ToString(), NumberStyles.Currency);
             PricePerHour = int.Parse(row["PricePerHour"].ToString(), NumberStyles.Currency);
             Note = row["Note"].ToString();
         }

@@ -26,12 +26,14 @@ namespace HotelMng.Pages
     public partial class RentersPage : Page
     {
         public ObservableCollection<Renter> Renters { get; set; }
+        public Renter RenterBeingAdded { get; set; }
+
+        //private readonly CollectionView _view;
 
         public RentersPage()
         {
             InitializeComponent();
-
-            Renters = new ObservableCollection<Renter>(RenterDAO.Instance.GetAllRenters()); 
+            Renters = new ObservableCollection<Renter>(RenterDAO.Instance.GetAllRenters());
 
             //var view = (CollectionView)CollectionViewSource.GetDefaultView(Renters);
             //view.GroupDescriptions?.Add(new PropertyGroupDescription("Renters"));
@@ -41,22 +43,25 @@ namespace HotelMng.Pages
         private void ButtonEditItem_OnClick(object sender, RoutedEventArgs e)
         {
             var btn = sender as Button;
+            if (btn is null) return;
+
+            //var rowBeingEdited = Renters.FirstOrDefault(s => s.RenterId == ((Renter)btn.DataContext).RenterId);
             var id = ((Renter)btn?.DataContext).RenterId;
             var rowBeingEdited = Renters.FirstOrDefault(s => s.RenterId == id);
-            if (rowBeingEdited != null)
+
+            var editor = new EditRenter()
             {
-                var editor = new EditRenter
+                UpdateRenterAction = renter =>
                 {
-                    UpdateRenterAction =renter =>
+                    if (RenterDAO.Instance.UpdateRenter(rowBeingEdited))
                     {
                         rowBeingEdited = renter;
-                        //RenterDAO.Instance.UpdateRenter(rowBeingEdited);
-                    },
-                    PassParameterToDialogAction = () => rowBeingEdited
-                };
-                editor.ShowDialog();
-
-            }
+                    }
+                    //_view.Refresh();
+                },
+                PassParameterToDialogAction = () => rowBeingEdited
+            };
+            editor.ShowDialog();
 
         }
         private void ButtonDelItem_OnClick(object sender, RoutedEventArgs e)
@@ -67,7 +72,7 @@ namespace HotelMng.Pages
                 var btn = sender as Button;
                 var rowBeingDeleted = (Renter)btn?.DataContext;
                 Renters.Remove(rowBeingDeleted);
-                //RenterDAO.Instance.DelRenter(rowBeingDeleted.RenterId);
+                RenterDAO.Instance.DelRenter(rowBeingDeleted.RenterId);
             }
         }
 
@@ -78,19 +83,20 @@ namespace HotelMng.Pages
                 MessageBox.Show("Vui lòng nhập đầy đủ thông tin");
                 return;
             }
-            var rt = new Renter()
-            {
-                RenterId = txtID.Text,
-                Name = txtName.Text,
-                Gender = txtGender.Text,
-                PhoneNum = txtPhoneNum.Text,
-                IdentityNum = txtIdentityNum.Text,
-                Address = txtAddress.Text
-            };
-            //if (RenterDAO.Instance.AddNewRenter(rt))
+            //var rt = new Renter()
             //{
-            //    MessageBox.Show("Thêm thành công");
-            //}
+            //    RenterId = txtID.Text,
+            //    Name = txtName.Text,
+            //    Gender = txtGender.Text,
+            //    PhoneNum = txtPhoneNum.Text,
+            //    IdentityNum = txtIdentityNum.Text,
+            //    Address = txtAddress.Text
+            //};
+            if (RenterDAO.Instance.AddRenter(txtName.Text, true, txtPhoneNum.Text, txtID.Text, txtIdentityNum.Text, txtAddress.Text))
+            {
+                Renters.Add(RenterBeingAdded);
+                MessageBox.Show("Thêm thành công");
+            }
         }
     }
 }

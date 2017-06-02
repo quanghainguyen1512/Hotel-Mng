@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -32,7 +31,7 @@ namespace HotelMng
             get => _rooms;
             set
             {
-                _rooms = value; 
+                _rooms = value;
                 OnPropertyChanged(nameof(Rooms));
             }
         }
@@ -44,8 +43,22 @@ namespace HotelMng
 
             AllRoomStatus = RoomStatusDAO.Instance.GetAllRoomStatus();
 
-            _view = (CollectionView) CollectionViewSource.GetDefaultView(Rooms);
+            _view = (CollectionView)CollectionViewSource.GetDefaultView(Rooms);
             _view.GroupDescriptions.Add(new PropertyGroupDescription("RoomTypeId"));
+
+            //for (int i = 1; i <= 12; i++)
+            //{
+            //    ComboBoxItem item = new ComboBoxItem();
+            //    item.Content = i;
+            //    cbxMonth.Items.Add(item);
+            //}
+
+            //for (int i = 2000; i <= DateTime.UtcNow.Year; i++)
+            //{
+            //    ComboBoxItem item = new ComboBoxItem();
+            //    item.Content = i;
+            //    cbxYear.Items.Add(item);
+            //}
         }
 
         private void HamburgerMenuItem_OnSelected(object sender, RoutedEventArgs e)
@@ -91,7 +104,7 @@ namespace HotelMng
             var menuItem = sender as MenuItem;
             if (menuItem is null) return;
 
-            var itemBeingEdited = Rooms.FirstOrDefault(r => r.RoomId == ((Room) menuItem.DataContext).RoomId);
+            var itemBeingEdited = Rooms.FirstOrDefault(r => r.RoomId == ((Room)menuItem.DataContext).RoomId);
 
             var dialog = new EditRoomDialog
             {
@@ -119,8 +132,7 @@ namespace HotelMng
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             var query = "EXEC dbo.USP_GetDataForReporting @month, @year";
-            var data = DataProvider.Instance.ExecuteQueries(query, new object[] {8, 2017});
-
+            var data = DataProvider.Instance.ExecuteQueries(query, new object[] { (int.Parse(cbxMonth.Text)), (int.Parse(cbxYear.Text)) });
             var ds = new ReportDataSource("DataSet1", data);
             _repo.LocalReport.DataSources.Add(ds);
             _repo.LocalReport.ReportEmbeddedResource = "HotelMng.Report1.rdlc";

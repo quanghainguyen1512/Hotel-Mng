@@ -94,14 +94,14 @@ namespace HotelMng.Pages
             //    Name = TxtName.Text,
             //    Price = (int)NumUpDownPrice.Value,
             //    SvTypeId = serviceType.SvTypeId,
-            //    Unit =  TxtUnit.Text
+            //    Unit = TxtUnit.Text
             //};
             //if (ServiceDAO.Instance.AddNewService(sv))
             //{
             //    var data = ServiceDAO.Instance.NewestServiceInfo();
             //    sv.ServId = data.Item1;
             //    sv.SvTypeName = data.Item2;
-            //    Services.Add(sv);                             
+            //    Services.Add(sv);
             //    MessageBox.Show("Thêm thành công");
             //}
         }
