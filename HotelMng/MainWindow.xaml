@@ -18,24 +18,6 @@
                  ShowMaxRestoreButton="False" 
                  ShowMinButton="False">
     <mah:MetroWindow.Resources>
-        <ContextMenu x:Key="ContextMenuForRentedRoom">
-            <MenuItem Header="Danh sách khách đang ở"/>
-            <MenuItem Header="Xem/Thêm dịch vụ"/>
-            <MenuItem Header="Thanh toán"/>
-            <Separator/>
-            <MenuItem Header="Xem/Chỉnh sửa thông tin" Click="MenuItemEditRoom_OnClick"/>
-            <MenuItem Header="Xóa phòng" Click="MenuItemDelRoom_OnClick"/>
-        </ContextMenu>
-        <ContextMenu x:Key="ContextMenuForAvailableRoom">
-            <MenuItem Header="Đăng kí phòng" Click="MenuItemRegRoom_OnClick"/>
-            <Separator/>
-            <MenuItem Header="Xem/Chỉnh sửa thông tin" Click="MenuItemEditRoom_OnClick"/>
-            <MenuItem Header="Xóa phòng" Click="MenuItemDelRoom_OnClick"/>
-        </ContextMenu>
-        <ContextMenu x:Key="DefaultContextMenu">
-            <MenuItem Header="Xem/Chỉnh sửa thông tin" Click="MenuItemEditRoom_OnClick"/>
-            <MenuItem Header="Xóa phòng" Click="MenuItemDelRoom_OnClick"/>
-        </ContextMenu>
     </mah:MetroWindow.Resources>
     <DockPanel DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:MainWindow}}}">
         <DockPanel.Resources>
@@ -105,6 +87,27 @@
                             <ScrollViewer Grid.Row="1">
                                 <ItemsControl ItemsSource="{Binding Rooms}"
                                               Name="RoomContainer">
+                                    <ItemsControl.Resources>
+                                        <ContextMenu x:Key="ContextMenuForRentedRoom">
+                                            <MenuItem Header="Danh sách khách đang ở"/>
+                                            <MenuItem Header="Xem/Thêm dịch vụ"/>
+                                            <MenuItem Header="Thanh toán"/>
+                                            <Separator/>
+                                            <MenuItem Header="Xem/Chỉnh sửa thông tin" Click="MenuItemEditRoom_OnClick"/>
+                                            <MenuItem Header="Xóa phòng" Click="MenuItemDelRoom_OnClick"/>
+                                        </ContextMenu>
+                                        <ContextMenu x:Key="ContextMenuForAvailableRoom">
+                                            <MenuItem Header="Đăng kí phòng" Click="MenuItemRegRoom_OnClick"/>
+                                            <Separator/>
+                                            <MenuItem Header="Xem/Chỉnh sửa thông tin" Click="MenuItemEditRoom_OnClick"/>
+                                            <MenuItem Header="Xóa phòng" Click="MenuItemDelRoom_OnClick"/>
+                                        </ContextMenu>
+                                        <ContextMenu x:Key="DefaultContextMenu">
+                                            <MenuItem Header="Xem/Chỉnh sửa thông tin" Click="MenuItemEditRoom_OnClick"/>
+                                            <MenuItem Header="Xóa phòng" Click="MenuItemDelRoom_OnClick"/>
+                                        </ContextMenu>
+
+                                    </ItemsControl.Resources>
                                     <ItemsControl.GroupStyle>
                                         <GroupStyle>
                                             <GroupStyle.HeaderTemplate>

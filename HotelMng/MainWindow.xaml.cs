@@ -83,13 +83,13 @@ namespace HotelMng
             switch (((Room)tile.DataContext).RoomStatus.StatusId)
             {
                 case 1:
-                    cm = this.FindResource("ContextMenuForAvailableRoom") as ContextMenu;
+                    cm = RoomContainer.FindResource("ContextMenuForAvailableRoom") as ContextMenu;
                     break;
                 case 2:
-                    cm = this.FindResource("ContextMenuForRentedRoom") as ContextMenu;
+                    cm = RoomContainer.FindResource("ContextMenuForRentedRoom") as ContextMenu;
                     break;
                 default:
-                    cm = this.FindResource("DefaultContextMenu") as ContextMenu;
+                    cm = RoomContainer.FindResource("DefaultContextMenu") as ContextMenu;
                     break;
             }
 
@@ -99,6 +99,33 @@ namespace HotelMng
             cm.IsOpen = true;
         }
         
+
+        #endregion
+
+        #region About Tab
+
+        private void Hyperlink_OnRequestNavigate(object sender, RequestNavigateEventArgs e)
+        {
+            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
+            e.Handled = true;
+        }
+
+        #endregion
+
+        #region Report Tab
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var query = "EXEC dbo.USP_GetDataForReporting @month, @year";
+            var data = DataProvider.Instance.ExecuteQueries(query, new object[] { 8, 2017 });
+
+            var ds = new ReportDataSource("DataSet1", data);
+            _repo.LocalReport.DataSources.Add(ds);
+            _repo.LocalReport.ReportEmbeddedResource = "HotelMng.Report1.rdlc";
+            _repo.RefreshReport();
+
+        }
+
 
         #endregion
 
@@ -122,7 +149,7 @@ namespace HotelMng
             var menuItem = sender as MenuItem;
             if (menuItem is null) return;
 
-            var itemBeingEdited = Rooms.FirstOrDefault(r => r.RoomId == ((Room) menuItem.DataContext).RoomId);
+            var itemBeingEdited = Rooms.FirstOrDefault(r => r.RoomId == ((Room)menuItem.DataContext).RoomId);
             var dialog = new EditRoomDialog
             {
                 PassParameterToDialogFunc =
@@ -157,7 +184,7 @@ namespace HotelMng
             };
             dialog.ShowDialog();
         }
-        
+
 
         #endregion
 
@@ -172,28 +199,5 @@ namespace HotelMng
         }
 
         #endregion
-
-        #region About Tab
-
-        private void Hyperlink_OnRequestNavigate(object sender, RequestNavigateEventArgs e)
-        {
-            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
-            e.Handled = true;
-        }
-
-        #endregion
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            var query = "EXEC dbo.USP_GetDataForReporting @month, @year";
-            var data = DataProvider.Instance.ExecuteQueries(query, new object[] { 8, 2017 });
-
-            var ds = new ReportDataSource("DataSet1", data);
-            _repo.LocalReport.DataSources.Add(ds);
-            _repo.LocalReport.ReportEmbeddedResource = "HotelMng.Report1.rdlc";
-            _repo.RefreshReport();
-
-        }
-
     }
 }
