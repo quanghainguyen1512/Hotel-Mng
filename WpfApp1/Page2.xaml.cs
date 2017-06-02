@@ -53,16 +53,16 @@ namespace WpfApp1
 
         private void Grid_OnCellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
-            //_rowBeingEdited = e.Row.Item as DataRowView;
-            //MessageBox.Show("Cell editing");
+            _rowBeingEdited = e.Row.Item as DataRowView;
+            MessageBox.Show("Cell editing");
         }
 
         private void Grid_OnCurrentCellChanged(object sender, EventArgs e)
         {
-            //var dataGridCellEditEndingEventArgs = e as DataGridCellEditEndingEventArgs;
-            //if (dataGridCellEditEndingEventArgs != null)
-            //    _newStudent = dataGridCellEditEndingEventArgs.Row.Item as Student;
-            ////MessageBox.Show(_newStudent?.Id.ToString());
+            var dataGridCellEditEndingEventArgs = e as DataGridCellEditEndingEventArgs;
+            if (dataGridCellEditEndingEventArgs != null)
+                _newStudent = dataGridCellEditEndingEventArgs.Row.Item as Student;
+            MessageBox.Show(_newStudent?.Id.ToString());
             MessageBox.Show("Current cell changed");
             _rowBeingEdited?.EndEdit();
         }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using DTO;
@@ -34,9 +35,26 @@ namespace DAO
             }
         }
 
-        public bool AddRenter(string name, bool gender, string phoneNum, int typeId, string identityNum, string address)
+        public bool AddRenter(string name, bool gender, string phoneNum, string renterId, string identityNum, string address)
         {
-            _query = $"INSERT RENTER VALUES (N'{name}, {gender}, {phoneNum}, {typeId}, {identityNum}, {address})";
+            _query = $"INSERT RENTER VALUES ({name}, {gender}, {phoneNum}, {renterId}, {identityNum}, {address})";
+            var result = DataProvider.Instance.ExecuteNonQuery(_query);
+            return result > 0;
+        }
+
+        public bool UpdateRenter(Renter renter)
+        {
+            _query =
+                "UPDATE dbo.RENTER " +
+                $"SET RenterId = '{renter.RenterId}', Name = '{renter.Name}', Gender = '{renter.Gender}', PhoneNum = '{renter.PhoneNum}', IdentityNum='{renter.IdentityNum}', Address='{renter.Address}'" +
+                $"WHERE RenterId = '{renter.RenterId}'";
+            var result = DataProvider.Instance.ExecuteNonQuery(_query);
+            return result > 0;
+        }
+
+        public bool DelRenter(string rtId)
+        {
+            _query = $"DELETE FROM dbo.RENTER WHERE RenterId = {rtId}";
             var result = DataProvider.Instance.ExecuteNonQuery(_query);
             return result > 0;
         }

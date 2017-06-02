@@ -6,10 +6,10 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>2.55208in</Width>
+              <Width>3.48958in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.38542in</Width>
+              <Width>3.5in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -262,7 +262,7 @@
           <TablixMembers>
             <TablixMember>
               <TablixHeader>
-                <Size>1.5625in</Size>
+                <Size>2.13542in</Size>
                 <CellContents>
                   <Textbox Name="Textbox5">
                     <CanGrow>true</CanGrow>
@@ -318,7 +318,7 @@
                 </SortExpression>
               </SortExpressions>
               <TablixHeader>
-                <Size>1.5625in</Size>
+                <Size>2.13542in</Size>
                 <CellContents>
                   <Textbox Name="RoomTypeId">
                     <CanGrow>true</CanGrow>
@@ -363,7 +363,7 @@
             </TablixMember>
             <TablixMember>
               <TablixHeader>
-                <Size>1.5625in</Size>
+                <Size>2.13542in</Size>
                 <CellContents>
                   <Textbox Name="Textbox7">
                     <CanGrow>true</CanGrow>
@@ -404,7 +404,7 @@
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
         <Height>0.75in</Height>
-        <Width>6.5in</Width>
+        <Width>9.125in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -419,7 +419,7 @@
       </Border>
     </Style>
   </Body>
-  <Width>6.5in</Width>
+  <Width>9.125in</Width>
   <Page>
     <LeftMargin>1in</LeftMargin>
     <RightMargin>1in</RightMargin>
