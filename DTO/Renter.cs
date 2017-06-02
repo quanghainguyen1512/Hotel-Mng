@@ -24,6 +24,7 @@ namespace DTO
         private string _phoneNum;
         private string _identityNum;
         private string _address;
+        private Nationality _nationality;
         public Renter()
         {
 
@@ -83,6 +84,16 @@ namespace DTO
             }
         }
 
+        public Nationality Nationality
+        {
+            get => _nationality;
+            set
+            {
+                _nationality = value; 
+                OnPropertyChanged(nameof(Nationality));
+            }
+        }
+
         public Renter(System.Data.DataRow row)
         {
             RenterId = row["RenterId"].ToString();
@@ -91,6 +102,7 @@ namespace DTO
             PhoneNum = row["PhoneNum"].ToString();
             IdentityNum = row["IdentityNum"].ToString();
             Address = row["Address"].ToString();
+            Nationality = new Nationality(row);
         }
     }
 }

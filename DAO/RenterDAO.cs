@@ -27,7 +27,7 @@ namespace DAO
 
         public IEnumerable<Renter> GetAllRenters()
         {
-            _query = "SELECT * FROM RENTER";
+            _query = "SELECT * FROM dbo.RENTER JOIN dbo.TABLE_NATIONALITY ON TABLE_NATIONALITY.NatId = RENTER.NatId";
             var data = DataProvider.Instance.ExecuteQueries(_query);
             foreach (DataRow row in data.Rows)
             {
@@ -35,9 +35,10 @@ namespace DAO
             }
         }
 
-        public bool AddRenter(string name, bool gender, string phoneNum, string renterId, string identityNum, string address)
+        public bool AddRenter(Renter renter)
         {
-            _query = $"INSERT RENTER VALUES ({name}, {gender}, {phoneNum}, {renterId}, {identityNum}, {address})";
+            _query = $"INSERT INTO dbo.RENTER (Name, Gender, PhoneNum, NatId, IdentityNum, Address) " +
+                     $"VALUES(N'{renter.Name}', {renter.Gender}, '{renter.PhoneNum}', {renter.Nationality.NatId}, '{renter.IdentityNum}', '{renter.Address}')";
             var result = DataProvider.Instance.ExecuteNonQuery(_query);
             return result > 0;
         }
@@ -46,15 +47,15 @@ namespace DAO
         {
             _query =
                 "UPDATE dbo.RENTER " +
-                $"SET RenterId = '{renter.RenterId}', Name = '{renter.Name}', Gender = '{renter.Gender}', PhoneNum = '{renter.PhoneNum}', IdentityNum='{renter.IdentityNum}', Address='{renter.Address}'" +
+                $"SET Name = '{renter.Name}', Gender = '{renter.Gender}', PhoneNum = '{renter.PhoneNum}', IdentityNum='{renter.IdentityNum}', Address='{renter.Address}'" +
                 $"WHERE RenterId = '{renter.RenterId}'";
             var result = DataProvider.Instance.ExecuteNonQuery(_query);
             return result > 0;
         }
 
-        public bool DelRenter(string rtId)
+        public bool DelRenter(string renterId)
         {
-            _query = $"DELETE FROM dbo.RENTER WHERE RenterId = {rtId}";
+            _query = $"DELETE FROM dbo.RENTER WHERE RenterId = {renterId}";
             var result = DataProvider.Instance.ExecuteNonQuery(_query);
             return result > 0;
         }

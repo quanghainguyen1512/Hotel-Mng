@@ -5,15 +5,19 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
       xmlns:local="clr-namespace:HotelMng.Pages"
+      xmlns:converter="clr-namespace:HotelMng.Converter"
       mc:Ignorable="d"
       d:DesignHeight="500" d:DesignWidth="800"
-      Title="RentersPage" Height="550" Width="1000">
+      Title="RentersPage">
 
     <Grid DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:RentersPage}}}">
-        <Grid.ColumnDefinitions>
+        <Grid.Resources>
+            <converter:GenderConverter x:Key="GenderConverter"/>
+        </Grid.Resources>
+        <!--<Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>
             <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
+        </Grid.ColumnDefinitions>-->
 
         <DataGrid Grid.Column="0" 
                   ItemsSource="{Binding Renters}"
@@ -27,27 +31,27 @@
                   IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="RenterId"
-                                    Width="80"
+                                    Width="0.5*"
                                     Binding="{Binding RenterId}" 
                                     FontSize="16"/>
                 <DataGridTextColumn Header="Tên" 
-                                    Width="150"
+                                    Width="*"
                                     Binding="{Binding Name}"
                                     FontSize="16"/>
                 <DataGridTextColumn Header="Giới Tính"
-                                    Width="80"
-                                    Binding="{Binding Gender}" 
+                                    Width="0.5*"
+                                    Binding="{Binding Gender, Converter={StaticResource GenderConverter}}" 
                                     FontSize="16"/>
                 <DataGridTextColumn Header="Phone"
-                                    Width="100"
+                                    Width="0.5*"
                                     Binding="{Binding PhoneNum}" 
                                     FontSize="16"/>
                 <DataGridTextColumn Header="CMND"
-                                    Width="80"
+                                    Width="0.8*"
                                     Binding="{Binding IdentityNum}" 
                                     FontSize="16"/>
                 <DataGridTextColumn Header="Địa Chỉ"
-                                    Width="180"
+                                    Width="*"
                                     Binding="{Binding Address}" 
                                     FontSize="16"/>
                 <DataGridTemplateColumn Width="Auto">
@@ -94,7 +98,7 @@
 
             </DataGrid.Columns>
         </DataGrid>
-        <Grid Grid.Column="1">
+        <!--<Grid Grid.Column="1">
             <Grid.Resources>
                 <Style TargetType="TextBlock">
                     <Setter Property="Foreground" Value="White"/>
@@ -147,17 +151,17 @@
             <TextBlock Grid.Row="2" Grid.Column="0" TextWrapping="Wrap" Text="Giới Tính:" 
                        VerticalAlignment="Center" HorizontalAlignment="Center" 
                        Margin="10" Width="38" Foreground="White" FontSize="14" Height="39"/>
-            <StackPanel Grid.Row="2" Grid.Column="1"  Orientation="Horizontal"
-                            VerticalAlignment="Center" >
+            <StackPanel Grid.Row="2" Grid.Column="1"  
+                        Orientation="Horizontal"
+                        VerticalAlignment="Center">
                 <RadioButton Content="Nam" Margin="3" IsChecked="{Binding RenterBeingUpdated.Gender}"/>
                 <RadioButton Content="Nữ" Margin="3"/>
-                <RadioButton Content="Khác" Margin="3" IsChecked="{x:Null}"/>
             </StackPanel>
             <TextBlock Grid.Row="3" Grid.Column="0" 
                        VerticalAlignment="Center" HorizontalAlignment="Center" 
                        Text="Phone:" Foreground="White" FontSize="14" 
                        Width="42" Margin="10,20,6,20"/>
-            <TextBox Name="txtPhoneNum" Grid.Row="3" Grid.Column="1"
+            <TextBox Name="TxtPhoneNum" Grid.Row="3" Grid.Column="1"
                      Text="{Binding RenterBeingAdded.PhoneNum}" 
                      Background="White" MinHeight="0" FontSize="14"
                      Margin="0,19,10,10" Width="130" HorizontalAlignment="Left"/>
@@ -165,7 +169,7 @@
                        VerticalAlignment="Center" HorizontalAlignment="Center" 
                        Text="CMND:" Foreground="White" 
                        FontSize="14" Width="42" Margin="10,20,6,20"/>
-            <TextBox Name="txtIdentityNum" Grid.Row="4" Grid.Column="1"
+            <TextBox Name="TxtIdentityNum" Grid.Row="4" Grid.Column="1"
                      Text="{Binding RenterBeingAdded.IdentityNum}" 
                      Background="White" MinHeight="0" FontSize="14" 
                      Margin="0,19,10,10" Width="130" HorizontalAlignment="Left"/>
@@ -173,7 +177,7 @@
                        VerticalAlignment="Center" HorizontalAlignment="Center"
                        Text="Địa chỉ:" Foreground="White" 
                        FontSize="14" Width="42" Margin="10,20,6,20"/>
-            <TextBox Name="txtAddress" Grid.Row="5" Grid.Column="1" TextWrapping="Wrap"
+            <TextBox Name="TxtAddress" Grid.Row="5" Grid.Column="1" TextWrapping="Wrap"
                      Text="{Binding RenterBeingAdded.Address}" 
                      Background="White" MinHeight="0" FontSize="14" 
                      Margin="0,19,10,10"/>
@@ -187,6 +191,6 @@
                         Content="Thêm" Margin="10,20"
                         Click="ButtonAdd_Click" FontWeight="Bold"/>
             </Grid>
-        </Grid>
+        </Grid>-->
     </Grid>
 </Page>

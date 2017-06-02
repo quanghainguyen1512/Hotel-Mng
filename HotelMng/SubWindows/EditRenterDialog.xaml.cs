@@ -20,9 +20,9 @@ using System.ComponentModel;
 namespace HotelMng.SubWindows
 {
     /// <summary>
-    /// Interaction logic for EditRenter.xaml
+    /// Interaction logic for EditRenterDialog.xaml
     /// </summary>
-    public partial class EditRenter : INotifyPropertyChanged
+    public partial class EditRenterDialog : INotifyPropertyChanged
     {
         public Action<Renter> UpdateRenterAction;
         public Func<Renter> PassParameterToDialogAction;
@@ -39,7 +39,7 @@ namespace HotelMng.SubWindows
             }
         }
 
-        public EditRenter()
+        public EditRenterDialog()
         {
             InitializeComponent();
         }

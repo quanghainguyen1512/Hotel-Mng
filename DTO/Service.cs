@@ -65,11 +65,7 @@ namespace DTO
             Name = row["Name"].ToString();
             Price = int.Parse(row["Price"].ToString(), NumberStyles.Currency);
             Unit = row["Unit"].ToString();
-            SvType = new ServiceType
-            {
-                SvTypeId = (int) row["SvTypeId"],
-                SvTypeName = row["SvTypeName"].ToString()
-            };
+            SvType = new ServiceType(row);
         }
     }
 }

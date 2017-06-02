@@ -8,7 +8,7 @@
                  xmlns:uc="clr-namespace:HotelMng.Assets.UserControls"
                  mc:Ignorable="d"
                  Title="Hóa đơn" Height="500" Width="600"
-                 WindowStartupLocation="CenterOwner"
+                 WindowStartupLocation="CenterScreen"
                  ResizeMode="NoResize"
                  GlowBrush="{DynamicResource AccentColorBrush}"
                  WindowStyle="None">
@@ -230,9 +230,9 @@
                         HorizontalAlignment="Right"
                         Orientation="Horizontal">
                 <Button Content="THANH TOÁN" 
-                        Style="{DynamicResource StyleBtnInForm}"/>
+                        Style="{DynamicResource StyleBtnCloseInForm}"/>
                 <Button Content="ĐÓNG"
-                        Style="{DynamicResource StyleBtnInForm}"
+                        Style="{DynamicResource StyleBtnCloseInForm}"
                         Click="ButtonBase_OnClick"/>
             </StackPanel>
 

@@ -45,9 +45,9 @@
         <StackPanel Grid.Row="2"
                     HorizontalAlignment="Right"
                     Orientation="Horizontal">
-            <Button Content="OK" Style="{DynamicResource StyleBtnInForm}"/>
+            <Button Content="OK" Style="{DynamicResource StyleBtnApplyInForm}"/>
             <Button Content="ĐÓNG" 
-                    Style="{DynamicResource StyleBtnInForm}"
+                    Style="{DynamicResource StyleBtnCloseInForm}"
                     Click="ButtonBase_OnClick"/>
         </StackPanel>
 

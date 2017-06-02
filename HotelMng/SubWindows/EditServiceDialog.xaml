@@ -66,10 +66,10 @@
                     Orientation="Horizontal"
                     Grid.ColumnSpan="2">
             <Button Content="ÁP DỤNG" 
-                    Style="{DynamicResource StyleBtnInForm}"
+                    Style="{DynamicResource StyleBtnApplyInForm}"
                     Click="ButtonApply_OnClick"/>
             <Button Content="ĐÓNG" 
-                    Style="{DynamicResource StyleBtnInForm}"
+                    Style="{DynamicResource StyleBtnCloseInForm}"
                     Click="ButtonCancel_OnClick"/>
         </StackPanel>
     </Grid>

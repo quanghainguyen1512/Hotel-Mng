@@ -37,13 +37,13 @@
                     HorizontalAlignment="Right"
                     Orientation="Horizontal">
             <Button Content="Add" 
-                    Style="{DynamicResource StyleBtnInForm}"
+                    Style="{DynamicResource StyleBtnApplyInForm}"
                     Name="ButtonOk"
                     IsEnabled="False"
                     Click="ButtonAdd_OnClick">
             </Button>
             <Button Content="ĐÓNG" 
-                    Style="{DynamicResource StyleBtnInForm}"
+                    Style="{DynamicResource StyleBtnCloseInForm}"
                     Click="ButtonBase_OnClick"/>
         </StackPanel>
 

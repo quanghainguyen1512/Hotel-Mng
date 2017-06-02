@@ -115,6 +115,7 @@
     <Compile Include="Assets\UserControls\RoomStatusItem.xaml.cs">
       <DependentUpon>RoomStatusItem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converter\GenderConverter.cs" />
     <Compile Include="Converter\RoomTypeConverter.cs" />
     <Compile Include="HotelManagementDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -130,7 +131,6 @@
     <Compile Include="Pages\ServicesPage.xaml.cs">
       <DependentUpon>ServicesPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SqlServerTypes\Loader.cs" />
     <Compile Include="SubWindows\AddNewServiceTypeDialog.xaml.cs">
       <DependentUpon>AddNewServiceTypeDialog.xaml</DependentUpon>
     </Compile>
@@ -140,8 +140,8 @@
     <Compile Include="SubWindows\ChangeRoomWindow.xaml.cs">
       <DependentUpon>ChangeRoomWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SubWindows\EditRenter.xaml.cs">
-      <DependentUpon>EditRenter.xaml</DependentUpon>
+    <Compile Include="SubWindows\EditRenterDialog.xaml.cs">
+      <DependentUpon>EditRenterDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="SubWindows\EditRoomDialog.xaml.cs">
       <DependentUpon>EditRoomDialog.xaml</DependentUpon>
@@ -154,9 +154,6 @@
     </Compile>
     <Compile Include="SubWindows\RegistrationForm.xaml.cs">
       <DependentUpon>RegistrationForm.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="SubWindows\RoomDetails.xaml.cs">
-      <DependentUpon>RoomDetails.xaml</DependentUpon>
     </Compile>
     <Page Include="Assets\Styles\FormResources.xaml">
       <SubType>Designer</SubType>
@@ -225,7 +222,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SubWindows\EditRenter.xaml">
+    <Page Include="SubWindows\EditRenterDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -252,10 +249,6 @@
     <Page Include="Resources\IconsNonShared.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="SubWindows\RoomDetails.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -315,19 +308,6 @@
     <Resource Include="Resources\Entypo-license.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="SqlServerTypes\readme.htm" />
-    <Content Include="SqlServerTypes\x64\msvcr120.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="SqlServerTypes\x64\SqlServerSpatial140.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="SqlServerTypes\x86\msvcr120.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="SqlServerTypes\x86\SqlServerSpatial140.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Resource Include="Assets\Icon\appbar.currency.dollar.png" />
     <Resource Include="Assets\Icon\appbar.social.delicious.png" />
     <Content Include="SQL scripts\main_scripts.sql" />
