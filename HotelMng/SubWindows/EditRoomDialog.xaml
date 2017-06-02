@@ -17,7 +17,7 @@
     <mah:MetroWindow.Background>
         <SolidColorBrush Color="{StaticResource FormBackgroundColor}"/>
     </mah:MetroWindow.Background>
-    <Grid Margin="8">
+    <Grid Margin="8" DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:EditRoomDialog}}}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition Width="2*"/>
@@ -37,16 +37,24 @@
         <TextBlock Text="Trạng thái:" Grid.Row="1" Grid.Column="0"/>
         <ComboBox Name="CbbRoomStatus" Grid.Row="1" Grid.Column="1" 
                   VerticalAlignment="Center"
-                  HorizontalContentAlignment="Center"/>
+                  HorizontalContentAlignment="Center"
+                  ItemsSource="{Binding RoomStatusIEnumerable}"
+                  DisplayMemberPath="StatusName"/>
         <TextBlock Grid.Row="2" Grid.Column="0"
                    Text="Sức chứa:"/>
-        <TextBox Grid.Row="2" Grid.Column="1"
-                 Name="TxtCapacity"/>
+        <mah:NumericUpDown Grid.Row="2" Grid.Column="1" 
+                           Name="NumUpDownCapacity"
+                           VerticalAlignment="Center"
+                           HorizontalContentAlignment="Center"
+                           Minimum="1"
+                           Maximum="6"
+                           Value="{Binding RoomBeingEdited.Capacity}"/>
         <TextBlock Text="Mô tả:" Grid.Row="3" Grid.Column="0"/>
         <TextBox Grid.Row="3" Grid.Column="1" 
                  Name="TxtDescription"
                  TextWrapping="Wrap"
-                 Height="60"/>
+                 Height="60"
+                 Text="{Binding RoomBeingEdited.Description}"/>
         <Separator Grid.Row="4" Grid.ColumnSpan="2"
                    Margin="0,15,0,5"/>
         <StackPanel Grid.Row="5"

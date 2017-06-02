@@ -3,13 +3,16 @@
                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                  xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+                 xmlns:sys="clr-namespace:System;assembly=mscorlib"
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:local="clr-namespace:HotelMng"
                  xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
                  mc:Ignorable="d"
                  Title="Phiếu đăng ký" Height="500" Width="400"
-                 WindowStartupLocation="CenterOwner"
+                 WindowStartupLocation="CenterScreen"
                  GlowBrush="{DynamicResource AccentColorBrush}"
-                 ResizeMode="NoResize">
+                 ResizeMode="NoResize"
+                 Loaded="RegistrationForm_OnLoaded">
     <mah:MetroWindow.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -19,18 +22,17 @@
         </ResourceDictionary>
     </mah:MetroWindow.Resources>
     <mah:MetroWindow.Background>
-        <SolidColorBrush Color="{StaticResource FormBackgroundColor}"></SolidColorBrush>
+        <SolidColorBrush Color="{StaticResource FormBackgroundColor}"/>
     </mah:MetroWindow.Background>
-    <Grid Margin="10">
+    <Grid Margin="10" DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:RegistrationForm}}}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="1.5*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <GroupBox Name="GroupBoxRenterInfo"
-                  Style="{StaticResource StyleGroupBox}" 
-                  Height="200">
+                  Style="{StaticResource StyleGroupBox}" >
             <GroupBox.Header>
                 <TextBlock Text="Thông tin khách hàng đại diện thuê"
                            FontSize="13"/>
@@ -50,32 +52,38 @@
                 </Grid.RowDefinitions>
 
                 <TextBlock Grid.Row="0" Grid.Column="0"
-                           Text="Họ tên:"/>
-                <TextBox Grid.Row="0" Grid.Column="1" Margin="0,0,5,0"/>
+                           Text="Họ tên*:"/>
+                <TextBox Grid.Row="0" Grid.Column="1" 
+                         Margin="0,0,5,0"
+                         Name="TxtName"
+                         Text="{Binding Form.Renter.Name}"/>
                 <TextBlock Grid.Row="1" Grid.Column="0"
                            Text="Giới tính:"/>
                 <StackPanel Grid.Row="1" Grid.Column="1"
                             Orientation="Horizontal"
                             VerticalAlignment="Center">
-                    <RadioButton Content="Nam" Margin="0,0,30,0" IsChecked="True"/>
-                    <RadioButton Content="Nữ" Margin="0,0,30,0"/>
-                    <RadioButton Content="Khác"/>
+                    <RadioButton Content="Nam" Margin="0,0,30,0" IsChecked="{Binding Form.Renter.Gender}"/>
+                    <RadioButton Content="Nữ" Margin="0,0,30,0" IsChecked="True"/>
                 </StackPanel>
                 <TextBlock Grid.Row="2" Grid.Column="0"
-                           Text="CMND:"/>
-                <TextBox Grid.Row="2" Grid.Column="1" Margin="0,0,5,0"/>
+                           Text="CMND*:"
+                           Name="TxtIdNum"/>
+                <TextBox Grid.Row="2" Grid.Column="1" Margin="0,0,5,0"
+                         Text="{Binding Form.Renter.IdentityNum}"/>
                 <TextBlock Grid.Row="3" Grid.Column="0"
                            Text="SĐT:"/>
-                <TextBox Grid.Row="3" Grid.Column="1" Margin="0,0,5,0"/>
+                <TextBox Grid.Row="3" Grid.Column="1" Margin="0,0,5,0"
+                         Text="{Binding Form.Renter.PhoneNum}"/>
                 <TextBlock Grid.Row="4" Grid.Column="0"
-                           Text="Quốc tịch:"/>
+                           Text="Quốc tịch*:"/>
                 <StackPanel Grid.Row="4" Grid.Column="1"
                             Orientation="Horizontal">
                     <ComboBox VerticalAlignment="Center"
                               Width="Auto" Name="CbbNationality"
-                              SelectionChanged="ComboBox_SelectionChanged">
-                        
-                    </ComboBox>
+                              SelectedIndex="{Binding Form.Renter.NatId}"
+                              SelectionChanged="ComboBox_SelectionChanged"
+                              ItemsSource="{Binding Nationalities}"
+                              DisplayMemberPath="NatName"/>
                     <TextBox Margin="20,0"
                              Width="100"
                              Visibility="Collapsed"
@@ -88,49 +96,38 @@
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition/>
-                <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Row="0" Grid.Column="0" 
-                       Text="Lựa chọn:"/>
-            <StackPanel Grid.Row="0" Grid.Column="1"
-                        Orientation="Horizontal"
-                        VerticalAlignment="Center">
-                <RadioButton Content="Nhận phòng" 
-                             Checked="RadioButton_Checked"
-                             Name="RbtnCheckIn"/>
-                <RadioButton Content="Đặt trước" 
-                             Margin="30,0" 
-                             Checked="RadioButton_Checked"
-                             Name="RbtnReservation"/>
-            </StackPanel>
-            <TextBlock Grid.Row="1" Grid.Column="0"
-                       Text="Thời điểm nhận phòng:"/>
-            <mah:DateTimePicker Grid.Row="1" Grid.Column="1"
+            <TextBlock Grid.Row="0" Grid.Column="0"
+                       Text="Thời điểm nhận phòng*:"/>
+            <mah:DateTimePicker Grid.Row="0" Grid.Column="1"
                                 Orientation="Horizontal"
                                 VerticalAlignment="Center"
                                 Name="CheckInTime"
-                                IsTodayHighlighted="True"/>
-            <TextBlock Grid.Row="3" Grid.Column="0" 
-                       Text="Trả trước:"/>
-            <TextBox Grid.Row="3" Grid.Column="1"/>
-            <TextBlock Grid.Row="4" Grid.Column="0"
-                       Text="Ghi chú:" VerticalAlignment="Top"/>
-            <TextBox Grid.Row="4" Grid.Column="1"
-                     TextWrapping="Wrap"
-                     VerticalAlignment="Stretch"
-                     VerticalScrollBarVisibility="Auto"/>
+                                IsTodayHighlighted="True"
+                                SelectedDate="{Binding Form.CheckIn}"/>
+            <TextBlock Text="Phòng" Grid.Row="1" Grid.Column="0"/>
+            <TextBlock Grid.Row="1" Grid.Column="1"
+                       Text="{Binding Form.Room.RoomId}"
+                       FontWeight="DemiBold"/>
+            <TextBlock Grid.Row="2" Grid.Column="1"
+                       HorizontalAlignment="Right"
+                       Text="(*) là những mục bắt buộc"
+                       FontSize="11"
+                       FontStyle="Italic"
+                       Foreground="DimGray"></TextBlock>
         </Grid>
         <Separator Grid.Row="2"
                    Margin="0,15,0,5"/>
         <StackPanel Grid.Row="3"
                     HorizontalAlignment="Right"
                     Orientation="Horizontal">
-            <Button Content="ÁP DỤNG" Style="{DynamicResource StyleBtnInForm}"/>
+            <Button Content="ÁP DỤNG" 
+                    Style="{DynamicResource StyleBtnInForm}"
+                    Click="ButtonApply_OnClick"/>
             <Button Content="ĐÓNG" 
                     Style="{DynamicResource StyleBtnInForm}"
                     Click="ButtonBase_OnClick"/>

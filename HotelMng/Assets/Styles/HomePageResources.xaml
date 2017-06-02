@@ -21,8 +21,9 @@
     </LinearGradientBrush>
     <SolidColorBrush x:Key="RoomNeedsCleaningBrush" Color="#FFCA28"/>
     <SolidColorBrush x:Key="EmptyRoomBrush" Color="#E0E0E0"/>
-    <SolidColorBrush x:Key="RentedRoomBrush" Color="#F48FB1"/>
+    <SolidColorBrush x:Key="RentedRoomBrush" Color="#EF5350"/>
     <SolidColorBrush x:Key="RoomNeedsFixingBrush" Color="#00E5FF"/>
+    <SolidColorBrush x:Key="BookedRoomBrush" Color="#F48FB1"/>
     <Canvas Width="24" Height="24" x:Key="ReportIcon">
         <Path Data="M13,9H18.5L13,3.5V9M6,2H14L20,8V20A2,2 0 0,1 18,22H6C4.89,22 4,21.1 4,20V4C4,2.89 4.89,2 6,2M15,18V16H6V18H15M18,14V12H6V14H18Z" Fill="White" />
     </Canvas>

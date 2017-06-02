@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -12,17 +15,50 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using DTO;
+using DTO.Annotations;
 
 namespace HotelMng.SubWindows
 {
     /// <summary>
     /// Interaction logic for EditRoomDialog.xaml
     /// </summary>
-    public partial class EditRoomDialog
+    public partial class EditRoomDialog : INotifyPropertyChanged
     {
-        public Func<Room> PassParameterToDialogFunc;
+        public Func<Tuple<Room, IEnumerable<RoomStatus>, IEnumerable<char>>> PassParameterToDialogFunc;
         public Action<Room> UpdateRoomTypeAction;
         private Room _roomBeingEdited;
+        private IEnumerable<RoomStatus> _roomStatusIEnumerable;
+        private IEnumerable<char> _roomTypeIdEnumerable;
+
+        public Room RoomBeingEdited
+        {
+            get => _roomBeingEdited;
+            set
+            {
+                _roomBeingEdited = value;
+                OnPropertyChanged(nameof(RoomBeingEdited));
+            }
+        }
+
+        public IEnumerable<RoomStatus> RoomStatusIEnumerable
+        {
+            get => _roomStatusIEnumerable;
+            set
+            {
+                _roomStatusIEnumerable = value;
+                OnPropertyChanged(nameof(RoomStatusIEnumerable));
+            }
+        }
+
+        public IEnumerable<char> RoomTypeIdEnumerable
+        {
+            get => _roomTypeIdEnumerable;
+            set
+            {
+                _roomTypeIdEnumerable = value; 
+                OnPropertyChanged(nameof(RoomStatusIEnumerable));
+            }
+        }
 
         public EditRoomDialog()
         {
@@ -36,37 +72,46 @@ namespace HotelMng.SubWindows
 
         private void ButtonApply_OnClick(object sender, RoutedEventArgs e)
         {
-            
+            RoomBeingEdited.RoomTypeId = Convert.ToChar(CbbRoomType.SelectedItem);
+            RoomBeingEdited.RoomStatus = CbbRoomStatus.SelectionBoxItem as RoomStatus;
+            UpdateRoomTypeAction(RoomBeingEdited);
+            this.Close();
         }
 
         private void EditRoomDialog_OnLoaded(object sender, RoutedEventArgs e)
         {
-            _roomBeingEdited = PassParameterToDialogFunc();
-            TxtDescription.Text = _roomBeingEdited.Description;
-            TxtCapacity.Text = _roomBeingEdited.Capacity.ToString();
+            RoomBeingEdited = PassParameterToDialogFunc().Item1;
+            RoomStatusIEnumerable = PassParameterToDialogFunc().Item2;
+            RoomTypeIdEnumerable = PassParameterToDialogFunc().Item3;
+            CbbRoomType.ItemsSource = RoomTypeIdEnumerable;
 
-            var selectedIndex = 0;
-            for (int i = 0; i < CbbRoomType.Items.Count; i++)
+            for (var i = 0; i < CbbRoomStatus.Items.Count; i++)
             {
-                var item = CbbRoomType.Items[i];
-                if ((item as RoomType).RoomTypeId == _roomBeingEdited.RoomTypeId)
+                var item = CbbRoomStatus.Items[i] as RoomStatus;
+                if (item != null && item.StatusId == RoomBeingEdited.RoomStatus.StatusId)
                 {
-                    selectedIndex = i;
+                    CbbRoomStatus.SelectedIndex = i;
                     break;
                 }
             }
-            CbbRoomType.SelectedIndex = selectedIndex;
 
-            for (int i = 0; i < CbbRoomStatus.Items.Count; i++)
+            for (var i = 0; i < CbbRoomType.Items.Count; i++)
             {
-                var item = CbbRoomStatus.Items[i];
-                if ((item as RoomType).RoomTypeId == _roomBeingEdited.RoomTypeId)
+                var item = Convert.ToChar(CbbRoomType.Items[i]);
+                if (item == RoomBeingEdited.RoomTypeId)
                 {
-                    selectedIndex = i;
+                    CbbRoomType.SelectedIndex = i;
                     break;
                 }
             }
-            CbbRoomStatus.SelectedIndex = selectedIndex;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

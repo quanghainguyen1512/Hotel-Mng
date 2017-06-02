@@ -42,8 +42,9 @@
   <ItemGroup>
     <Compile Include="Base.cs" />
     <Compile Include="Bill.cs" />
+    <Compile Include="Nationality.cs" />
     <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="RegisterForm.cs" />
+    <Compile Include="RegForm.cs" />
     <Compile Include="Renter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Room.cs" />

@@ -18,11 +18,21 @@
                  ShowMaxRestoreButton="False" 
                  ShowMinButton="False">
     <mah:MetroWindow.Resources>
-        <ContextMenu x:Key="TileCMenu">
+        <ContextMenu x:Key="ContextMenuForRentedRoom">
             <MenuItem Header="Danh sách khách đang ở"/>
             <MenuItem Header="Xem/Thêm dịch vụ"/>
-            <MenuItem Header="Chuyển phòng"/>
+            <MenuItem Header="Thanh toán"/>
             <Separator/>
+            <MenuItem Header="Xem/Chỉnh sửa thông tin" Click="MenuItemEditRoom_OnClick"/>
+            <MenuItem Header="Xóa phòng" Click="MenuItemDelRoom_OnClick"/>
+        </ContextMenu>
+        <ContextMenu x:Key="ContextMenuForAvailableRoom">
+            <MenuItem Header="Đăng kí phòng" Click="MenuItemRegRoom_OnClick"/>
+            <Separator/>
+            <MenuItem Header="Xem/Chỉnh sửa thông tin" Click="MenuItemEditRoom_OnClick"/>
+            <MenuItem Header="Xóa phòng" Click="MenuItemDelRoom_OnClick"/>
+        </ContextMenu>
+        <ContextMenu x:Key="DefaultContextMenu">
             <MenuItem Header="Xem/Chỉnh sửa thông tin" Click="MenuItemEditRoom_OnClick"/>
             <MenuItem Header="Xóa phòng" Click="MenuItemDelRoom_OnClick"/>
         </ContextMenu>
@@ -49,7 +59,12 @@
                 </TabItem.Header>
 
                 <Grid>
-                    <GroupBox Style="{StaticResource StyleGroupBox}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <GroupBox Style="{StaticResource StyleGroupBox}"
+                              Grid.Column="0">
                         <GroupBox.Header>
                             <TextBlock Text="Danh sách phòng"
                                        FontSize="20"
@@ -81,21 +96,10 @@
                                         <DataTemplate>
                                             <uc:RoomStatusItem StatusText="{Binding StatusName}"
                                                                ItemsCount="{Binding ItemCount}"
-                                                               Style="{StaticResource RoomStatusItemStyle}"/>
+                                                               Style="{StaticResource RoomStatusItemStyle}"
+                                                               Margin="50,0,0,0"/>
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
-                                    <!--<uc:RoomStatusItem StatusBrush="{StaticResource RoomNeedsCleaningBrush}"
-                                                       StatusText="Cần dọn"
-                                                       Margin="45,0,0,0"/>
-                                    <uc:RoomStatusItem StatusBrush="{StaticResource RentedRoomBrush}"
-                                                       StatusText="Có khách"
-                                                       Margin="45,0,0,0"/>
-                                    <uc:RoomStatusItem StatusBrush="{StaticResource EmptyRoomBrush}"
-                                                       StatusText="Phòng trống"
-                                                       Margin="45,0,0,0"/>
-                                    <uc:RoomStatusItem StatusBrush="{StaticResource RoomNeedsFixingBrush}"
-                                                       StatusText="Cần sửa"
-                                                       Margin="45,0,0,0"/>-->
                                 </ItemsControl>
                             </StackPanel>
                             <ScrollViewer Grid.Row="1">
@@ -203,6 +207,7 @@
                             </StackPanel>
                         </Grid>
                     </GroupBox>
+                    
                 </Grid>
             </TabItem>
             <TabItem Style="{DynamicResource StyleTabItemDefault}">
@@ -267,7 +272,7 @@
                     </WindowsFormsHost>
                 </StackPanel>
 
-
+                 
             </TabItem>
             <TabItem Style="{DynamicResource StyleTabItemRight}">
                 <TabItem.Header>
@@ -280,8 +285,101 @@
                         <TextBlock Text="THÔNG TIN" Style="{StaticResource StyleHeaderText}"/>
                     </StackPanel>
                 </TabItem.Header>
-            </TabItem>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <StackPanel HorizontalAlignment="Stretch"
+                                Grid.Row="0" Grid.Column="1"
+                                Margin="0,20">
+                        <StackPanel.Resources>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                            </Style>
+                        </StackPanel.Resources>
+                        <TextBlock Text="ĐẠI HỌC QUỐC GIA THÀNH PHỐ HỒ CHÍ MINH"
+                                   FontSize="15" FontWeight="DemiBold"/>
+                        <TextBlock Text="TRƯỜNG ĐẠI HỌC CÔNG NGHỆ THÔNG TIN"
+                                   FontSize="15" FontWeight="DemiBold"/>
+                        <TextBlock Text="KHOA CÔNG NGHỆ PHẦN MỀM"
+                                   FontSize="15" FontWeight="DemiBold"/>
+                        <TextBlock Text="*****************"
+                                   FontSize="15" FontWeight="DemiBold"/>
+                        <TextBlock Text="ĐỒ ÁN MÔN HỌC"
+                                   FontSize="20" FontWeight="DemiBold"/>
+                        <TextBlock Text="NHẬP MÔN CÔNG NGHỆ PHẦN MỀM"
+                                   FontSize="20" FontWeight="DemiBold"/>
+                        <Separator/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Grid.Column="1">
+                        <Image Source="AppIcon.ico" Height="150"
+                               Margin="0,0,0,10"/>
+                        <TextBlock Text="Phần mêm quản lý khách sạn" 
+                                   HorizontalAlignment="Center"
+                                   FontSize="16" FontStyle="Italic"
+                                   FontWeight="Black"/>
+                    </StackPanel>
+                    <Grid Grid.Column="1" Grid.Row="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.Resources>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="FontSize" Value="14"></Setter>
+                            </Style>
+                        </Grid.Resources>
+                        <TextBlock Text="Nhóm thực hiện:" Grid.Row="0" Grid.Column="0"
+                                   Margin="0,10,0,0"/>
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="Nhóm 7"
+                                   Margin="0,10,0,0"/>
+                        <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                                    Margin="100,10,0,10">
+                            <TextBlock Text="1. Nguyễn Quang Hải (15520187)"/>
+                            <TextBlock Text="2. Nguyễn Trung Hào (15520199)"/>
+                            <TextBlock Text="3. Đào Đức Huy (15520295)"></TextBlock>
+                        </StackPanel>
+                        <TextBlock Grid.Row="2" Grid.Column="0"
+                                   Text="Giảng viên hướng dẫn:"
+                                   Margin="0,0,0,10"/>
+                        <TextBlock Grid.Row="2" Grid.Column="1"
+                                   Text="Nguyễn Thị Thanh Trúc"
+                                   Margin="0,0,0,10"/>
+                        <TextBlock Grid.Row="3" Grid.Column="0"
+                                   Text="Source control:"
+                                   Margin="0,0,0,10"/>
+                        <StackPanel Grid.Row="3" Grid.Column="1"
+                                    Orientation="Horizontal"
+                                    Margin="0,0,0,10">
+                            <Rectangle Width="20">
+                                <Rectangle.Fill>
+                                    <VisualBrush Visual="{StaticResource appbar_github}"/>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                            <TextBlock Margin="10,0,0,0">
+                                <Hyperlink NavigateUri="https://github.com/quanghainguyen1512/Hotel-Mng"
+                                           RequestNavigate="Hyperlink_OnRequestNavigate">
+                                    Hotel Manager
+                                </Hyperlink>
+                            </TextBlock>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
 
+            </TabItem>
         </TabControl>
     </DockPanel>
 </mah:MetroWindow>

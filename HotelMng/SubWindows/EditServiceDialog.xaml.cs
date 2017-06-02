@@ -63,15 +63,6 @@ namespace HotelMng.SubWindows
         {
             ServiceTypes = PassServiceTypeFunc();
             ServiceBeingUpdated = PassParameterToDialogFunc();
-            
-            for (var i = 0; i < CbbServType.Items.Count; i++)
-            {
-                if ((CbbServType.Items[i] as ServiceType).SvTypeId == ServiceBeingUpdated.SvType.SvTypeId)
-                {
-                    CbbServType.SelectedIndex = i;
-                    break;
-                }
-            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

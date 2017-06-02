@@ -33,28 +33,28 @@ namespace HotelMng.SubWindows
             _renterBeingUpdated = PassParameterToDialogAction();
 
 
-            txtRenterId.Text = _renterBeingUpdated.RenterId;
-            txtName.Text = _renterBeingUpdated.Name;
-            txtGender.Text = _renterBeingUpdated.Gender;
-            txtPhoneNum.Text = _renterBeingUpdated.PhoneNum;
-            txtIdentityNum.Text = _renterBeingUpdated.IdentityNum;
-            txtAddress.Text = _renterBeingUpdated.Address;
+            //txtRenterId.Text = _renterBeingUpdated.RenterId;
+            //txtName.Text = _renterBeingUpdated.Name;
+            //txtGender.Text = _renterBeingUpdated.Gender;
+            //txtPhoneNum.Text = _renterBeingUpdated.PhoneNum;
+            //txtIdentityNum.Text = _renterBeingUpdated.IdentityNum;
+            //txtAddress.Text = _renterBeingUpdated.Address;
 
         }
 
         private void ButtonApply_OnClick(object sender, RoutedEventArgs e)
         {
-            _renterBeingUpdated = new Renter()
-            {
-                RenterId = txtRenterId.Text,
-                Name = txtName.Text,
-                Gender = txtGender.Text,
-                PhoneNum = txtPhoneNum.Text,
-                IdentityNum = txtIdentityNum.Text,
-                Address = txtAddress.Text
+            //_renterBeingUpdated = new Renter()
+            //{
+            //    RenterId = txtRenterId.Text,
+            //    Name = txtName.Text,
+            //    Gender = txtGender.Text,
+            //    PhoneNum = txtPhoneNum.Text,
+            //    IdentityNum = txtIdentityNum.Text,
+            //    Address = txtAddress.Text
 
-            };
-            UpdateRenterAction(_renterBeingUpdated);
+            //};
+            //UpdateRenterAction(_renterBeingUpdated);
 
         }
 

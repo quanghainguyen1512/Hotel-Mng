@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ namespace DTO
         public string BillId { get; set; }
         public int TotalMoney { get; set; }
         public string Company { get; set; }
+        public ObservableCollection<RegForm> RegisterForms{ get; set; }    
         #endregion
 
         public Bill(System.Data.DataRow row)

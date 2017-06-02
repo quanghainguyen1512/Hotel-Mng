@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DTO;
 
 namespace DAO
@@ -55,7 +50,7 @@ namespace DAO
         public bool UpdateRoom(Room room)
         {
             _query =
-                $"UPDATE dbo.ROOM SET RoomTypeId = {room.RoomTypeId}, Desciption = {room.Description}, StatusId = {room.RoomStatus.StatusId}" +
+                $"UPDATE dbo.ROOM SET RoomTypeId = '{room.RoomTypeId}', Description = N'{room.Description}', StatusId = {room.RoomStatus.StatusId} " +
                 $"WHERE RoomId = {room.RoomId}";
             var result = DataProvider.Instance.ExecuteNonQuery(_query);
             return result > 0;

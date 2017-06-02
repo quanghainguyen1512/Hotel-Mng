@@ -80,12 +80,12 @@ namespace HotelMng.Pages
             }
             var rt = new Renter()
             {
-                RenterId = txtID.Text,
-                Name = txtName.Text,
-                Gender = txtGender.Text,
-                PhoneNum = txtPhoneNum.Text,
-                IdentityNum = txtIdentityNum.Text,
-                Address = txtAddress.Text
+                //RenterId = txtID.Text,
+                //Name = txtName.Text,
+                //Gender = txtGender.Text,
+                //PhoneNum = txtPhoneNum.Text,
+                //IdentityNum = txtIdentityNum.Text,
+                //Address = txtAddress.Text
             };
             //if (RenterDAO.Instance.AddNewRenter(rt))
             //{

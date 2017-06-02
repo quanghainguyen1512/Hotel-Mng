@@ -57,8 +57,7 @@
                   VerticalAlignment="Center"
                   Name="CbbServType"
                   ItemsSource="{Binding ServiceTypes}"
-                  SelectedValue="{Binding ServiceBeingUpdated.SvType}"
-                  SelectedValuePath="SvType"
+                  SelectedIndex="{Binding ServiceBeingUpdated.SvType.SvTypeId}"
                   DisplayMemberPath="SvTypeName"/>
         <Separator Grid.Row="4" Grid.ColumnSpan="2"
                    Margin="0,15,0,5"/>

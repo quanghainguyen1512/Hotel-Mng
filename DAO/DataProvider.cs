@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Configuration;
+﻿using System.Linq;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -16,7 +11,7 @@ namespace DAO
 
         DataProvider() { }
 
-        private readonly string _connString = @"Data Source=DESKTOP-TKMUG3F\SIR;Initial Catalog=HotelManagement;Integrated Security=True";
+        private readonly string _connString = @"Data Source=DESKTOP-L9JNNSC;Initial Catalog=HotelManagement;Integrated Security=True";
 
         public static DataProvider Instance
         {
