@@ -9,7 +9,7 @@ using System.Data.SqlClient;
 
 namespace DAO
 {
-    public class DataProvider
+    public class DataProvider   
     {
         private static DataProvider _instance;
         private static readonly object Padlock = new object();
