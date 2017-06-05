@@ -155,6 +155,9 @@
     <Compile Include="SubWindows\RegistrationForm.xaml.cs">
       <DependentUpon>RegistrationForm.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SubWindows\UsingServiceWindow.xaml.cs">
+      <DependentUpon>UsingServiceWindow.xaml</DependentUpon>
+    </Compile>
     <Page Include="Assets\Styles\FormResources.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -234,6 +237,10 @@
     <Page Include="Resources\IconsNonShared.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SubWindows\UsingServiceWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

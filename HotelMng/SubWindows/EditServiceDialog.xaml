@@ -59,9 +59,9 @@
                   ItemsSource="{Binding ServiceTypes}"
                   SelectedIndex="{Binding ServiceBeingUpdated.SvType.SvTypeId}"
                   DisplayMemberPath="SvTypeName"/>
-        <Separator Grid.Row="4" Grid.ColumnSpan="2"
+        <Separator Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2"
                    Margin="0,15,0,5"/>
-        <StackPanel Grid.Row="5"
+        <StackPanel Grid.Column="0" Grid.Row="5"
                     HorizontalAlignment="Right"
                     Orientation="Horizontal"
                     Grid.ColumnSpan="2">

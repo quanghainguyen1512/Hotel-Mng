@@ -22,12 +22,6 @@
         <DataGrid Grid.Column="0" 
                   ItemsSource="{Binding Renters}"
                   Name="DgRenters"
-                  AutoGenerateColumns="False"
-                  SelectionMode="Single"
-                  SelectionUnit="FullRow"
-                  CanUserAddRows="False"
-                  CanUserDeleteRows="False"
-                  GridLinesVisibility="All"
                   IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="RenterId"
@@ -42,8 +36,8 @@
                                     Width="0.5*"
                                     Binding="{Binding Gender, Converter={StaticResource GenderConverter}}" 
                                     FontSize="16"/>
-                <DataGridTextColumn Header="Phone"
-                                    Width="0.5*"
+                <DataGridTextColumn Header="SĐT"
+                                    Width="0.8*"
                                     Binding="{Binding PhoneNum}" 
                                     FontSize="16"/>
                 <DataGridTextColumn Header="CMND"
@@ -58,19 +52,7 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Click="ButtonEditItem_OnClick"
-                                    Width="25"
-                                    Margin="5,0">
-                                <Button.ContentTemplate>
-                                    <DataTemplate>
-                                        <Rectangle Width="10" Height="10">
-                                            <Rectangle.Fill>
-                                                <VisualBrush Stretch="Fill" 
-                                                             Visual="{StaticResource appbar_edit}"/>
-                                            </Rectangle.Fill>
-                                        </Rectangle>
-                                    </DataTemplate>
-                                </Button.ContentTemplate>
-                            </Button>
+                                    Style="{StaticResource EditButtonIdDataGrid}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -79,19 +61,7 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Click="ButtonDelItem_OnClick"
-                                    Width="25"
-                                    Margin="5,0">
-                                <Button.ContentTemplate>
-                                    <DataTemplate>
-                                        <Rectangle Width="10" Height="10">
-                                            <Rectangle.Fill>
-                                                <VisualBrush Stretch="Fill" 
-                                                             Visual="{StaticResource appbar_axis_x_letter}"/>
-                                            </Rectangle.Fill>
-                                        </Rectangle>
-                                    </DataTemplate>
-                                </Button.ContentTemplate>
-                            </Button>
+                                    Style="{StaticResource DelButtonIdDataGrid}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

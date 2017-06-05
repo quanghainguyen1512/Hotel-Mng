@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -18,18 +17,8 @@ namespace HotelMng
     {
         public Func<Room> PassParameterFunc;
         public Action<RegForm> UpdateRegFormAction;
-        private ObservableCollection<Nationality> _nationalities;
         private RegForm _form;
-
-        public ObservableCollection<Nationality> Nationalities
-        {
-            get => _nationalities;
-            set
-            {
-                _nationalities = value;
-                OnPropertyChanged(nameof(Nationalities));
-            }
-        }
+        public ObservableCollection<Nationality> Nationalities { get; set; }
 
         public RegForm Form
         {
@@ -46,6 +35,7 @@ namespace HotelMng
             InitializeComponent();
             Form = new RegForm();
             Nationalities = new ObservableCollection<Nationality>(NationalityDAO.Instance.GetAllNationalities());
+            CheckInTime.SelectedDate = DateTime.Now;
         }
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)

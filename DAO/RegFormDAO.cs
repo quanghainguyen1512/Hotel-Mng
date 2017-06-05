@@ -29,7 +29,7 @@ namespace DAO
         public bool AddRegForm(RegForm reg)
         {
             _query =
-                $"INSERT INTO dbo.REG_FORM (CheckIn, RenterId, RoomId, Rental) VALUES({reg.CheckIn},'{reg.Renter.RenterId}', {reg.Room.RoomId}, 0)";
+                $"INSERT INTO dbo.REG_FORM (CheckIn, RenterId, RoomId, Rental) VALUES(convert(datetime,'{reg.CheckIn:G}',20),'{reg.Renter.RenterId}', {reg.Room.RoomId}, 0)";
             var result = DataProvider.Instance.ExecuteNonQuery(_query);
             return result > 0;
         }

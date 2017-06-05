@@ -3,7 +3,7 @@
                     xmlns:local="clr-namespace:HotelMng.Assets.ResourcesStyle"
                     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
                     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit">
-    <SolidColorBrush x:Key="NormalButtonBrushInForm" Color="#2196F3"/>
+    <SolidColorBrush x:Key="NormalButtonBrushInForm" Color="{StaticResource AccentColor}"/>
     <SolidColorBrush x:Key="HoverButtonBrushInForm" Color="#F9A825"/>
     <Color x:Key="FormBackgroundColor">#EEEEEE</Color>
     <Style TargetType="{x:Type TextBlock}">
@@ -80,7 +80,8 @@
                                           VerticalAlignment="Center"
                                           Margin="10,5"
                                           TextBlock.Foreground="White"
-                                          TextBlock.FontWeight="DemiBold"/>
+                                          TextBlock.FontWeight="DemiBold"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">

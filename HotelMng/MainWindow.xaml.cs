@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -98,36 +97,6 @@ namespace HotelMng
             cm.PlacementTarget = tile;
             cm.IsOpen = true;
         }
-        
-
-        #endregion
-
-        #region About Tab
-
-        private void Hyperlink_OnRequestNavigate(object sender, RequestNavigateEventArgs e)
-        {
-            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
-            e.Handled = true;
-        }
-
-        #endregion
-
-        #region Report Tab
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            var query = "EXEC dbo.USP_GetDataForReporting @month, @year";
-            var data = DataProvider.Instance.ExecuteQueries(query, new object[] { 8, 2017 });
-
-            var ds = new ReportDataSource("DataSet1", data);
-            _repo.LocalReport.DataSources.Add(ds);
-            _repo.LocalReport.ReportEmbeddedResource = "HotelMng.Report1.rdlc";
-            _repo.RefreshReport();
-
-        }
-
-
-        #endregion
 
         #region MenuItem Click event
 
@@ -175,18 +144,61 @@ namespace HotelMng
                 PassParameterFunc = () => roomParam,
                 UpdateRegFormAction = form =>
                 {
-                    //RegFormDAO.Instance.AddRegForm(form);
                     var temp = Rooms.First(r => r.RoomId == roomParam.RoomId);
                     temp.RoomStatus = AllRoomStatus.FirstOrDefault(s => s.StatusId == 2);
-                    RoomDAO.Instance.UpdateRoom(temp);
+                    if (RoomDAO.Instance.UpdateRoom(temp) && RenterDAO.Instance.AddRenter(form.Renter))
+                    {
+                        form.Renter.RenterId = RenterDAO.GetRenterId(form.Renter.IdentityNum);
+                        RegFormDAO.Instance.AddRegForm(form);
+                    }
                 }
-
+            };
+            dialog.ShowDialog();
+        }
+        private void MenuItemAddService_OnClick(object sender, RoutedEventArgs e)
+        {
+            var menuItem = sender as MenuItem;
+            if (menuItem is null) return;
+            var roomParam = (Room)menuItem.DataContext;
+            var dialog = new UsingServiceWindow
+            {
+                PassParameterFunc = () => roomParam.RoomId
             };
             dialog.ShowDialog();
         }
 
 
         #endregion
+
+        #endregion
+
+        #region About Tab
+
+        private void Hyperlink_OnRequestNavigate(object sender, RequestNavigateEventArgs e)
+        {
+            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
+            e.Handled = true;
+        }
+
+        #endregion
+
+        #region Report Tab
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var query = "EXEC dbo.USP_GetDataForReporting @month, @year";
+            var data = DataProvider.Instance.ExecuteQueries(query, new object[] { 8, 2017 });
+
+            var ds = new ReportDataSource("DataSet1", data);
+            Report.LocalReport.DataSources.Add(ds);
+            Report.LocalReport.ReportEmbeddedResource = "HotelMng.Report1.rdlc";
+            Report.RefreshReport();
+
+        }
+
+
+        #endregion
+
 
         #region Implement INotifyPropertyChanged
 
@@ -199,5 +211,6 @@ namespace HotelMng
         }
 
         #endregion
+
     }
 }

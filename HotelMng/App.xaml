@@ -22,10 +22,58 @@
                 <Setter Property="HorizontalContentAlignment"
                         Value="Center"/>
             </Style>
+            <Style BasedOn="{StaticResource MetroDataGrid}"
+                   TargetType="DataGrid">
+                <Setter Property="AutoGenerateColumns" Value="False"/>
+                <Setter Property="SelectionMode" Value="Single"/>
+                <Setter Property="CanUserDeleteRows" Value="False"/>
+                <Setter Property="CanUserAddRows" Value="False"/>
+                <Setter Property="GridLinesVisibility" Value="All"/>
+                <Setter Property="SelectionUnit" Value="FullRow"></Setter>
+            </Style>
+            
             <LinearGradientBrush x:Key="ToolBoxBrush" StartPoint="0,0.3" EndPoint="0, 1.2">
                 <GradientStop Color="#1E88E5" Offset="0"/>
                 <GradientStop Color="#0D47A1" Offset="1.2"/>
             </LinearGradientBrush>
+            
+            <Style TargetType="Button" x:Key="EditButtonIdDataGrid"
+                   BasedOn="{StaticResource MetroCircleButtonStyle}">
+                <Setter Property="Margin" Value="5,0"/>
+                <Setter Property="Width" Value="35"/>
+                <Setter Property="Height" Value="35"/>
+                <Setter Property="ContentTemplate">
+                    <Setter.Value>
+                        <DataTemplate>
+                            <Rectangle Width="10" Height="10">
+                                <Rectangle.Fill>
+                                    <VisualBrush Stretch="Fill" 
+                                                 Visual="{StaticResource appbar_edit}"/>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style TargetType="Button" x:Key="DelButtonIdDataGrid"
+                   BasedOn="{StaticResource MetroCircleButtonStyle}">
+                <Setter Property="Margin" Value="5,0"/>
+                <Setter Property="Width" Value="35"/>
+                <Setter Property="Height" Value="35"/>
+                <Setter Property="ContentTemplate">
+                    <Setter.Value>
+                        <DataTemplate>
+                            <Rectangle Width="10" Height="10">
+                                <Rectangle.Fill>
+                                    <VisualBrush Stretch="Fill" 
+                                                 Visual="{StaticResource appbar_axis_x_letter}"/>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
             <!--#endregion -->
         </ResourceDictionary>
     </Application.Resources>

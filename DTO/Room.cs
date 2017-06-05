@@ -61,7 +61,7 @@ namespace DTO
             RoomId = (int) row["RoomId"];
             Description = row["Description"].ToString();
             RoomTypeId = Convert.ToChar(row["RoomTypeId"]);
-            //Capacity = Convert.ToInt32(row["Capacity"]);
+            Capacity = Convert.ToInt32(row["Capacity"]);
             RoomStatus = new RoomStatus()
             {
                 StatusId = (int) row["StatusId"],

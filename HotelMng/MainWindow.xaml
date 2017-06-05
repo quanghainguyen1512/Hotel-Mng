@@ -90,23 +90,29 @@
                                     <ItemsControl.Resources>
                                         <ContextMenu x:Key="ContextMenuForRentedRoom">
                                             <MenuItem Header="Danh sách khách đang ở"/>
-                                            <MenuItem Header="Xem/Thêm dịch vụ"/>
+                                            <MenuItem Header="Xem/Thêm dịch vụ" Click="MenuItemAddService_OnClick"/>
                                             <MenuItem Header="Thanh toán"/>
                                             <Separator/>
-                                            <MenuItem Header="Xem/Chỉnh sửa thông tin" Click="MenuItemEditRoom_OnClick"/>
-                                            <MenuItem Header="Xóa phòng" Click="MenuItemDelRoom_OnClick"/>
+                                            <MenuItem Header="Xem/Chỉnh sửa thông tin" 
+                                                      Click="MenuItemEditRoom_OnClick"/>
+                                            <MenuItem Header="Xóa phòng" 
+                                                      Click="MenuItemDelRoom_OnClick"/>
                                         </ContextMenu>
                                         <ContextMenu x:Key="ContextMenuForAvailableRoom">
-                                            <MenuItem Header="Đăng kí phòng" Click="MenuItemRegRoom_OnClick"/>
+                                            <MenuItem Header="Đăng kí phòng" 
+                                                      Click="MenuItemRegRoom_OnClick"/>
                                             <Separator/>
-                                            <MenuItem Header="Xem/Chỉnh sửa thông tin" Click="MenuItemEditRoom_OnClick"/>
-                                            <MenuItem Header="Xóa phòng" Click="MenuItemDelRoom_OnClick"/>
+                                            <MenuItem Header="Xem/Chỉnh sửa thông tin" 
+                                                      Click="MenuItemEditRoom_OnClick"/>
+                                            <MenuItem Header="Xóa phòng" 
+                                                      Click="MenuItemDelRoom_OnClick"/>
                                         </ContextMenu>
                                         <ContextMenu x:Key="DefaultContextMenu">
-                                            <MenuItem Header="Xem/Chỉnh sửa thông tin" Click="MenuItemEditRoom_OnClick"/>
-                                            <MenuItem Header="Xóa phòng" Click="MenuItemDelRoom_OnClick"/>
+                                            <MenuItem Header="Xem/Chỉnh sửa thông tin" 
+                                                      Click="MenuItemEditRoom_OnClick"/>
+                                            <MenuItem Header="Xóa phòng" 
+                                                      Click="MenuItemDelRoom_OnClick"/>
                                         </ContextMenu>
-
                                     </ItemsControl.Resources>
                                     <ItemsControl.GroupStyle>
                                         <GroupStyle>
@@ -271,19 +277,23 @@
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition/>
-
                         <RowDefinition Height="7*"/>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
-                        <TextBlock Foreground="DeepPink" FontSize="35" FontWeight="Bold" Text="Báo Cáo Doanh Thu Theo Loại Phòng" HorizontalAlignment="Center"/>
+                        <TextBlock Foreground="DeepPink" 
+                                   FontSize="35" 
+                                   FontWeight="Bold" 
+                                   Text="Báo Cáo Doanh Thu Theo Loại Phòng" 
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
                     </Grid>
-                    <Grid Grid.Row="2">
+                    <Grid Grid.Row="1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="3*"/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
                         <WindowsFormsHost>
-                            <rv:ReportViewer x:Name="_repo"></rv:ReportViewer>
+                            <rv:ReportViewer x:Name="Report"></rv:ReportViewer>
                         </WindowsFormsHost>
                         <Grid Grid.Column="1">
                             <Grid.Background>
@@ -302,7 +312,10 @@
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Margin="10" Grid.Row="0" Grid.Column="0" Text="Tháng:" VerticalAlignment="Center" HorizontalAlignment="Center" Width="61" Foreground="White" FontSize="14"/>
-                            <ComboBox Grid.Row="0" Grid.Column="1"  Name="cbxMonth" Width="100" Height="30">
+                            <ComboBox Grid.Row="0" Grid.Column="1"  
+                                      Name="CbbMonth" 
+                                      Width="100" 
+                                      Height="30">
                                 <ComboBoxItem>1</ComboBoxItem>
                                 <ComboBoxItem>2</ComboBoxItem>
                                 <ComboBoxItem>3</ComboBoxItem>
@@ -317,14 +330,23 @@
                                 <ComboBoxItem>12</ComboBoxItem>
                             </ComboBox>
                             <TextBlock Margin="10" Grid.Row="1" Grid.Column="0" Text="Năm:" VerticalAlignment="Center" HorizontalAlignment="Center" Width="61" Foreground="White" FontSize="14"/>
-                            <ComboBox Grid.Row="1" Grid.Column="1"  Name="cbxYear" Width="100" Height="30">
+                            <ComboBox Grid.Row="1" Grid.Column="1"  
+                                      Name="CbbYear" 
+                                      Width="100" 
+                                      Height="30">
                                 <ComboBoxItem>2015</ComboBoxItem>
                                 <ComboBoxItem>2016</ComboBoxItem>
                                 <ComboBoxItem>2017</ComboBoxItem>
                                 <ComboBoxItem>2018</ComboBoxItem>
                                 <ComboBoxItem>2019</ComboBoxItem>
                             </ComboBox>
-                            <Button Margin="10" Grid.Row="2" Grid.ColumnSpan="2" Content="Show" Click="Button_Click" Height="50" Width="100" FontSize="14"/>
+                            <Button Margin="10" 
+                                    Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" 
+                                    Content="Show"
+                                    Click="Button_Click" 
+                                    Height="50" 
+                                    Width="100" 
+                                    FontSize="14"/>
                         </Grid>
                     </Grid>
                 </Grid>

@@ -56,6 +56,7 @@
     <Compile Include="RoomTypeDAO.cs" />
     <Compile Include="ServiceDAO.cs" />
     <Compile Include="ServiceTypeDAO.cs" />
+    <Compile Include="UseServiceDAO.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DTO\DTO.csproj">

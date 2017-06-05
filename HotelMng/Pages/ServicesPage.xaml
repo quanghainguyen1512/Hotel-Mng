@@ -18,12 +18,6 @@
         <DataGrid Grid.Column="0" 
                   ItemsSource="{Binding Services}"
                   Name="DgServices"
-                  AutoGenerateColumns="False"
-                  SelectionMode="Single"
-                  SelectionUnit="FullRow"
-                  CanUserAddRows="False"
-                  CanUserDeleteRows="False"
-                  GridLinesVisibility="All"
                   IsReadOnly="True">
             <DataGrid.GroupStyle>
                 <GroupStyle>
@@ -93,18 +87,7 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Click="ButtonEditItem_OnClick"
-                                    Width="25"
-                                    Margin="5,0">
-                                <Button.ContentTemplate>
-                                    <DataTemplate>
-                                        <Rectangle Width="10" Height="10">
-                                            <Rectangle.Fill>
-                                                <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_edit}"/>
-                                            </Rectangle.Fill>
-                                        </Rectangle>
-                                    </DataTemplate>
-                                </Button.ContentTemplate>
-                            </Button>
+                                    Style="{StaticResource EditButtonIdDataGrid}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -113,18 +96,7 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Click="ButtonDelItem_OnClick"
-                                    Width="25"
-                                    Margin="5,0">
-                                <Button.ContentTemplate>
-                                    <DataTemplate>
-                                        <Rectangle Width="10" Height="10">
-                                            <Rectangle.Fill>
-                                                <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_axis_x_letter}"/>
-                                            </Rectangle.Fill>
-                                        </Rectangle>
-                                    </DataTemplate>
-                                </Button.ContentTemplate>
-                            </Button>
+                                    Style="{StaticResource DelButtonIdDataGrid}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

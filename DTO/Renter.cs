@@ -27,7 +27,7 @@ namespace DTO
         private Nationality _nationality;
         public Renter()
         {
-
+            Nationality = new Nationality();
         }
         public string RenterId
         {

@@ -5,13 +5,14 @@ using DAO;
 using DTO;
 using HotelMng.SubWindows;
 using System.Collections.ObjectModel;
+using System.Data.SqlClient;
 
 namespace HotelMng.Pages
 {
     /// <summary>
     /// Interaction logic for RentersPage.xaml
     /// </summary>
-    public partial class RentersPage : Page
+    public partial class RentersPage
     {
         public ObservableCollection<Renter> Renters { get; set; }
 
@@ -45,13 +46,22 @@ namespace HotelMng.Pages
         }
         private void ButtonDelItem_OnClick(object sender, RoutedEventArgs e)
         {
+            var btn = sender as Button;
+            var rowBeingDeleted = (Renter)btn?.DataContext;
+
             if (MessageBox.Show("Chắc chắn xóa mục này ?", "", MessageBoxButton.YesNo, MessageBoxImage.Warning) ==
                 MessageBoxResult.Yes)
             {
-                var btn = sender as Button;
-                var rowBeingDeleted = (Renter)btn?.DataContext;
-                if (RenterDAO.Instance.DelRenter(rowBeingDeleted.RenterId))
-                    Renters.Remove(rowBeingDeleted);
+                try
+                {
+                    if (RenterDAO.Instance.DelRenter(rowBeingDeleted.RenterId))
+                        Renters.Remove(rowBeingDeleted);
+
+                }
+                catch (SqlException)
+                {
+                    MessageBox.Show("Không thể xóa");
+                }
             }
         }
     }

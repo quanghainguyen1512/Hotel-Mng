@@ -17,5 +17,9 @@ namespace DTO
             NatId = (int) row["NatId"];
             NatName = row["NatName"].ToString();
         }
+
+        public Nationality()
+        {
+        }
     }
 }

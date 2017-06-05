@@ -31,7 +31,7 @@ CREATE TABLE ROOM_STATUS
 	StatusName	NVARCHAR(20)
 )													
 GO
-CREATE TABLE ROOM													--Phòng
+CREATE TABLE ROOM													
 (
 	RoomId		INT NOT NULL PRIMARY KEY,
 	RoomTypeId	CHAR(1),
@@ -42,14 +42,14 @@ CREATE TABLE ROOM													--Phòng
 	FOREIGN KEY (StatusId) REFERENCES ROOM_STATUS(StatusId)
 )
 GO
-CREATE TABLE RENTER														--Người Thuê
+CREATE TABLE RENTER														
 (
-	RenterId	VARCHAR(20) NOT NULL PRIMARY KEY,
+	RenterId	VARCHAR(50) NOT NULL PRIMARY KEY DEFAULT NEWID(),
 	Name		NVARCHAR(30) NOT NULL,
 	Gender		bit NOT NULL,
 	PhoneNum	VARCHAR(15),
-	NatId		INT,													--QD2--
-	IDENTITYNum	VARCHAR(20),
+	NatId		INT,													
+	IdentityNum	VARCHAR(20) UNIQUE,
 	Address		VARCHAR(40)
 
 	FOREIGN KEY (NatId) REFERENCES TABLE_NATIONALITY(NatId)
@@ -70,7 +70,7 @@ CREATE TABLE SERVICE
 	SvTypeId INT,
 )
 GO
-CREATE TABLE BILL														--hóa đơn
+CREATE TABLE BILL														
 (
 	BillId		VARCHAR(20) NOT NULL PRIMARY KEY,
 	RenterId	VARCHAR(20),
@@ -80,12 +80,12 @@ CREATE TABLE BILL														--hóa đơn
 	FOREIGN KEY (RoomId) REFERENCES ROOM(RoomId),
 	FOREIGN KEY (RenterId) REFERENCES RENTER(RenterId),)
 GO
-CREATE TABLE REG_FORM														--phiếu thuê phòng
+CREATE TABLE REG_FORM														
 (
 	FormId		INT IDENTITY PRIMARY KEY,
 	CheckIn		SMALLDATETIME NOT NULL,
 	CheckOut	SMALLDATETIME,
-	RenterId	VARCHAR(20),
+	RenterId	VARCHAR(50),
 	RoomId		INT,
 	BillId		VARCHAR(20),
 	Rental		MONEY,
@@ -100,6 +100,7 @@ CREATE TABLE USE_SERVICES
 	ServId	INT,
 	FormId	INT,
 	Time	DateTime,
+	Quantity INT,
 
 	PRIMARY KEY (ServId, FormId),
 	FOREIGN KEY (ServId) REFERENCES SERVICE(ServId),
@@ -112,7 +113,7 @@ CREATE TABLE ROOMMATE
 	IdentityNum VARCHAR(10),
 	NatId	INT,
 	FormId	INT,
-	RenterId VARCHAR(20),
+	RenterId VARCHAR(50),
 
 	PRIMARY KEY (FormId,RenterId),
 	FOREIGN KEY (FormId) REFERENCES REG_FORM(FormId),
@@ -160,7 +161,23 @@ AS
 		ON RS.StatusID = R.StatusId
 	GROUP BY RS.StatusId, RS.StatusName
 GO
-ALTER PROC USP_GetDataForReporting
+CREATE PROC USP_GetSelectedFormId
+	@roomid INT
+AS
+	SELECT FormId
+	FROM dbo.REG_FORM
+	WHERE RoomId = @roomid AND CheckOut IS NULL
+GO
+CREATE PROC USP_GetServicesBeingUsed
+	@formid INT
+AS
+	SELECT US.FormId, US.Time, US.Quantity, US.ServId, S.Name
+	FROM dbo.USE_SERVICES AS US
+	JOIN dbo.SERVICE AS S
+		ON S.ServId = US.ServId
+	WHERE US.FormId = @formid
+GO
+CREATE PROC USP_GetDataForReporting
 	@month SMALLINT,
 	@year  INT
 AS

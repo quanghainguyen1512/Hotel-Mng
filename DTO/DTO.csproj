@@ -53,6 +53,7 @@
     <Compile Include="RoomType.cs" />
     <Compile Include="Service.cs" />
     <Compile Include="ServiceType.cs" />
+    <Compile Include="UseService.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

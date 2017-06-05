@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using DTO;
 
 namespace DAO
@@ -37,8 +35,9 @@ namespace DAO
 
         public bool AddRenter(Renter renter)
         {
+            var gender = renter.Gender.Equals(true) ? 1 : 0;
             _query = $"INSERT INTO dbo.RENTER (Name, Gender, PhoneNum, NatId, IdentityNum, Address) " +
-                     $"VALUES(N'{renter.Name}', {renter.Gender}, '{renter.PhoneNum}', {renter.Nationality.NatId}, '{renter.IdentityNum}', '{renter.Address}')";
+                     $"VALUES(N'{renter.Name}', {gender}, '{renter.PhoneNum}', {renter.Nationality.NatId}, '{renter.IdentityNum}', '{renter.Address}')";
             var result = DataProvider.Instance.ExecuteNonQuery(_query);
             return result > 0;
         }
@@ -55,9 +54,15 @@ namespace DAO
 
         public bool DelRenter(string renterId)
         {
-            _query = $"DELETE FROM dbo.RENTER WHERE RenterId = {renterId}";
+            _query = $"DELETE FROM dbo.RENTER WHERE RenterId = '{renterId}'";
             var result = DataProvider.Instance.ExecuteNonQuery(_query);
             return result > 0;
+        }
+
+        public static string GetRenterId(string identityNum)
+        {
+            var q = $"SELECT RenterId FROM dbo.RENTER WHERE IdentityNum = {identityNum}";
+            return DataProvider.Instance.ExecuteScalar(q).ToString();
         }
     }
 }
