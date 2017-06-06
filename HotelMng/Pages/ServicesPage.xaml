@@ -103,8 +103,9 @@
 
             </DataGrid.Columns>
         </DataGrid>
-        <Grid Grid.Column="1" Background="{StaticResource ToolBoxBrush}">
-            <Grid.Resources>
+        <StackPanel Grid.Column="1"
+                    Background="{StaticResource ToolBoxBrush}">
+            <StackPanel.Resources>
                 <Style TargetType="TextBlock">
                     <Setter Property="Foreground" Value="White"/>
                     <Setter Property="VerticalAlignment" Value="Center"/>
@@ -117,73 +118,101 @@
                     <Setter Property="Margin" Value="0,0,10,0"/>
                     <Setter Property="Padding" Value="3"></Setter>
                 </Style>
-            </Grid.Resources>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="2*"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Row="0" Grid.Column="0" Text="Tên:"/>
-            <TextBox Name="TxtName" 
-                     VerticalAlignment="Center"
-                     Grid.Row="0" Grid.Column="1" />
-            <TextBlock Grid.Row="1" Grid.Column="0" Text="Loại:"/>
-            <Grid Grid.Row="1" Grid.Column="1"
-                  VerticalAlignment="Center">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <ComboBox ItemsSource="{Binding ServiceTypes}" 
-                          DisplayMemberPath="SvTypeName"
-                          SelectedIndex="1"
-                          FontSize="14"
-                          Name="CbbSvType"/>
-                <Button Grid.Column="1"
-                        Width="30"
-                        Height="30"
-                        Style="{DynamicResource MetroCircleButtonStyle}"
-                        ToolTip="Danh sách "
-                        Click="AddServiceTypeInfo_OnClick"
-                        Background="WhiteSmoke">
-                    <Rectangle Width="5"
-                               Height="12">
-                        <Rectangle.Fill>
-                            <VisualBrush Stretch="Fill"
-                                         Visual="{StaticResource appbar_information}" />
-                        </Rectangle.Fill>
-                    </Rectangle>
-                </Button>
-            </Grid>
-            <TextBlock Grid.Row="2" Grid.Column="0" Text="Đơn giá:"/>
-            <mah:NumericUpDown Grid.Row="2" Grid.Column="1"
-                               Value="1000"
-                               HorizontalContentAlignment="Center"
-                               VerticalAlignment="Center"
-                               Margin="0,0,10,0"
-                               Interval="1000"
-                               Minimum="1000"
-                               Name="NumUpDownPrice"/>
-            <TextBlock Grid.Row="3" Grid.Column="0" Text="Đơn vị"/>
-            <TextBox Grid.Row="3" Grid.Column="1"
-                     Name="TxtUnit"/>
-            <Grid Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"
-                        VerticalAlignment="Center">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Button Name="ButtonAdd" Grid.Column="1"
-                        Content="Thêm" Margin="10,16"
-                        Click="ButtonAdd_OnClick"/>
-            </Grid>
-        </Grid>
+
+            </StackPanel.Resources>
+            <Expander Header="Tìm kiếm"
+                      Background="#C5CAE9"
+                      IsExpanded="True">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" 
+                               Text="Tìm theo tên:" 
+                               TextWrapping="Wrap" />
+                    <TextBox Name="TxtNameFilter" 
+                             VerticalAlignment="Center"
+                             Grid.Row="0" Grid.Column="1"
+                             TextChanged="TxtNameFilter_OnTextChanged"
+                             mah:TextBoxHelper.ClearTextButton="True"/>
+                </Grid>
+            </Expander>
+
+            <Expander Header="Thêm dịch vụ"
+                      Background="#C5CAE9">
+                <Grid Background="Transparent">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Tên:"/>
+                    <TextBox Name="TxtName" 
+                             VerticalAlignment="Center"
+                             Grid.Row="0" Grid.Column="1" 
+                             Text="{Binding ServiceBeingAdded.Name}"/>
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Loại:"/>
+                    <Grid Grid.Row="1" Grid.Column="1"
+                          VerticalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <ComboBox ItemsSource="{Binding ServiceTypes}" 
+                                  DisplayMemberPath="SvTypeName"
+                                  SelectedIndex="{Binding ServiceBeingAdded.SvType.SvTypeId}"
+                                  FontSize="14"
+                                  Name="CbbSvType"/>
+                        <Button Grid.Column="1"
+                                Width="30"
+                                Height="30"
+                                Style="{DynamicResource MetroCircleButtonStyle}"
+                                ToolTip="Danh sách "
+                                Click="AddServiceTypeInfo_OnClick"
+                                Background="WhiteSmoke">
+                            <Rectangle Width="5"
+                                       Height="12">
+                                <Rectangle.Fill>
+                                    <VisualBrush Stretch="Fill"
+                                                 Visual="{StaticResource appbar_information}" />
+                                </Rectangle.Fill>
+                            </Rectangle>
+                        </Button>
+                    </Grid>
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Đơn giá:"/>
+                    <mah:NumericUpDown Grid.Row="2" Grid.Column="1"
+                                       Value="{Binding ServiceBeingAdded.Price}"
+                                       HorizontalContentAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       Margin="0,0,10,0"
+                                       Interval="1000"
+                                       Minimum="1000"
+                                       Name="NumUpDownPrice"/>
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Đơn vị"/>
+                    <TextBox Grid.Row="3" 
+                             Grid.Column="1"
+                             Text="{Binding ServiceBeingAdded.Unit}"
+                             Name="TxtUnit"/>
+                    <Grid Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"
+                          VerticalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Button Name="ButtonAdd" Grid.Column="1"
+                                Content="Thêm" Margin="10,16"
+                                Click="ButtonAdd_OnClick"/>
+                    </Grid>
+                </Grid>
+            </Expander>
+        </StackPanel>
     </Grid>
 </Page>

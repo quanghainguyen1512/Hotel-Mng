@@ -64,7 +64,7 @@
                     <Setter Property="VerticalAlignment" Value="Center"/>
                     <Setter Property="FontSize" Value="14"/>
                     <Setter Property="Margin" Value="0,0,10,0"/>
-                    <Setter Property="Padding" Value="3"></Setter>
+                    <Setter Property="Padding" Value="3"/>
                 </Style>
             </Grid.Resources>
             <Grid.RowDefinitions>

@@ -64,7 +64,7 @@
                                         Height="Auto">
                                 <TextBlock Text="Tình trạng phòng:"
                                            Margin="20,0"
-                                           FontSize="13"
+                                           FontSize="15"
                                            VerticalAlignment="Center"
                                            FontWeight="DemiBold"
                                            FontStyle="Italic"/>
@@ -89,9 +89,11 @@
                                               Name="RoomContainer">
                                     <ItemsControl.Resources>
                                         <ContextMenu x:Key="ContextMenuForRentedRoom">
-                                            <MenuItem Header="Danh sách khách đang ở"/>
-                                            <MenuItem Header="Xem/Thêm dịch vụ" Click="MenuItemAddService_OnClick"/>
-                                            <MenuItem Header="Thanh toán"/>
+                                            <MenuItem Header="Danh sách khách trong phòng"
+                                                      Click="MenuItemRentersInRoom_OnClick"/>
+                                            <MenuItem Header="Xem/Thêm dịch vụ" 
+                                                      Click="MenuItemAddService_OnClick"/>
+                                            <MenuItem Header="Thanh toán" Click="MenuItemBillInfo_OnClick"/>
                                             <Separator/>
                                             <MenuItem Header="Xem/Chỉnh sửa thông tin" 
                                                       Click="MenuItemEditRoom_OnClick"/>
@@ -195,25 +197,6 @@
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
                             </ScrollViewer>
-                            <StackPanel Grid.Row="2" 
-                                        Orientation="Horizontal"
-                                        VerticalAlignment="Center">
-                                <TextBlock Text="Thời gian khách hàng muốn ở:"
-                                           Margin="20,0,10,0"
-                                           FontSize="13"
-                                           VerticalAlignment="Center"
-                                           FontWeight="DemiBold"
-                                           FontStyle="Italic"/>
-                                <mah:DateTimePicker Name="TimePicker" 
-                                                    Width="200"
-                                                    Margin="100,0"
-                                                    SelectedDate="{x:Static sys:DateTime.Now}"
-                                                    SelectedDateChanged="TimePicker_OnSelectedDateChanged"/>
-                                <Button Margin="200,0"
-                                        Content="Tải lại danh sách"
-                                        Style="{StaticResource StyleButtonReload}">
-                                </Button>
-                            </StackPanel>
                         </Grid>
                     </GroupBox>
                     
@@ -295,13 +278,7 @@
                         <WindowsFormsHost>
                             <rv:ReportViewer x:Name="Report"></rv:ReportViewer>
                         </WindowsFormsHost>
-                        <Grid Grid.Column="1">
-                            <Grid.Background>
-                                <LinearGradientBrush StartPoint="0,0.3" EndPoint="0, 1.2">
-                                    <GradientStop Color="#1E88E5" Offset="0"/>
-                                    <GradientStop Color="#EEEEEE" Offset="1.2"/>
-                                </LinearGradientBrush>
-                            </Grid.Background>
+                        <Grid Grid.Column="1" Background="{StaticResource ToolBoxBrush}">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
@@ -384,11 +361,11 @@
                             </Style>
                         </StackPanel.Resources>
                         <TextBlock Text="ĐẠI HỌC QUỐC GIA THÀNH PHỐ HỒ CHÍ MINH"
-                                   FontSize="15" FontWeight="DemiBold"/>
+                                   FontSize="15" />
                         <TextBlock Text="TRƯỜNG ĐẠI HỌC CÔNG NGHỆ THÔNG TIN"
-                                   FontSize="15" FontWeight="DemiBold"/>
+                                   FontSize="15" />
                         <TextBlock Text="KHOA CÔNG NGHỆ PHẦN MỀM"
-                                   FontSize="15" FontWeight="DemiBold"/>
+                                   FontSize="15" />
                         <TextBlock Text="*****************"
                                    FontSize="15" FontWeight="DemiBold"/>
                         <TextBlock Text="ĐỒ ÁN MÔN HỌC"

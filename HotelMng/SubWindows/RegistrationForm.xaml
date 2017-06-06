@@ -81,7 +81,7 @@
                             Orientation="Horizontal">
                     <ComboBox VerticalAlignment="Center"
                               Width="Auto" Name="CbbNationality"
-                              SelectedIndex="{Binding Form.Renter.NatId}"
+                              SelectedIndex="{Binding Form.Renter.Nationality.NatId}"
                               SelectionChanged="ComboBox_SelectionChanged"
                               ItemsSource="{Binding Nationalities}"
                               DisplayMemberPath="NatName"/>

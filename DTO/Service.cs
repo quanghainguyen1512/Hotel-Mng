@@ -57,6 +57,7 @@ namespace DTO
 
         public Service()
         {
+            SvType = new ServiceType();
         }
 
         public Service(System.Data.DataRow row)

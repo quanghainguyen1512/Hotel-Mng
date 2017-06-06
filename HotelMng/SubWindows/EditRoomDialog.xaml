@@ -30,16 +30,23 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <TextBlock Text="Loại phòng:" Grid.Row="0" Grid.Column="0"/>
-        <ComboBox Name="CbbRoomType" Grid.Row="0" Grid.Column="1" 
+        <TextBlock Text="Loại phòng:" 
+                   Grid.Row="0" Grid.Column="0"/>
+        <ComboBox Name="CbbRoomType" 
+                  Grid.Row="0" Grid.Column="1" 
                   VerticalAlignment="Center"
                   HorizontalContentAlignment="Center"/>
-        <TextBlock Text="Trạng thái:" Grid.Row="1" Grid.Column="0"/>
-        <ComboBox Name="CbbRoomStatus" Grid.Row="1" Grid.Column="1" 
+        <TextBlock Text="Trạng thái:" 
+                   Grid.Row="1" 
+                   Grid.Column="0"/>
+        <ComboBox Name="CbbRoomStatus" 
+                  Grid.Row="1" 
+                  Grid.Column="1" 
                   VerticalAlignment="Center"
                   HorizontalContentAlignment="Center"
                   ItemsSource="{Binding RoomStatusIEnumerable}"
-                  DisplayMemberPath="StatusName"/>
+                  DisplayMemberPath="StatusName"
+                  SelectedIndex="{Binding RoomBeingEdited.RoomStatus.StatusId}"/>
         <TextBlock Grid.Row="2" Grid.Column="0"
                    Text="Sức chứa:"/>
         <mah:NumericUpDown Grid.Row="2" Grid.Column="1" 

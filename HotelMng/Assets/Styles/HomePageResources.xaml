@@ -33,16 +33,16 @@
 
     <Style TargetType="userControls:RoomStatusItem" x:Key="RoomStatusItemStyle">
         <Style.Triggers>
-            <DataTrigger Binding="{Binding StatusId}" Value="1">
+            <DataTrigger Binding="{Binding StatusId}" Value="0">
                 <Setter Property="StatusBrush" Value="{StaticResource EmptyRoomBrush}"/>
             </DataTrigger>
-            <DataTrigger Binding="{Binding StatusId}" Value="2">
+            <DataTrigger Binding="{Binding StatusId}" Value="1">
                 <Setter Property="StatusBrush" Value="{StaticResource RentedRoomBrush}"/>
             </DataTrigger>
-            <DataTrigger Binding="{Binding StatusId}" Value="3">
+            <DataTrigger Binding="{Binding StatusId}" Value="2">
                 <Setter Property="StatusBrush" Value="{StaticResource RoomNeedsCleaningBrush}"/>
             </DataTrigger>
-            <DataTrigger Binding="{Binding StatusId}" Value="4">
+            <DataTrigger Binding="{Binding StatusId}" Value="3">
                 <Setter Property="StatusBrush" Value="{StaticResource RoomNeedsFixingBrush}"/>
             </DataTrigger>
         </Style.Triggers>
@@ -432,16 +432,16 @@
                                 </Setter.Value>
                             </Setter>
                         </Trigger>
-                        <DataTrigger Binding="{Binding RoomStatus.StatusId}" Value="1">
+                        <DataTrigger Binding="{Binding RoomStatus.StatusId}" Value="0">
                             <Setter TargetName="TileBackground" Property="Background" Value="{StaticResource EmptyRoomBrush}"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding RoomStatus.StatusId}" Value="2">
+                        <DataTrigger Binding="{Binding RoomStatus.StatusId}" Value="1">
                             <Setter TargetName="TileBackground" Property="Background" Value="{StaticResource RentedRoomBrush}"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding RoomStatus.StatusId}" Value="3">
+                        <DataTrigger Binding="{Binding RoomStatus.StatusId}" Value="2">
                             <Setter TargetName="TileBackground" Property="Background" Value="{StaticResource RoomNeedsCleaningBrush}"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding RoomStatus.StatusId}" Value="4">
+                        <DataTrigger Binding="{Binding RoomStatus.StatusId}" Value="3">
                             <Setter TargetName="TileBackground" Property="Background" Value="{StaticResource RoomNeedsFixingBrush}"/>
                         </DataTrigger>
                     </ControlTemplate.Triggers>

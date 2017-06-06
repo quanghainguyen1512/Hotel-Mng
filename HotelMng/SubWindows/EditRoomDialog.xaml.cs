@@ -85,15 +85,15 @@ namespace HotelMng.SubWindows
             RoomTypeIdEnumerable = PassParameterToDialogFunc().Item3;
             CbbRoomType.ItemsSource = RoomTypeIdEnumerable;
 
-            for (var i = 0; i < CbbRoomStatus.Items.Count; i++)
-            {
-                var item = CbbRoomStatus.Items[i] as RoomStatus;
-                if (item != null && item.StatusId == RoomBeingEdited.RoomStatus.StatusId)
-                {
-                    CbbRoomStatus.SelectedIndex = i;
-                    break;
-                }
-            }
+            //for (var i = 0; i < CbbRoomStatus.Items.Count; i++)
+            //{
+            //    var item = CbbRoomStatus.Items[i] as RoomStatus;
+            //    if (item != null && item.StatusId == RoomBeingEdited.RoomStatus.StatusId)
+            //    {
+            //        CbbRoomStatus.SelectedIndex = i;
+            //        break;
+            //    }
+            //}
 
             for (var i = 0; i < CbbRoomType.Items.Count; i++)
             {

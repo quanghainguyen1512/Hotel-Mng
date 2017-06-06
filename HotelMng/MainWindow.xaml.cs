@@ -28,7 +28,18 @@ namespace HotelMng
 
         private ObservableCollection<Room> _rooms;
         private readonly CollectionView _view;
-        public IEnumerable<RoomStatus> AllRoomStatus { get; set; }
+        private IEnumerable<RoomStatus> _allRoomStatus;
+
+        public IEnumerable<RoomStatus> AllRoomStatus
+        {
+            get => _allRoomStatus;
+            set
+            {
+                _allRoomStatus = value; 
+                OnPropertyChanged(nameof(AllRoomStatus));
+            }
+        }
+
         public ObservableCollection<Room> Rooms
         {
             get => _rooms;
@@ -46,10 +57,10 @@ namespace HotelMng
             InitializeComponent();
             Rooms = new ObservableCollection<Room>(RoomDAO.Instance.GetAllRooms());
 
-            AllRoomStatus = RoomStatusDAO.Instance.GetAllRoomStatus();
+            LoadRoomStatus(); 
 
             _view = (CollectionView) CollectionViewSource.GetDefaultView(Rooms);
-            _view.GroupDescriptions.Add(new PropertyGroupDescription("RoomTypeId"));
+            _view.GroupDescriptions?.Add(new PropertyGroupDescription("RoomTypeId"));
         }
 
         #region Mng Tab
@@ -68,9 +79,9 @@ namespace HotelMng
 
         #region Home Tab
 
-        private void TimePicker_OnSelectedDateChanged(object sender, TimePickerBaseSelectionChangedEventArgs<DateTime?> e)
+        private void LoadRoomStatus()
         {
-
+            AllRoomStatus = RoomStatusDAO.Instance.GetAllRoomStatus();
         }
 
         private void Tile_OnClick(object sender, RoutedEventArgs e)
@@ -118,7 +129,8 @@ namespace HotelMng
             var menuItem = sender as MenuItem;
             if (menuItem is null) return;
 
-            var itemBeingEdited = Rooms.FirstOrDefault(r => r.RoomId == ((Room)menuItem.DataContext).RoomId);
+            var itemBeingEdited = Rooms.First(r => r.RoomId == ((Room)menuItem.DataContext).RoomId);
+            var oldStatus = itemBeingEdited.RoomStatus.StatusId;
             var dialog = new EditRoomDialog
             {
                 PassParameterToDialogFunc =
@@ -127,9 +139,10 @@ namespace HotelMng
                 {
                     if (RoomDAO.Instance.UpdateRoom(room))
                     {
-                        itemBeingEdited = room;
+                        _view.Refresh();
+                        if (oldStatus != itemBeingEdited.RoomStatus.StatusId)
+                            LoadRoomStatus();
                     }
-                    _view.Refresh();
                 }
             };
             dialog.ShowDialog();
@@ -139,13 +152,13 @@ namespace HotelMng
             var menuItem = sender as MenuItem;
             if (menuItem is null) return;
             var roomParam = (Room)menuItem.DataContext;
-            var dialog = new RegistrationForm()
+            var dialog = new RegistrationForm
             {
                 PassParameterFunc = () => roomParam,
                 UpdateRegFormAction = form =>
                 {
                     var temp = Rooms.First(r => r.RoomId == roomParam.RoomId);
-                    temp.RoomStatus = AllRoomStatus.FirstOrDefault(s => s.StatusId == 2);
+                    temp.RoomStatus = AllRoomStatus.FirstOrDefault(s => s.StatusId == 1);
                     if (RoomDAO.Instance.UpdateRoom(temp) && RenterDAO.Instance.AddRenter(form.Renter))
                     {
                         form.Renter.RenterId = RenterDAO.GetRenterId(form.Renter.IdentityNum);
@@ -166,7 +179,14 @@ namespace HotelMng
             };
             dialog.ShowDialog();
         }
+        private void MenuItemRentersInRoom_OnClick(object sender, RoutedEventArgs e)
+        {
 
+        }
+
+        private void MenuItemBillInfo_OnClick(object sender, RoutedEventArgs e)
+        {
+        }
 
         #endregion
 

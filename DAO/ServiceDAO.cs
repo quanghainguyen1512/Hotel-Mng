@@ -62,13 +62,11 @@ namespace DAO
             return result > 0;
         }
 
-        public Tuple<int, string> NewestServiceInfo()
+        public int NewestServiceInfo()
         {
             _query = "EXEC dbo.USP_GetNewestServiceInfo";
-            var data = DataProvider.Instance.ExecuteQueries(_query);
-            var servId = (int) data.Rows[0]["ServId"];
-            var svTypeName = data.Rows[0]["SvTypeName"].ToString();
-            return new Tuple<int, string>(servId, svTypeName);
+            var data = DataProvider.Instance.ExecuteScalar(_query);
+            return (int) data;
         }
     }
 }

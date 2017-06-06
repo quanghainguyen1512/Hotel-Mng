@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -16,6 +17,7 @@ namespace HotelMng.Pages
     {
         public ObservableCollection<ServiceType> ServiceTypes { get; set; }
         public ObservableCollection<Service> Services { get; set; }
+        public Service ServiceBeingAdded { get; set; } = new Service();
         private readonly CollectionView _view;
         public ServicesPage()
         {
@@ -25,6 +27,16 @@ namespace HotelMng.Pages
 
             _view = (CollectionView) CollectionViewSource.GetDefaultView(Services);
             _view.GroupDescriptions?.Add(new PropertyGroupDescription("SvType.SvTypeName"));
+            _view.Filter = ServiceFilter;
+        }
+
+        private bool ServiceFilter(object item)
+        {
+            var str = TxtNameFilter.Text;
+            if (string.IsNullOrEmpty(str))
+                return true;
+            var service = item as Service;
+            return service != null && service.Name.IndexOf(str, StringComparison.InvariantCultureIgnoreCase) >= 0;
         }
 
         private void ButtonDelItem_OnClick(object sender, RoutedEventArgs e)
@@ -55,9 +67,8 @@ namespace HotelMng.Pages
                 {
                     if (ServiceDAO.Instance.UpdateService(rowBeingEdited))
                     {
-                        rowBeingEdited = service;
+                        _view.Refresh();
                     }
-                    _view.Refresh();
                 },
                 PassParameterToDialogFunc = () => rowBeingEdited,
                 PassServiceTypeFunc = () => ServiceTypes
@@ -88,22 +99,19 @@ namespace HotelMng.Pages
                 return;
             }
             var serviceType = CbbSvType.SelectedItem as ServiceType;
-            if (NumUpDownPrice.Value is null || serviceType is null) return;
-            //var sv = new Service
-            //{
-            //    Name = TxtName.Text,
-            //    Price = (int)NumUpDownPrice.Value,
-            //    SvTypeId = serviceType.SvTypeId,
-            //    Unit = TxtUnit.Text
-            //};
-            //if (ServiceDAO.Instance.AddNewService(sv))
-            //{
-            //    var data = ServiceDAO.Instance.NewestServiceInfo();
-            //    sv.ServId = data.Item1;
-            //    sv.SvTypeName = data.Item2;
-            //    Services.Add(sv);
-            //    MessageBox.Show("Thêm thành công");
-            //}
+            if (serviceType is null) return;
+            if (ServiceDAO.Instance.AddNewService(ServiceBeingAdded))
+            {
+                ServiceBeingAdded.ServId = ServiceDAO.Instance.NewestServiceInfo();
+                ServiceBeingAdded.SvType.SvTypeName = serviceType.SvTypeName;
+                Services.Add(ServiceBeingAdded);
+                MessageBox.Show("Thêm thành công");
+            }
+        }
+
+        private void TxtNameFilter_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            _view.Refresh();
         }
     }
 }
