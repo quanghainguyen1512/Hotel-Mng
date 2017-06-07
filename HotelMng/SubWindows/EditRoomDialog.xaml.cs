@@ -1,19 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using DTO;
 using DTO.Annotations;
 
@@ -26,9 +15,9 @@ namespace HotelMng.SubWindows
     {
         public Func<Tuple<Room, IEnumerable<RoomStatus>, IEnumerable<char>>> PassParameterToDialogFunc;
         public Action<Room> UpdateRoomTypeAction;
-        private Room _roomBeingEdited;
         private IEnumerable<RoomStatus> _roomStatusIEnumerable;
         private IEnumerable<char> _roomTypeIdEnumerable;
+        private Room _roomBeingEdited;
 
         public Room RoomBeingEdited
         {
@@ -67,7 +56,7 @@ namespace HotelMng.SubWindows
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void ButtonApply_OnClick(object sender, RoutedEventArgs e)
@@ -75,7 +64,8 @@ namespace HotelMng.SubWindows
             RoomBeingEdited.RoomTypeId = Convert.ToChar(CbbRoomType.SelectedItem);
             RoomBeingEdited.RoomStatus = CbbRoomStatus.SelectionBoxItem as RoomStatus;
             UpdateRoomTypeAction(RoomBeingEdited);
-            this.Close();
+
+            Close();
         }
 
         private void EditRoomDialog_OnLoaded(object sender, RoutedEventArgs e)

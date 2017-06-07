@@ -23,7 +23,7 @@
                   ItemsSource="{Binding RoomTypes}"
                   IsReadOnly="True">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Mã phòng" 
+                <DataGridTextColumn Header="Mã loại phòng" 
                                     Binding="{Binding RoomTypeId}"
                                     Width=".8*"
                                     FontSize="18"/>
@@ -32,7 +32,7 @@
                                     Width="*"
                                     FontSize="15"/>
                 <DataGridTextColumn Header="Giá giờ đầu" 
-                                    Binding="{Binding Price1StHour}"
+                                    Binding="{Binding PriceFirstHour}"
                                     Width="*"
                                     FontSize="15"/>
                 <DataGridTextColumn Header="Giá mỗi giờ sau"

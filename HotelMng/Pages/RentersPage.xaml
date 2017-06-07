@@ -36,7 +36,7 @@
                                     Width="0.5*"
                                     Binding="{Binding PhoneNum}" 
                                     FontSize="16"/>
-                <DataGridTextColumn Header="CMNDPassport"
+                <DataGridTextColumn Header="CMND/Passport"
                                     Width="0.8*"
                                     Binding="{Binding IdentityNum}" 
                                     FontSize="16"/>

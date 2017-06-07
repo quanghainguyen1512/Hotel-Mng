@@ -60,7 +60,7 @@ namespace HotelMng.Pages
                 }
                 catch (SqlException)
                 {
-                    MessageBox.Show("Không thể xóa");
+                    MessageBox.Show("Không thể xóa khách hàng này");
                 }
             }
         }

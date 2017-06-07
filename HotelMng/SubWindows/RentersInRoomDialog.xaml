@@ -52,7 +52,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="0.8*"/>
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0">
                 <TextBox mah:TextBoxHelper.Watermark="Họ tên"
@@ -80,14 +80,14 @@
                         HorizontalContentAlignment="Center"
                         VerticalAlignment="Center"
                         Content="Thêm"
-                        Margin="20,0"
+                        Margin="20,0,0,0"
                         FontSize="15"
                         Click="ButtonAdd_OnClick"/>
                 <Button Style="{StaticResource StyleBtnCloseInForm}"
                         HorizontalContentAlignment="Center"
                         VerticalAlignment="Center"
                         Content="Đóng"
-                        Margin="20,10,20,0"
+                        Margin="20,10,0,0"
                         FontSize="15"
                         Click="ButtonClose_OnClick"/>
 

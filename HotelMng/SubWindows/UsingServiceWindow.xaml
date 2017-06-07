@@ -25,6 +25,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <DataGrid Grid.Row="0" 
+                  RowEditEnding="DataGrid_OnRowEditEnding"
                   ItemsSource="{Binding UseServices}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Tên dịch vụ" 
@@ -39,7 +40,9 @@
                                     IsReadOnly="True"/>
                 <mah:DataGridNumericUpDownColumn Header="Số lượng"
                                                  FontSize="13"
-                                                 Binding="{Binding Quantity}"/>
+                                                 Binding="{Binding Quantity}"
+                                                 Interval="1"
+                                                 Minimum="1"/>
                 <DataGridTemplateColumn Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -56,7 +59,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1.5*"/>
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="0.8*"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <ComboBox Grid.Row="0"
@@ -117,13 +120,13 @@
                         VerticalAlignment="Center"
                         Click="ButtonAdd_OnClick"
                         Content="Thêm"
-                        Margin="20,0"
+                        Margin="20,0,0,0"
                         FontSize="15"/>
                 <Button Style="{StaticResource StyleBtnCloseInForm}"
                         HorizontalContentAlignment="Center"
                         VerticalAlignment="Center"
                         Content="Đóng"
-                        Margin="20,10,20,0"
+                        Margin="20,10,0,0"
                         FontSize="15"
                         Click="ButtonClose_OnClick"/>
 

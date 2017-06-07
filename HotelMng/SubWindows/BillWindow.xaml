@@ -130,8 +130,7 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <DataGrid Grid.Row="0" 
-                                  GridLinesVisibility="All">
+                        <DataGrid Grid.Row="0">
                             <DataGrid.Columns>
                                 <mah:DataGridNumericUpDownColumn Header="Số lượng"/>
                             </DataGrid.Columns>

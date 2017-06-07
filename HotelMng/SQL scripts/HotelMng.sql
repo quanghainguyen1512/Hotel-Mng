@@ -213,3 +213,10 @@ AS
 	FROM dbo.TABLE_NATIONALITY AS NAT
 	ORDER BY NAT.NatId DESC
 GO
+CREATE PROC USP_LogIn
+	@username VARCHAR(20),
+	@password VARCHAR(20)
+AS
+	SELECT *
+	FROM dbo.ACCOUNT
+	WHERE Password = @password AND UserName = @username

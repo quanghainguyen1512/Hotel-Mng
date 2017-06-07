@@ -225,7 +225,7 @@
                                                  HorizontalAlignment="Left"
                                                  IsOpen="True"
                                                  Background="{StaticResource ToolBoxBrush}">
-                        <hamburgerMenu:HamburgerMenuItem Text="Quản lý phòng" 
+                        <hamburgerMenu:HamburgerMenuItem Text="Quản lý loại phòng" 
                                                          Icon="Assets/Icon/appbar.key.png"
                                                          Tag="Pages/RoomMngPage.xaml"
                                                          Selected="HamburgerMenuItem_OnSelected"/>

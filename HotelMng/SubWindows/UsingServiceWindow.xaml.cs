@@ -82,6 +82,10 @@ namespace HotelMng.SubWindows
                 MessageBox.Show("Dịch vụ đã có trong danh sách, bạn có thể thay đổi số lượng");
             }
         }
+        private void ButtonClose_OnClick(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
 
         #region Implement INotifyPropertyChanged
 
@@ -94,5 +98,9 @@ namespace HotelMng.SubWindows
         }
 
         #endregion
+
+        private void DataGrid_OnRowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+        {
+        }
     }
 }
