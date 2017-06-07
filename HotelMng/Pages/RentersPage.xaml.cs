@@ -54,7 +54,7 @@ namespace HotelMng.Pages
             {
                 try
                 {
-                    if (RenterDAO.Instance.DelRenter(rowBeingDeleted.RenterId))
+                    if (RenterDAO.Instance.DelRenter(rowBeingDeleted?.RenterId))
                         Renters.Remove(rowBeingDeleted);
 
                 }

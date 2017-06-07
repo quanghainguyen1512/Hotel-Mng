@@ -128,14 +128,14 @@ CREATE TABLE FEE
 )
 GO
 ------------------------Procedure--
-CREATE PROC USP_GetAllRoommatesByRenterId
-	@renterid VARCHAR(20)
+ALTER PROC USP_GetAllRoommatesByRenterId
+	@formid INT
 AS
-	SELECT RM.Name, RM.IdentityNum, NAT.NatName
+	SELECT RM.Name, RM.IdentityNum, NAT.NatId, NAT.NatName
 	FROM dbo.ROOMMATE AS RM
 	JOIN dbo.TABLE_NATIONALITY AS NAT
 		ON NAT.NatId = RM.NatId
-	WHERE RM.RenterId = @renterid
+	WHERE RM.FormId = @formid
 GO
 CREATE PROC USP_GetAllServicesInfo
 AS
@@ -143,7 +143,6 @@ AS
 	FROM dbo.SERVICE AS SV 
 	JOIN dbo.SERVICE_TYPE AS ST
 		ON ST.SvTypeId = SV.SvTypeId
-
 GO
 CREATE PROC USP_GetAllRoomInfo
 AS
@@ -207,4 +206,10 @@ AS
 	JOIN dbo.SERVICE_TYPE AS ST
 		ON ST.SvTypeId = S.SvTypeId
 	ORDER BY S.ServId DESC
+GO
+CREATE PROC USP_GetNewestNationalityId
+AS
+	SELECT TOP 1 NAT.NatId
+	FROM dbo.TABLE_NATIONALITY AS NAT
+	ORDER BY NAT.NatId DESC
 GO

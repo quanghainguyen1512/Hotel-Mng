@@ -92,10 +92,10 @@ namespace HotelMng
 
             switch (((Room)tile.DataContext).RoomStatus.StatusId)
             {
-                case 1:
+                case 0:
                     cm = RoomContainer.FindResource("ContextMenuForAvailableRoom") as ContextMenu;
                     break;
-                case 2:
+                case 1:
                     cm = RoomContainer.FindResource("ContextMenuForRentedRoom") as ContextMenu;
                     break;
                 default:
@@ -181,7 +181,14 @@ namespace HotelMng
         }
         private void MenuItemRentersInRoom_OnClick(object sender, RoutedEventArgs e)
         {
-
+            var menuItem = sender as MenuItem;
+            if (menuItem is null) return;
+            var roomParam = (Room)menuItem.DataContext;
+            var dialog = new RentersInRoomDialog
+            {
+                PassParameterFunc = () => roomParam.RoomId
+            };
+            dialog.ShowDialog();
         }
 
         private void MenuItemBillInfo_OnClick(object sender, RoutedEventArgs e)

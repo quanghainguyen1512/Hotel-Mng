@@ -29,7 +29,7 @@ namespace DAO
 
         public IEnumerable<Nationality> GetAllNationalities()
         {
-            _query = "SELECT * FROM dbo.TABLE_NATIONALITY";
+            _query = "SELECT * FROM dbo.TABLE_NATIONALITY ORDER BY NatId";
             var data = DataProvider.Instance.ExecuteQueries(_query);
             foreach (DataRow row in data.Rows)
             {

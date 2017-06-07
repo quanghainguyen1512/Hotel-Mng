@@ -12,7 +12,6 @@ namespace DTO
     {
         #region Properties
 
-        public int FormId { get; set; }
         public DateTime Time { get; set; }
         public int Quantity { get; set; }
         public int ServId { get; set; }
@@ -25,7 +24,6 @@ namespace DTO
 
         public UseService(DataRow row)
         {
-            FormId = (int) row["FormId"];
             Quantity = (int) row["Quantity"];
             Time = (DateTime) row["Time"];
             ServId = (int) row["ServId"];

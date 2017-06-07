@@ -27,15 +27,29 @@ namespace DAO
             }
         }
 
-        public IEnumerable<Roommate> GetRoommates(string renterId)
+        public IEnumerable<Roommate> GetRoommates(int formId)
         {
-            _query = "EXEC dbo.USP_GetAllRoommatesByRenterId";
-            var data = DataProvider.Instance.ExecuteQueries(_query, new object[] {renterId});
+            _query = "EXEC dbo.USP_GetAllRoommatesByRenterId @formid";
+            var data = DataProvider.Instance.ExecuteQueries(_query, new object[] {formId});
             foreach (DataRow row in data.Rows)
             {
                 yield return new Roommate(row);
             }
         }
 
+        public bool AddRoommate(Roommate roommate, int formid)
+        {
+            _query =
+                $"INSERT INTO dbo.ROOMMATE VALUES (N'{roommate.Name}', '{roommate.IdentityNum}', {roommate.Nationality.NatId}, {formid})";
+            var result = DataProvider.Instance.ExecuteNonQuery(_query);
+            return result > 0;
+        }
+
+        public bool DelRoomate(string name, int formid)
+        {
+            _query = $"DELETE FROM dbo.ROOMMATE WHERE Name = N'{name}' AND FormId = {formid}";
+            var result = DataProvider.Instance.ExecuteNonQuery(_query);
+            return result > 0;
+        }
     }
 }

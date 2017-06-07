@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Data.SqlClient;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,9 +19,9 @@ namespace HotelMng.SubWindows
     public partial class UsingServiceWindow : INotifyPropertyChanged
     {
         private ObservableCollection<UseService> _useServices;
+        private int _formId;
         public Func<int> PassParameterFunc { get; set; }
         public IEnumerable<Service> Services { get; set; }
-        private int _formId;
         public ObservableCollection<UseService> UseServices
         {
             get => _useServices;
@@ -54,7 +55,7 @@ namespace HotelMng.SubWindows
 
             var rowBeingDeleted = (UseService) btn.DataContext;
 
-            if (UseServiceDAO.Instance.DeleteItem(rowBeingDeleted.FormId, rowBeingDeleted.ServId))
+            if (UseServiceDAO.Instance.DeleteItem(_formId, rowBeingDeleted.ServId))
                 UseServices.Remove(rowBeingDeleted);
         }
 
@@ -65,15 +66,21 @@ namespace HotelMng.SubWindows
 
             var us = new UseService
             {
-                FormId = _formId,
                 Quantity = Convert.ToInt32(NumUpDownQuantity.Value),
                 ServId = s.ServId,
                 SvName = s.Name,
                 Time = DateTime.Now
             };
 
-            if (UseServiceDAO.Instance.AddItem(us))
-                UseServices.Add(us);
+            try
+            {
+                if (UseServiceDAO.Instance.AddItem(us, _formId))
+                    UseServices.Add(us);
+            }
+            catch (SqlException)
+            {
+                MessageBox.Show("Dịch vụ đã có trong danh sách, bạn có thể thay đổi số lượng");
+            }
         }
 
         #region Implement INotifyPropertyChanged

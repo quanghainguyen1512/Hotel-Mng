@@ -13,7 +13,7 @@ namespace DTO
 
         public string Name { get; set; }
         public string IdentityNum { get; set; }
-        public string Nationality { get; set; }
+        public Nationality Nationality { get; set; }
 
         #endregion
 
@@ -21,7 +21,12 @@ namespace DTO
         {
             Name = row["Name"].ToString();
             IdentityNum = row["IdentityNum"].ToString();
-            Nationality = row["NatName"].ToString();
+            Nationality = new Nationality(row);
+        }
+
+        public Roommate()
+        {
+            Nationality = new Nationality();
         }
     }
 }

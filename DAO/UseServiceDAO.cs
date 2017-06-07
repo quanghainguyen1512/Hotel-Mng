@@ -40,10 +40,10 @@ namespace DAO
             return result > 0;
         }
 
-        public bool AddItem(UseService useService)
+        public bool AddItem(UseService useService, int formid)
         {
             _query =
-                $"INSERT INTO dbo.USE_SERVICES VALUES ({useService.ServId}, {useService.FormId}, GETDATE(), {useService.Quantity})";
+                $"INSERT INTO dbo.USE_SERVICES VALUES ({useService.ServId}, {formid}, GETDATE(), {useService.Quantity})";
             var result = DataProvider.Instance.ExecuteNonQuery(_query);
             return result > 0;
         }
