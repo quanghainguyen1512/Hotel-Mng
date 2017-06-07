@@ -1,10 +1,12 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using DAO;
 using DTO;
+using DTO.Annotations;
 using HotelMng.SubWindows;
 
 namespace HotelMng.Pages
@@ -12,15 +14,41 @@ namespace HotelMng.Pages
     /// <summary>
     /// Interaction logic for RoomMngPage.xaml
     /// </summary>
-    public partial class RoomMngPage
+    public partial class RoomMngPage : INotifyPropertyChanged
     {
-        public ObservableCollection<RoomType> RoomTypes { get; set; }
-        public RoomType RoomTypeBeingAdded { get; set; }
+        #region Fields
+
+        private IEnumerable<RoomType> _roomTypes;
+
+        #endregion
+
+        #region Properties
+
+        public RoomType RoomTypeBeingAdded { get; set; } = new RoomType();
+
+        public IEnumerable<RoomType> RoomTypes
+        {
+            get => _roomTypes;
+            set
+            {
+                _roomTypes = value; 
+                OnPropertyChanged(nameof(RoomTypes));
+            }
+        }
+
+        #endregion
         public RoomMngPage()
         {
             InitializeComponent();
-            RoomTypes = new ObservableCollection<RoomType>(RoomTypeDAO.Instance.GetAllRoomTypes()); 
+            LoadData();
         }
+
+        void LoadData()
+        {
+            RoomTypes = RoomTypeDAO.Instance.GetAllRoomTypes();
+        }
+
+        #region Event Handlers
 
         private void ButtonEditRoomType_OnClick(object sender, RoutedEventArgs e)
         {
@@ -33,8 +61,8 @@ namespace HotelMng.Pages
             {
                 UpdateRoomTypeAction = roomtype =>
                 {
-                    rowBeingEdited = roomtype;
-                    RoomTypeDAO.Instance.UpdateRoomTypes(rowBeingEdited);
+                    if (RoomTypeDAO.Instance.UpdateRoomTypes(rowBeingEdited)) 
+                        LoadData();
                 },
                 PassParameterToDialogFunc = () => rowBeingEdited
             };
@@ -48,20 +76,24 @@ namespace HotelMng.Pages
                 MessageBox.Show("Vui lòng nhập đầy đủ thông tin");
                 return;
             }
-            //var rt = new RoomType
-            //{
-            //    RoomTypeId = Convert.ToChar(TxtNote.Text),
-            //    PriceFirstHour = (int) NumUpDownPrice1StHour.Value,
-            //    PriceByDay = (int) NumUpDownPriceByDay.Value,
-            //    PricePerHour = (int) NumUpDownPricePerHour.Value,
-            //    Note = TxtNote.Text
-            //};
             if (RoomTypeDAO.Instance.AddRoomTypes(RoomTypeBeingAdded))
             {
-                RoomTypes.Add(RoomTypeBeingAdded);
-                MessageBox.Show("Thêm thành công");
+                LoadData();
             }
         }
 
+        #endregion
+
+        #region Implement INotifyPropertyChanged
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        #endregion
     }
 }

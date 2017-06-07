@@ -41,7 +41,7 @@ namespace DAO
         public bool AddRoomTypes(RoomType roomType)
         {
             _query =
-                $"INSERT INTO dbo.ROOM_TYPE VALUES ({roomType.RoomTypeId}, {roomType.PriceByDay}, {roomType.PriceFirstHour}, {roomType.PricePerHour}, N'{roomType.Note}'";
+                $"INSERT INTO dbo.ROOM_TYPE VALUES ('{roomType.RoomTypeId}', {roomType.PriceByDay}, {roomType.PriceFirstHour}, {roomType.PricePerHour}, N'{roomType.Note}')";
             var result = DataProvider.Instance.ExecuteNonQuery(_query);
             return result > 0;
         }

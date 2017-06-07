@@ -4,12 +4,17 @@ namespace DTO
 {
     public class Room : Base
     {
-        #region Properties
+
+        #region Fields
 
         private string _description;
         private char _roomTypeId;
         private int _capacity;
         private RoomStatus _roomStatus;
+
+        #endregion
+
+        #region Properties
 
         public int RoomId { get; set; }
 
@@ -62,12 +67,11 @@ namespace DTO
             Description = row["Description"].ToString();
             RoomTypeId = Convert.ToChar(row["RoomTypeId"]);
             Capacity = Convert.ToInt32(row["Capacity"]);
-            RoomStatus = new RoomStatus()
+            RoomStatus = new RoomStatus
             {
                 StatusId = (int) row["StatusId"],
                 StatusName = row["StatusName"].ToString()
             };
         }
-
     }
 }

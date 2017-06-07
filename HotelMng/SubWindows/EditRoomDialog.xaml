@@ -46,7 +46,7 @@
                   HorizontalContentAlignment="Center"
                   ItemsSource="{Binding RoomStatusIEnumerable}"
                   DisplayMemberPath="StatusName"
-                  SelectedIndex="{Binding RoomBeingEdited.RoomStatus.StatusId}"/>
+                  SelectedValue="{Binding RoomBeingEdited.RoomStatus}" />
         <TextBlock Grid.Row="2" Grid.Column="0"
                    Text="Sức chứa:"/>
         <mah:NumericUpDown Grid.Row="2" Grid.Column="1" 
@@ -62,9 +62,12 @@
                  TextWrapping="Wrap"
                  Height="60"
                  Text="{Binding RoomBeingEdited.Description}"/>
-        <Separator Grid.Row="4" Grid.ColumnSpan="2"
+        <Separator Grid.Row="4"
+                   Grid.Column="0"
+                   Grid.ColumnSpan="2"
                    Margin="0,15,0,5"/>
         <StackPanel Grid.Row="5"
+                    Grid.Column="0"
                     HorizontalAlignment="Right"
                     Orientation="Horizontal"
                     Grid.ColumnSpan="2">

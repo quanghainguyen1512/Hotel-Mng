@@ -15,7 +15,11 @@ namespace HotelMng
 
         private void ButtonLogIn_OnClick(object sender, RoutedEventArgs e)
         {
-            if (!LogIn(TxbUsername.Text, TxbPassword.Password)) return;
+            if (!LogIn(TxbUsername.Text, TxbPassword.Password))
+            {
+                MessageBox.Show("Đăng nhập thất bại, vui lòng thử lại");
+                return;
+            }
 
             var main = new MainWindow();
             main.Show();

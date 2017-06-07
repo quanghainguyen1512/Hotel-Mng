@@ -7,10 +7,30 @@ using System.Threading.Tasks;
 
 namespace DTO
 {
-    public class Nationality
+    public class Nationality : Base
     {
-        public int NatId { get; set; }
-        public string NatName { get; set; }
+        private int _natId;
+        private string _natName;
+
+        public int NatId
+        {
+            get => _natId;
+            set
+            {
+                _natId = value; 
+                OnPropertyChanged(nameof(NatId));
+            }
+        }
+
+        public string NatName
+        {
+            get => _natName;
+            set
+            {
+                _natName = value; 
+                OnPropertyChanged(nameof(NatName));
+            }
+        }
 
         public Nationality(DataRow row)
         {
@@ -20,6 +40,14 @@ namespace DTO
 
         public Nationality()
         {
+        }
+
+        public override bool Equals(object obj)
+        {
+            var nat = obj as Nationality;
+            if (nat is null) return false;
+
+            return NatId == nat.NatId;
         }
     }
 }

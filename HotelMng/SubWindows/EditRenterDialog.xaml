@@ -24,7 +24,7 @@
             <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
@@ -34,9 +34,6 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <TextBlock Text="ID:" Grid.Row="0" Grid.Column="0"/>
-        <TextBox Grid.Row="0" Grid.Column="1"
-                 Name="TxtRenterId" Text="{Binding RenterBeingUpdated.RenterId}"/>
         <TextBlock Text="Tên:" Grid.Row="1" Grid.Column="0"/>
         <TextBox Grid.Row="1" Grid.Column="1"
                  Name="TxtName" Text="{Binding RenterBeingUpdated.Name}"/>
@@ -62,16 +59,16 @@
                    Text="Quốc tịch:"/>
         <StackPanel Grid.Row="6" Grid.Column="1"
                     Orientation="Horizontal">
-            <!--<ComboBox VerticalAlignment="Center"
+            <ComboBox VerticalAlignment="Center"
                       Width="Auto" Name="CbbNationality"
-                      SelectedIndex="{Binding RenterBeingUpdated.Nationality.NatId}"
+                      SelectedValue="{Binding RenterBeingUpdated.Nationality}"
                       SelectionChanged="ComboBox_SelectionChanged"
                       ItemsSource="{Binding Nationalities}"
                       DisplayMemberPath="NatName"/>
             <TextBox Margin="20,0"
                      Width="100"
                      Visibility="Collapsed"
-                     Name="TxbOtherNat"/>-->
+                     Name="TxbOtherNat"/>
         </StackPanel>
 
         <Separator Grid.Row="7" Grid.ColumnSpan="2"

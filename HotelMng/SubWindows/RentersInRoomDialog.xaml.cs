@@ -17,12 +17,11 @@ namespace HotelMng.SubWindows
     public partial class RentersInRoomDialog : INotifyPropertyChanged
     {
         private const int OtherNatPosInComboBox = 6;
-
         private int _formId;
         private ObservableCollection<Roommate> _roommates;
         private Roommate _roommateBeingAdded = new Roommate();
-        public Func<int> PassParameterFunc { get; set; }
 
+        public Func<int> PassParameterFunc { get; set; }
         public Roommate RoommateBeingAdded
         {
             get => _roommateBeingAdded;
@@ -32,7 +31,6 @@ namespace HotelMng.SubWindows
                 OnPropertyChanged(nameof(RoommateBeingAdded));
             }
         }
-
         public ObservableCollection<Roommate> Roommates
         {
             get => _roommates;
@@ -122,7 +120,7 @@ namespace HotelMng.SubWindows
         }
         private void ButtonClose_OnClick(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         #region Implement INotifyPropertyChanged

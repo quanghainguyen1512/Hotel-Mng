@@ -69,7 +69,8 @@
                           SelectedIndex="{Binding RoommateBeingAdded.Nationality.NatId}"
                           DisplayMemberPath="NatName"
                           VerticalAlignment="Center"
-                          mah:TextBoxHelper.Watermark="Quốc tịch" SelectionChanged="ComboBox_SelectionChanged"/>
+                          mah:TextBoxHelper.Watermark="Quốc tịch" 
+                          SelectionChanged="ComboBox_SelectionChanged"/>
                 <TextBox Margin="0,10,0,0"
                          Name="TxbOtherNat"
                          mah:TextBoxHelper.Watermark="Tên Quốc tịch"

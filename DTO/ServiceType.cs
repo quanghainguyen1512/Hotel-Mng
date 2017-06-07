@@ -37,5 +37,13 @@
             SvTypeId = (int) row["SvTypeId"];
             SvTypeName = row["SvTypeName"].ToString();
         }
+
+        public override bool Equals(object obj)
+        {
+            var svType = obj as ServiceType;
+            if (svType is null) return false;
+
+            return SvTypeId == svType.SvTypeId;
+        }
     }
 }

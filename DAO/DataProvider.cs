@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Data;
 using System.Data.SqlClient;
+using System.Threading.Tasks;
 
 namespace DAO
 {
@@ -74,7 +75,7 @@ namespace DAO
         /// <returns></returns>
         public int ExecuteNonQuery(string query, object[] parameters = null)
         {
-            var count = 0;
+            int count;
 
             using (var sqlConnection = new SqlConnection(_connString))
             {

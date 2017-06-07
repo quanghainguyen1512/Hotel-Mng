@@ -1,11 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using DAO;
 using DTO;
+using DTO.Annotations;
 using HotelMng.SubWindows;
 
 namespace HotelMng.Pages
@@ -13,21 +17,39 @@ namespace HotelMng.Pages
     /// <summary>
     /// Interaction logic for ServicesPage.xaml
     /// </summary>
-    public partial class ServicesPage
+    public partial class ServicesPage : INotifyPropertyChanged
     {
+        private CollectionView _view;
+        private IEnumerable<Service> _services;
+
         public ObservableCollection<ServiceType> ServiceTypes { get; set; }
-        public ObservableCollection<Service> Services { get; set; }
+
+        public IEnumerable<Service> Services
+        {
+            get => _services;
+            set
+            {
+                _services = value; 
+                OnPropertyChanged(nameof(Services));
+            }
+        }
+
         public Service ServiceBeingAdded { get; set; } = new Service();
-        private readonly CollectionView _view;
+
         public ServicesPage()
         {
             InitializeComponent();
             ServiceTypes = new ObservableCollection<ServiceType>(ServiceTypeDAO.Instance.GetAllServiceTypes()); 
-            Services = new ObservableCollection<Service>(ServiceDAO.Instance.GetAllServices());
+            LoadData();
 
-            _view = (CollectionView) CollectionViewSource.GetDefaultView(Services);
-            _view.GroupDescriptions?.Add(new PropertyGroupDescription("SvType.SvTypeName"));
             _view.Filter = ServiceFilter;
+        }
+
+        void LoadData()
+        {
+            Services = ServiceDAO.Instance.GetAllServices();
+            _view = (CollectionView)CollectionViewSource.GetDefaultView(Services);
+            _view.GroupDescriptions?.Add(new PropertyGroupDescription("SvType.SvTypeName"));
         }
 
         private bool ServiceFilter(object item)
@@ -50,7 +72,7 @@ namespace HotelMng.Pages
                 var rowBeingDeleted = (Service)btn.DataContext;
 
                 if (ServiceDAO.Instance.DeleteService(rowBeingDeleted.ServId))
-                    Services.Remove(rowBeingDeleted);
+                    LoadData();
             }
         }
 
@@ -66,9 +88,7 @@ namespace HotelMng.Pages
                 UpdateServiceAction = service =>
                 {
                     if (ServiceDAO.Instance.UpdateService(rowBeingEdited))
-                    {
-                        _view.Refresh();
-                    }
+                        LoadData();
                 },
                 PassParameterToDialogFunc = () => rowBeingEdited,
                 PassServiceTypeFunc = () => ServiceTypes
@@ -94,24 +114,26 @@ namespace HotelMng.Pages
         private void ButtonAdd_OnClick(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrEmpty(TxtName.Text) || string.IsNullOrEmpty(TxtUnit.Text))
-            {
                 MessageBox.Show("Vui lòng nhập đầy đủ thông tin");
-                return;
-            }
-            var serviceType = CbbSvType.SelectedItem as ServiceType;
-            if (serviceType is null) return;
-            if (ServiceDAO.Instance.AddNewService(ServiceBeingAdded))
-            {
-                ServiceBeingAdded.ServId = ServiceDAO.Instance.NewestServiceInfo();
-                ServiceBeingAdded.SvType.SvTypeName = serviceType.SvTypeName;
-                Services.Add(ServiceBeingAdded);
-                MessageBox.Show("Thêm thành công");
-            }
+            else if (ServiceDAO.Instance.AddNewService(ServiceBeingAdded))
+                LoadData();
         }
 
         private void TxtNameFilter_OnTextChanged(object sender, TextChangedEventArgs e)
         {
             _view.Refresh();
         }
+
+        #region Implement INotifyPropertyChanged
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        #endregion
     }
 }

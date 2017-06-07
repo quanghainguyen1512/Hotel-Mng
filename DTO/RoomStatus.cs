@@ -1,16 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data;
 
 namespace DTO
 {
     public class RoomStatus : Base
     {
+        #region Fields
+
         private int _itemCount;
+
+        #endregion
+
+        #region Properties
+
         public int StatusId { get; set; }
+
         public string StatusName { get; set; }
 
         public int ItemCount
@@ -23,6 +26,8 @@ namespace DTO
             }
         }
 
+        #endregion
+
         public RoomStatus()
         {
             
@@ -32,6 +37,14 @@ namespace DTO
             StatusId = (int) row["StatusId"];
             StatusName = row["StatusName"].ToString();
             ItemCount = (int) row["ItemCount"];
+        }
+
+        public override bool Equals(object obj)
+        {
+            var r = obj as RoomStatus;
+            if (r is null) return false;
+
+            return StatusId == r.StatusId;
         }
     }
 }

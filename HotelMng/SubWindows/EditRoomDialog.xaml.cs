@@ -13,11 +13,18 @@ namespace HotelMng.SubWindows
     /// </summary>
     public partial class EditRoomDialog : INotifyPropertyChanged
     {
-        public Func<Tuple<Room, IEnumerable<RoomStatus>, IEnumerable<char>>> PassParameterToDialogFunc;
-        public Action<Room> UpdateRoomTypeAction;
+        #region Fields
+
         private IEnumerable<RoomStatus> _roomStatusIEnumerable;
         private IEnumerable<char> _roomTypeIdEnumerable;
         private Room _roomBeingEdited;
+        
+        #endregion
+
+        #region Properties
+
+        public Func<Tuple<Room, IEnumerable<RoomStatus>, IEnumerable<char>>> PassParameterToDialogFunc;
+        public Action<Room> UpdateRoomTypeAction;
 
         public Room RoomBeingEdited
         {
@@ -49,10 +56,13 @@ namespace HotelMng.SubWindows
             }
         }
 
+        #endregion
         public EditRoomDialog()
         {
             InitializeComponent();
         }
+
+        #region Event Handlers
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
@@ -62,7 +72,6 @@ namespace HotelMng.SubWindows
         private void ButtonApply_OnClick(object sender, RoutedEventArgs e)
         {
             RoomBeingEdited.RoomTypeId = Convert.ToChar(CbbRoomType.SelectedItem);
-            RoomBeingEdited.RoomStatus = CbbRoomStatus.SelectionBoxItem as RoomStatus;
             UpdateRoomTypeAction(RoomBeingEdited);
 
             Close();
@@ -75,16 +84,6 @@ namespace HotelMng.SubWindows
             RoomTypeIdEnumerable = PassParameterToDialogFunc().Item3;
             CbbRoomType.ItemsSource = RoomTypeIdEnumerable;
 
-            //for (var i = 0; i < CbbRoomStatus.Items.Count; i++)
-            //{
-            //    var item = CbbRoomStatus.Items[i] as RoomStatus;
-            //    if (item != null && item.StatusId == RoomBeingEdited.RoomStatus.StatusId)
-            //    {
-            //        CbbRoomStatus.SelectedIndex = i;
-            //        break;
-            //    }
-            //}
-
             for (var i = 0; i < CbbRoomType.Items.Count; i++)
             {
                 var item = Convert.ToChar(CbbRoomType.Items[i]);
@@ -96,6 +95,10 @@ namespace HotelMng.SubWindows
             }
         }
 
+        #endregion
+
+        #region Implement INotifyPropertyChanged
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
@@ -103,5 +106,8 @@ namespace HotelMng.SubWindows
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+
+        #endregion
     }
 }

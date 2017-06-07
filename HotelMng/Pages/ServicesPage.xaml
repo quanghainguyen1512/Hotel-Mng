@@ -168,7 +168,7 @@
                         </Grid.ColumnDefinitions>
                         <ComboBox ItemsSource="{Binding ServiceTypes}" 
                                   DisplayMemberPath="SvTypeName"
-                                  SelectedIndex="{Binding ServiceBeingAdded.SvType.SvTypeId}"
+                                  SelectedValue="{Binding ServiceBeingAdded.SvType}"
                                   FontSize="14"
                                   Name="CbbSvType"/>
                         <Button Grid.Column="1"

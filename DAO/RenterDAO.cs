@@ -37,7 +37,7 @@ namespace DAO
         {
             var gender = renter.Gender.Equals(true) ? 1 : 0;
             _query = $"INSERT INTO dbo.RENTER (Name, Gender, PhoneNum, NatId, IdentityNum, Address) " +
-                     $"VALUES(N'{renter.Name}', {gender}, '{renter.PhoneNum}', {renter.Nationality.NatId}, '{renter.IdentityNum}', '{renter.Address}')";
+                     $"VALUES(N'{renter.Name}', {gender}, '{renter.PhoneNum}', {renter.Nationality.NatId}, '{renter.IdentityNum}', N'{renter.Address}')";
             var result = DataProvider.Instance.ExecuteNonQuery(_query);
             return result > 0;
         }
@@ -46,7 +46,7 @@ namespace DAO
         {
             _query =
                 "UPDATE dbo.RENTER " +
-                $"SET Name = '{renter.Name}', Gender = '{renter.Gender}', PhoneNum = '{renter.PhoneNum}', IdentityNum='{renter.IdentityNum}', Address='{renter.Address}'" +
+                $"SET Name = N'{renter.Name}', Gender = '{renter.Gender}', PhoneNum = '{renter.PhoneNum}', IdentityNum='{renter.IdentityNum}', Address = N'{renter.Address}'" +
                 $"WHERE RenterId = '{renter.RenterId}'";
             var result = DataProvider.Instance.ExecuteNonQuery(_query);
             return result > 0;

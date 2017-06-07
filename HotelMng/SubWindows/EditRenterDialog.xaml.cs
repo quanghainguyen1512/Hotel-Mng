@@ -1,21 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Data.SqlClient;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Runtime.CompilerServices;
-using DTO;
 using DAO;
-using DTO.Annotations;
-using System.ComponentModel;
+using DTO;
 
 namespace HotelMng.SubWindows
 {
@@ -24,10 +15,12 @@ namespace HotelMng.SubWindows
     /// </summary>
     public partial class EditRenterDialog : INotifyPropertyChanged
     {
+        private const int OtherNatPosInComboBox = 6;
+        private Renter _renterBeingUpdated;
+
         public Action<Renter> UpdateRenterAction;
         public Func<Renter> PassParameterToDialogAction;
-
-        private Renter _renterBeingUpdated;
+        public ObservableCollection<Nationality> Nationalities { get; set; }
 
         public Renter RenterBeingUpdated
         {
@@ -39,9 +32,11 @@ namespace HotelMng.SubWindows
             }
         }
 
+
         public EditRenterDialog()
         {
             InitializeComponent();
+            Nationalities = new ObservableCollection<Nationality>(NationalityDAO.Instance.GetAllNationalities());
         }
 
         private void EditRenter_OnLoaded(object sender, RoutedEventArgs e)
@@ -51,19 +46,54 @@ namespace HotelMng.SubWindows
 
         private void ButtonApply_OnClick(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                if (CbbNationality.SelectedIndex == OtherNatPosInComboBox && NationalityDAO.Instance.AddNewNat(TxbOtherNat.Text))
+                {
+                    var newNatId = (int)DataProvider.Instance.ExecuteScalar("EXEC USP_GetNewestNationalityId");
+                    var newNatName = TxbOtherNat.Text;
+
+                    RenterBeingUpdated.Nationality.NatId = newNatId;
+                    RenterBeingUpdated.Nationality.NatName = newNatName;
+
+                    Nationalities.Add(new Nationality { NatId = newNatId, NatName = newNatName });
+                }
+
+            }
+            catch (SqlException)
+            {
+                MessageBox.Show("Quốc tịch này đã có, vui lòng chọn trong danh sách");
+            }
+
             UpdateRenterAction(RenterBeingUpdated);
-            this.Close();
+            Close();
         }
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (CbbNationality.SelectedIndex == OtherNatPosInComboBox)
+            {
+                TxbOtherNat.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                TxbOtherNat.Visibility = Visibility.Collapsed;
+                TxbOtherNat.Text = "";
+            }
+        }
+
+        #region Implement INotifyPropertyChanged
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        #endregion
     }
 }
