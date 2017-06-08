@@ -1,0 +1,63 @@
+﻿<Page x:Class="HotelMng.Pages.AdjustFeePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+      xmlns:local="clr-namespace:HotelMng.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="500" d:DesignWidth="800"
+      Title="AdjustFeePage"
+      Background="White">
+    <Page.Resources>
+        <ResourceDictionary Source="../Assets/Styles/FormResources.xaml"/>
+    </Page.Resources>
+    <Grid Margin="130,150,130,0"
+          Width="500"
+          DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:AdjustFeePage}}}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Phí khi khách nước ngoài ở:"
+                   VerticalAlignment="Center"
+                   FontSize="15"
+                   TextWrapping="Wrap"
+                   Margin="0,20,30,23"/>
+        <mah:NumericUpDown Grid.Row="0"
+                           Grid.Column="1"
+                           Interval="0.05"
+                           HorizontalContentAlignment="Center"
+                           Minimum="0.05"
+                           FontSize="20"
+                           Value="{Binding Fee.FeeForForeigner}"
+                           VerticalAlignment="Center"/>
+        <TextBlock Grid.Row="1" Grid.Column="0" 
+                   Text="Phí mỗi người ở quá sức chứa:"
+                   TextWrapping="Wrap"
+                   VerticalAlignment="Center"
+                   FontSize="15" Margin="0,0,30,1"/>
+        <mah:NumericUpDown Grid.Row="1"
+                           Grid.Column="1"
+                           HorizontalContentAlignment="Center"
+                           Interval="0.05"
+                           Minimum="0.05"
+                           FontSize="20"
+                           Value="{Binding Fee.FeeForEachMoreGuest}"
+                           VerticalAlignment="Center"/>
+        <Button Grid.Row="3"
+                Grid.Column="1" 
+                Content="ÁP DỤNG" 
+                FontSize="13"
+                Margin="0,10"
+                HorizontalAlignment="Right"
+                Style="{DynamicResource StyleBtnApplyInForm}"
+                Click="ButtonApply_OnClick"/>
+    </Grid>
+</Page>

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
@@ -26,7 +25,7 @@ namespace HotelMng
     {
         #region Fields
 
-        private ObservableCollection<Room> _rooms;
+        private IEnumerable<Room> _rooms;
         private CollectionView _view;
         private IEnumerable<RoomStatus> _allRoomStatus;
 
@@ -44,7 +43,7 @@ namespace HotelMng
             }
         }
 
-        public ObservableCollection<Room> Rooms
+        public IEnumerable<Room> Rooms
         {
             get => _rooms;
             set
@@ -63,7 +62,7 @@ namespace HotelMng
             LoadRoomStatus(); 
         }
 
-        #region Mng Tab
+        #region Management Tab
 
         private void HamburgerMenuItem_OnSelected(object sender, RoutedEventArgs e)
         {
@@ -81,7 +80,7 @@ namespace HotelMng
 
         private void LoadData()
         {
-            Rooms = new ObservableCollection<Room>(RoomDAO.Instance.GetAllRooms());
+            Rooms = RoomDAO.Instance.GetAllRooms();
             _view = (CollectionView)CollectionViewSource.GetDefaultView(Rooms);
             _view.GroupDescriptions?.Add(new PropertyGroupDescription("RoomTypeId"));
 
@@ -98,6 +97,28 @@ namespace HotelMng
                 MessageBoxResult.No)
                 return;
             Close();
+        }
+        private void ButtonAddRoom_OnClick(object sender, RoutedEventArgs e)
+        {
+            var dialog = new AddRoomDialog()
+            {
+                PassParameterToDialogFunc = () => Rooms.Select(r => r.RoomTypeId).Distinct(),
+                AddRoomTypeAction = room =>
+                {
+                    if (RoomDAO.Instance.AddNewRoom(room))
+                    {
+                        MessageBox.Show("Thêm thành công");
+                        LoadData();
+                    }
+                }
+            };
+            dialog.ShowDialog();
+        }
+
+        private void ButtonChangePassword_OnClick(object sender, RoutedEventArgs e)
+        {
+            var dialog = new ChangePasswordDialog();
+            dialog.ShowDialog();
         }
 
         private void Tile_OnClick(object sender, RoutedEventArgs e)
@@ -170,7 +191,7 @@ namespace HotelMng
                 MessageBoxResult.Yes)
             {
                 if (RoomDAO.Instance.DeleteRoom(room.RoomId))
-                    Rooms.Remove(room);
+                    LoadData();
             }
         }
         private void MenuItemEditRoom_OnClick(object sender, RoutedEventArgs e)
@@ -184,10 +205,11 @@ namespace HotelMng
             {
                 PassParameterToDialogFunc =
                     () => new Tuple<Room, IEnumerable<RoomStatus>, IEnumerable<char>>(itemBeingEdited, AllRoomStatus, Rooms.Select(r => r.RoomTypeId).Distinct()),
-                UpdateRoomTypeAction = room =>
+                UpdateRoomAction = room =>
                 {
                     if (RoomDAO.Instance.UpdateRoom(room))
                     {
+                        LoadData();
                         if (oldStatus != itemBeingEdited.RoomStatus.StatusId)
                             LoadRoomStatus();
                     }
@@ -241,9 +263,6 @@ namespace HotelMng
             dialog.ShowDialog();
         }
 
-        private void MenuItemPayBill_OnClick(object sender, RoutedEventArgs e)
-        {
-        }
         private void MenuItemCheckOut_OnClick(object sender, RoutedEventArgs e)
         {
             var menuItem = sender as MenuItem;
@@ -279,9 +298,5 @@ namespace HotelMng
 
         #endregion
 
-        private void ButtonChangePassword_OnClick(object sender, RoutedEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

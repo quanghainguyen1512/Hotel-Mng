@@ -73,5 +73,10 @@ namespace DTO
                 StatusName = row["StatusName"].ToString()
             };
         }
+
+        public Room()
+        {
+            RoomStatus = new RoomStatus();
+        }
     }
 }

@@ -25,7 +25,7 @@ CREATE TABLE ROOM_TYPE
 	Note			NVARCHAR(100)
 )
 GO
-CREATE TABLE ROOM_STATUS
+CREATE TABLE ROOM_STATUSf
 (
 	StatusID	INT IDENTITY (0,1) NOT NULL PRIMARY KEY,
 	StatusName	NVARCHAR(20)
@@ -131,7 +131,7 @@ CREATE TABLE FEE
 )
 GO
 ------------------------Procedure--
-ALTER PROC USP_GetAllRoommatesByRenterId
+CREATE PROC USP_GetAllRoommatesByFormId
 	@formid INT
 AS
 	SELECT RM.Name, RM.IdentityNum, NAT.NatId, NAT.NatName

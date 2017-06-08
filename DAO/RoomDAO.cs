@@ -35,7 +35,8 @@ namespace DAO
 
         public bool AddNewRoom(Room room)
         {
-            _query = $"INSERT INTO dbo.ROOM VALUES({room.RoomId}, {room.RoomTypeId}, {room.Description}, 1)";
+            _query = $"INSERT INTO dbo.ROOM (RoomId , RoomTypeId , Description , StatusId , Capacity ) " +
+                     $"VALUES({room.RoomId}, '{room.RoomTypeId}' , '{room.Description}', 0, {room.Capacity})";
             var result = DataProvider.Instance.ExecuteNonQuery(_query);
             return result > 0;
         }
@@ -58,7 +59,7 @@ namespace DAO
 
         public bool UpdateRoomAfterPay(int roomId)
         {
-            _query = $"UPDATE dbo.ROOM SET StatusId = 0 WHERE RoomId = {roomId}";
+            _query = $"UPDATE dbo.ROOM SET StatusId = 2 WHERE RoomId = {roomId}";
             var result = DataProvider.Instance.ExecuteNonQuery(_query);
             return result > 0;
         }

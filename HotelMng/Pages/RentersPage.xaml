@@ -33,11 +33,11 @@
                                     Binding="{Binding Gender, Converter={StaticResource GenderConverter}}" 
                                     FontSize="16"/>
                 <DataGridTextColumn Header="SĐT"
-                                    Width="0.5*"
+                                    Width="0.7*"
                                     Binding="{Binding PhoneNum}" 
                                     FontSize="16"/>
                 <DataGridTextColumn Header="CMND/Passport"
-                                    Width="0.8*"
+                                    Width="0.6*"
                                     Binding="{Binding IdentityNum}" 
                                     FontSize="16"/>
                 <DataGridTextColumn Header="Quốc tịch"

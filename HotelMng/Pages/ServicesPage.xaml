@@ -121,7 +121,7 @@
 
             </StackPanel.Resources>
             <Expander Header="Tìm kiếm"
-                      Background="#C5CAE9"
+                      Background="{StaticResource AccentColorBrush4}"
                       IsExpanded="True">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -140,7 +140,7 @@
             </Expander>
 
             <Expander Header="Thêm dịch vụ"
-                      Background="#C5CAE9">
+                      Background="{StaticResource AccentColorBrush4}">
                 <Grid Background="Transparent">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>

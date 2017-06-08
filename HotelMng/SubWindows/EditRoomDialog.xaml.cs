@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using DTO;
@@ -24,7 +25,7 @@ namespace HotelMng.SubWindows
         #region Properties
 
         public Func<Tuple<Room, IEnumerable<RoomStatus>, IEnumerable<char>>> PassParameterToDialogFunc;
-        public Action<Room> UpdateRoomTypeAction;
+        public Action<Room> UpdateRoomAction;
 
         public Room RoomBeingEdited
         {
@@ -72,7 +73,7 @@ namespace HotelMng.SubWindows
         private void ButtonApply_OnClick(object sender, RoutedEventArgs e)
         {
             RoomBeingEdited.RoomTypeId = Convert.ToChar(CbbRoomType.SelectedItem);
-            UpdateRoomTypeAction(RoomBeingEdited);
+            UpdateRoomAction(RoomBeingEdited);
 
             Close();
         }
@@ -80,7 +81,12 @@ namespace HotelMng.SubWindows
         private void EditRoomDialog_OnLoaded(object sender, RoutedEventArgs e)
         {
             RoomBeingEdited = PassParameterToDialogFunc().Item1;
-            RoomStatusIEnumerable = PassParameterToDialogFunc().Item2;
+
+            if (RoomBeingEdited.RoomStatus.StatusId == 1)
+                RoomStatusIEnumerable = PassParameterToDialogFunc().Item2.Where(rs => rs.StatusId == 1);
+            else
+                RoomStatusIEnumerable = PassParameterToDialogFunc().Item2.Where(rs => rs.StatusId != 1);
+
             RoomTypeIdEnumerable = PassParameterToDialogFunc().Item3;
             CbbRoomType.ItemsSource = RoomTypeIdEnumerable;
 

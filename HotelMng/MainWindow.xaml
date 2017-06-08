@@ -94,8 +94,6 @@
                                                       Click="MenuItemAddService_OnClick"/>
                                             <MenuItem Header="Trả phòng (Không xuất hóa đơn)"
                                                       Click="MenuItemCheckOut_OnClick"/>
-                                            <MenuItem Header="Thanh toán (Xuất hóa đơn)" 
-                                                      Click="MenuItemPayBill_OnClick"/>
                                             <Separator/>
                                             <MenuItem Header="Xem/Chỉnh sửa thông tin" 
                                                       Click="MenuItemEditRoom_OnClick"/>
@@ -210,7 +208,8 @@
                                 <Setter Property="FontSize" Value="15"/>
                             </Style>
                         </StackPanel.Resources>
-                        <Button Content="Thêm phòng mới"/>
+                        <Button Content="Thêm phòng mới"
+                                Click="ButtonAddRoom_OnClick"/>
                         <Button Content="Lập hóa đơn"/>
                         <Button Content="Đổi mật khẩu tài khoản" 
                                 FontSize="13"
@@ -258,7 +257,9 @@
                                                          Tag="Pages/RentersPage.xaml"
                                                          Selected="HamburgerMenuItem_OnSelected"/>
                         <hamburgerMenu:HamburgerMenuItem Text="Thay đổi phí phụ thu"
-                                                         Icon="Assets/Icon/appbar.currency.dollar.png"/>
+                                                         Tag="Pages/AdjustFeePage.xaml"
+                                                         Icon="Assets/Icon/appbar.currency.dollar.png"
+                                                         Selected="HamburgerMenuItem_OnSelected"/>
 
                     </hamburgerMenu:HamburgerMenu>
                     <Frame Grid.Column="1"
@@ -443,7 +444,8 @@
                                    Margin="0,0,0,10"/>
                         <StackPanel Grid.Row="3" Grid.Column="1"
                                     Orientation="Horizontal"
-                                    Margin="0,0,0,10">
+                                    Margin="0,0,0,10"
+                                    ToolTip="Github repository">
                             <Rectangle Width="20">
                                 <Rectangle.Fill>
                                     <VisualBrush Visual="{StaticResource appbar_github}"/>

@@ -58,6 +58,7 @@ namespace HotelMng
         private void RegistrationForm_OnLoaded(object sender, RoutedEventArgs e)
         {
             Form.RoomId = PassParameterFunc();
+            Form.CheckIn = DateTime.Now;
         }
         private void ButtonApply_OnClick(object sender, RoutedEventArgs e)
         {

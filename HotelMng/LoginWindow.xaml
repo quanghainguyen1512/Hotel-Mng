@@ -30,12 +30,12 @@
         
         <StackPanel Grid.Row="1"
                     VerticalAlignment="Center">
-            <TextBox mah:TextBoxHelper.Watermark="Username"
+            <TextBox mah:TextBoxHelper.Watermark="Tên đăng nhập"
                      FontSize="18" 
                      Margin="0,0,0,5"
                      Padding="10,5"
                      Name="TxbUsername"/>
-            <PasswordBox mah:TextBoxHelper.Watermark="Password"
+            <PasswordBox mah:TextBoxHelper.Watermark="Mật khẩu"
                          FontSize="18"
                          Padding="10,5"
                          Name="TxbPassword"/>

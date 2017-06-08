@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DTO;
 
 namespace DAO
@@ -29,7 +25,7 @@ namespace DAO
 
         public IEnumerable<Roommate> GetRoommates(int formId)
         {
-            _query = "EXEC dbo.USP_GetAllRoommatesByRenterId @formid";
+            _query = "EXEC dbo.USP_GetAllRoommatesByFormId @formid";
             var data = DataProvider.Instance.ExecuteQueries(_query, new object[] {formId});
             foreach (DataRow row in data.Rows)
             {

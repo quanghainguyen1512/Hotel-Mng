@@ -15,7 +15,7 @@ namespace HotelMng
 
         private void ButtonLogIn_OnClick(object sender, RoutedEventArgs e)
         {
-            if (!LogIn(TxbUsername.Text, TxbPassword.Password))
+            if (!AccountDAO.Instance.LogIn(TxbUsername.Text, TxbPassword.Password))
             {
                 MessageBox.Show("Đăng nhập thất bại, vui lòng thử lại");
                 return;
@@ -23,14 +23,9 @@ namespace HotelMng
 
             var main = new MainWindow();
             main.Show();
+            
             Close();
         }
 
-        bool LogIn(string username, string password)
-        {
-            var result = DataProvider.Instance.ExecuteQueries("EXEC USP_LogIn @username, @password",
-                new object[] {username, password});
-            return result.Rows.Count == 1;
-        }
     }
 }
