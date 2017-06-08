@@ -43,8 +43,8 @@
             </Style>
             
             <LinearGradientBrush x:Key="ToolBoxBrush" StartPoint="0,0.3" EndPoint="0, 1.2">
-                <GradientStop Color="#2962FF" Offset="0"/>
-                <GradientStop Color="#64B5F6" Offset="1"/>
+                <GradientStop Color="{StaticResource AccentBaseColor}" Offset="0"/>
+                <GradientStop Color="{StaticResource AccentColor}" Offset="1"/>
             </LinearGradientBrush>
             
             <Style TargetType="Button" x:Key="EditButtonIdDataGrid"

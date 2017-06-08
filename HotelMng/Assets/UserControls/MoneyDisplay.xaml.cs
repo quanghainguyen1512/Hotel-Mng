@@ -49,5 +49,17 @@ namespace HotelMng.Assets.UserControls
             DependencyProperty.Register("CurrencyUnit", typeof(string), typeof(MoneyDisplay), new PropertyMetadata("VND"));
 
 
+
+        public SolidColorBrush ItemForeground
+        {
+            get => (SolidColorBrush)GetValue(ItemForegroundProperty);
+            set => SetValue(ItemForegroundProperty, value);
+        }
+
+        // Using a DependencyProperty as the backing store for ItemForeground.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ItemForegroundProperty =
+            DependencyProperty.Register("ItemForeground", typeof(SolidColorBrush), typeof(MoneyDisplay), new PropertyMetadata());
+
+
     }
 }

@@ -8,8 +8,10 @@
              Height="Auto" Width="Auto">
     <StackPanel Orientation="Horizontal"
                 DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:MoneyDisplay}}}">
-        <TextBlock Text="{Binding Value, UpdateSourceTrigger=PropertyChanged}" />
+        <TextBlock Text="{Binding Value, UpdateSourceTrigger=PropertyChanged}" 
+                   Foreground="{Binding ItemForeground}"/>
         <TextBlock Text="{Binding CurrencyUnit, UpdateSourceTrigger=PropertyChanged}"
+                   Foreground="{Binding ItemForeground}"
                    Margin="10,0,0,0"/>
     </StackPanel>
 </UserControl>

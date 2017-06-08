@@ -6,8 +6,9 @@
                  xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
                  xmlns:sys="clr-namespace:System;assembly=mscorlib"
                  xmlns:uc="clr-namespace:HotelMng.Assets.UserControls"
+                 xmlns:hotelMng="clr-namespace:HotelMng"
                  mc:Ignorable="d"
-                 Title="Hóa đơn" Height="500" Width="600"
+                 Title="Hóa đơn" Height="500" Width="700"
                  WindowStartupLocation="CenterScreen"
                  ResizeMode="NoResize"
                  GlowBrush="{DynamicResource AccentColorBrush}"
@@ -22,7 +23,7 @@
     <mah:MetroWindow.Background>
         <SolidColorBrush Color="{StaticResource FormBackgroundColor}"></SolidColorBrush>
     </mah:MetroWindow.Background>
-    <Grid>
+    <Grid DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type hotelMng:BillWindow}}}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="*"/>
@@ -82,47 +83,16 @@
                                 Orientation="Horizontal">
                         <TextBlock Text="Tổng (1):"/>
                         <uc:MoneyDisplay x:Name="RentalCost"
-                                         FontWeight="DemiBold"/>
+                                         FontWeight="DemiBold"
+                                         ItemForeground="Black"/>
                     </StackPanel>
 
-                    <TextBlock Grid.Row="4" Grid.Column="0"
+                    <TextBlock Grid.Row="4" 
+                               Grid.Column="0"
                                TextWrapping="Wrap"
+                               Grid.ColumnSpan="2"
+                               FontSize="14"
                                Text="Danh sách dịch vụ đã sử dụng:"/>
-                    <StackPanel Grid.Row="4" Grid.Column="1"
-                                VerticalAlignment="Center"
-                                Orientation="Horizontal"
-                                HorizontalAlignment="Right">
-                        <StackPanel.Resources>
-                            <x:Array Type="sys:Int32" x:Key="ArrayQuantityService">
-                                <sys:Int32>1</sys:Int32>
-                                <sys:Int32>2</sys:Int32>
-                                <sys:Int32>5</sys:Int32>
-                                <sys:Int32>10</sys:Int32>
-                                <sys:Int32>-1</sys:Int32>
-                                <sys:Int32>-2</sys:Int32>
-                                <sys:Int32>-5</sys:Int32>
-                                <sys:Int32>-10</sys:Int32>
-                            </x:Array>
-
-                        </StackPanel.Resources>
-                        <ComboBox SelectedIndex="0" 
-                                  Width="100"/>
-                        <TextBlock Text="x"/>
-                        <ComboBox ItemsSource="{StaticResource ArrayQuantityService}"
-                                  SelectedIndex="0"/>
-                        <Button Width="30"
-                                Height="30"
-                                VerticalAlignment="Top"
-                                Style="{DynamicResource MetroCircleButtonStyle}">
-                            <Rectangle Width="15"
-                                       Height="15">
-                                <Rectangle.Fill>
-                                    <VisualBrush Stretch="Fill"
-                                                 Visual="{StaticResource appbar_add}" />
-                                </Rectangle.Fill>
-                            </Rectangle>
-                        </Button>
-                    </StackPanel>
                     <Grid Grid.Row="5" Grid.Column="0"
                           Grid.ColumnSpan="2">
                         <Grid.RowDefinitions>
@@ -143,7 +113,8 @@
                                     Orientation="Horizontal">
                             <TextBlock Text="Tổng (2):"/>
                             <uc:MoneyDisplay x:Name="ServTotalPrice" 
-                                             FontWeight="DemiBold"/>
+                                             FontWeight="DemiBold"
+                                             ItemForeground="Black"/>
                         </StackPanel>
                     </Grid>
                     <Separator Grid.Row="6" Grid.Column="0"
@@ -151,14 +122,15 @@
                                Margin="0,15,0,5"/>
                     <TextBlock Grid.Row="7" Grid.Column="0"
                                TextWrapping="Wrap"
+                               FontSize="15"
+                               FontWeight="DemiBold"
                                Text="Tổng tiền (1) + (2):"/>
-                    <StackPanel Grid.Row="7" Grid.Column="1"
-                                Orientation="Horizontal"
-                                HorizontalAlignment="Right">
-                        <uc:MoneyDisplay x:Name="Total" 
-                                         FontSize="20"
-                                         Foreground="Red"/>
-                    </StackPanel>
+                    <uc:MoneyDisplay x:Name="Total" 
+                                     FontSize="20"
+                                     FontWeight="DemiBold"
+                                     ItemForeground="Red" 
+                                     Grid.Row="7" Grid.Column="1"
+                                     HorizontalAlignment="Right"/>
                 </Grid>
             </Grid>
         </Border>
@@ -181,7 +153,8 @@
                         Grid.Row="0">
                 <TextBlock Text="Mã HĐ:"
                            FontSize="20"/>
-                <TextBlock Text="123" Name="TxblBillId"
+                <TextBlock Text="{Binding BillId}" 
+                           Name="TxblBillId"
                            FontSize="20"/>
             </StackPanel>
             <Grid Grid.Row="1">
@@ -210,18 +183,29 @@
                            TextWrapping="Wrap"/>
                 <DataGrid Grid.Row="2" Grid.Column="0"
                           Grid.ColumnSpan="2"
+                          IsReadOnly="True"
                           Margin="5"
-                          SelectedIndex="0"/>
+                          Name="DataGridForm"
+                          SelectedIndex="0">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Width="*"
+                                            Header="Mã phiếu"/>
+                        <DataGridTextColumn Width="*"
+                                            Header="Phòng"/>
+                        <DataGridTextColumn Width="*"
+                                            Header="Tiền thuê"/>
+                    </DataGrid.Columns>
+                </DataGrid>
                 <TextBlock Grid.Row="3" Grid.Column="0"
                            Text="Trị giá hóa đơn:"
-                           Foreground="#FFEB3B"
+                           Foreground="Yellow"
                            FontSize="15"
                            FontWeight="Bold"
                            TextWrapping="Wrap"/>
                 <uc:MoneyDisplay Grid.Row="3" Grid.Column="1"
-                                 Foreground="Red"
-                                 FontSize="15"
+                                 FontSize="20"
                                  FontWeight="Bold"
+                                 ItemForeground="Yellow"
                                  HorizontalAlignment="Right"
                                  Margin="5,0"/>
             </Grid>
@@ -234,7 +218,6 @@
                         Style="{DynamicResource StyleBtnCloseInForm}"
                         Click="ButtonBase_OnClick"/>
             </StackPanel>
-
         </Grid>
     </Grid>
 </mah:MetroWindow>

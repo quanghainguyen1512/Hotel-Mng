@@ -3,7 +3,6 @@
                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                 xmlns:xceed="http://schemas.xceed.com/wpf/xaml/toolkit"
                  xmlns:local="clr-namespace:HotelMng"
                  xmlns:sys="clr-namespace:System;assembly=mscorlib"
                  xmlns:uc="clr-namespace:HotelMng.Assets.UserControls"
@@ -42,8 +41,8 @@
 
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <GroupBox Style="{StaticResource StyleGroupBox}"
                               Grid.Column="0">
@@ -56,7 +55,6 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="0.5*"/>
                                 <RowDefinition Height="5*"/>
-                                <RowDefinition/>
                             </Grid.RowDefinitions>
                             <StackPanel Orientation="Horizontal"
                                         VerticalAlignment="Center"
@@ -84,7 +82,8 @@
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
                             </StackPanel>
-                            <ScrollViewer Grid.Row="1">
+                            <ScrollViewer Grid.Row="1"
+                                          Margin="10,0,0,10">
                                 <ItemsControl ItemsSource="{Binding Rooms}"
                                               Name="RoomContainer">
                                     <ItemsControl.Resources>
@@ -93,7 +92,10 @@
                                                       Click="MenuItemRentersInRoom_OnClick"/>
                                             <MenuItem Header="Xem/Thêm dịch vụ" 
                                                       Click="MenuItemAddService_OnClick"/>
-                                            <MenuItem Header="Thanh toán" Click="MenuItemBillInfo_OnClick"/>
+                                            <MenuItem Header="Trả phòng (Không xuất hóa đơn)"
+                                                      Click="MenuItemCheckOut_OnClick"/>
+                                            <MenuItem Header="Thanh toán (Xuất hóa đơn)" 
+                                                      Click="MenuItemPayBill_OnClick"/>
                                             <Separator/>
                                             <MenuItem Header="Xem/Chỉnh sửa thông tin" 
                                                       Click="MenuItemEditRoom_OnClick"/>
@@ -199,7 +201,25 @@
                             </ScrollViewer>
                         </Grid>
                     </GroupBox>
-                    
+                    <StackPanel Grid.Column="1"
+                          Background="{StaticResource ToolBoxBrush}">
+                        <StackPanel.Resources>
+                            <Style TargetType="Button" BasedOn="{StaticResource MetroButton}">
+                                <Setter Property="Margin" Value="20,60,20,0"/>
+                                <Setter Property="Padding" Value="15"/>
+                                <Setter Property="FontSize" Value="15"/>
+                            </Style>
+                        </StackPanel.Resources>
+                        <Button Content="Thêm phòng mới"/>
+                        <Button Content="Lập hóa đơn"/>
+                        <Button Content="Đổi mật khẩu tài khoản" 
+                                FontSize="13"
+                                Click="ButtonChangePassword_OnClick"/>
+                        
+                        <Button Content="Thoát"
+                                Click="ButtonExit_OnCick"
+                                Margin="20,220,20,20"/>
+                    </StackPanel>
                 </Grid>
             </TabItem>
             <TabItem Style="{DynamicResource StyleTabItemDefault}">
@@ -263,7 +283,7 @@
                         <RowDefinition Height="7*"/>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
-                        <TextBlock Foreground="DeepPink" 
+                        <TextBlock Foreground="{StaticResource AccentBaseColorBrush}" 
                                    FontSize="35" 
                                    FontWeight="Bold" 
                                    Text="Báo Cáo Doanh Thu Theo Loại Phòng" 
@@ -276,9 +296,30 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
                         <WindowsFormsHost>
-                            <rv:ReportViewer x:Name="Report"></rv:ReportViewer>
+                            <rv:ReportViewer x:Name="Report"/>
                         </WindowsFormsHost>
                         <Grid Grid.Column="1" Background="{StaticResource ToolBoxBrush}">
+                            <Grid.Resources>
+                                <x:Array Type="sys:Int32" x:Key="MonthArr">
+                                    <sys:Int32>1</sys:Int32>
+                                    <sys:Int32>2</sys:Int32>
+                                    <sys:Int32>3</sys:Int32>
+                                    <sys:Int32>4</sys:Int32>
+                                    <sys:Int32>5</sys:Int32>
+                                    <sys:Int32>6</sys:Int32>
+                                    <sys:Int32>7</sys:Int32>
+                                    <sys:Int32>8</sys:Int32>
+                                    <sys:Int32>9</sys:Int32>
+                                    <sys:Int32>10</sys:Int32>
+                                    <sys:Int32>11</sys:Int32>
+                                    <sys:Int32>12</sys:Int32>
+                                </x:Array>
+                                <x:Array Type="sys:Int32" x:Key="YearArr">
+                                    <sys:Int32>2016</sys:Int32>
+                                    <sys:Int32>2017</sys:Int32>
+                                    <sys:Int32>2018</sys:Int32>
+                                </x:Array>
+                            </Grid.Resources>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
@@ -292,36 +333,19 @@
                             <ComboBox Grid.Row="0" Grid.Column="1"  
                                       Name="CbbMonth" 
                                       Width="100" 
-                                      Height="30">
-                                <ComboBoxItem>1</ComboBoxItem>
-                                <ComboBoxItem>2</ComboBoxItem>
-                                <ComboBoxItem>3</ComboBoxItem>
-                                <ComboBoxItem>4</ComboBoxItem>
-                                <ComboBoxItem>5</ComboBoxItem>
-                                <ComboBoxItem>6</ComboBoxItem>
-                                <ComboBoxItem>7</ComboBoxItem>
-                                <ComboBoxItem>8</ComboBoxItem>
-                                <ComboBoxItem>9</ComboBoxItem>
-                                <ComboBoxItem>10</ComboBoxItem>
-                                <ComboBoxItem>11</ComboBoxItem>
-                                <ComboBoxItem>12</ComboBoxItem>
-                            </ComboBox>
+                                      Height="30"
+                                      ItemsSource="{StaticResource MonthArr}"/>
                             <TextBlock Margin="10" Grid.Row="1" Grid.Column="0" Text="Năm:" VerticalAlignment="Center" HorizontalAlignment="Center" Width="61" Foreground="White" FontSize="14"/>
                             <ComboBox Grid.Row="1" Grid.Column="1"  
                                       Name="CbbYear" 
                                       Width="100" 
-                                      Height="30">
-                                <ComboBoxItem>2015</ComboBoxItem>
-                                <ComboBoxItem>2016</ComboBoxItem>
-                                <ComboBoxItem>2017</ComboBoxItem>
-                                <ComboBoxItem>2018</ComboBoxItem>
-                                <ComboBoxItem>2019</ComboBoxItem>
-                            </ComboBox>
+                                      Height="30"
+                                      ItemsSource="{StaticResource YearArr}"/>
                             <Button Margin="10" 
                                     Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" 
-                                    Content="Show"
+                                    Content="Xem"
                                     Click="Button_Click" 
-                                    Height="50" 
+                                    Height="40" 
                                     Width="100" 
                                     FontSize="14"/>
                         </Grid>

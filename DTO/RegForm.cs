@@ -10,14 +10,27 @@ namespace DTO
 {
     public class RegForm : Base
     {
-        private Room _room;
+        #region Fields
+
         private int _rental;
         private Renter _renter;
+        private DateTime? _checkOut;
+
+        #endregion
 
         #region Properties
         public int FormId { get; set; }
         public DateTime CheckIn { get; set; }
-        public DateTime? CheckOut { get; set; }
+
+        public DateTime? CheckOut
+        {
+            get => _checkOut;
+            set
+            {
+                _checkOut = value; 
+                OnPropertyChanged(nameof(CheckOut));
+            }
+        }
 
         public Renter Renter
         {
@@ -29,17 +42,10 @@ namespace DTO
             }
         }
 
-        public Room Room
-        {
-            get => _room;
-            set
-            {
-                _room = value; 
-                OnPropertyChanged(nameof(Room));
-            }
-        }
+        public int RoomId { get; set; }
 
-        public Bill Bill { get; set; }
+        //public Bill Bill { get; set; }
+        public string BillId { get; set; }
 
         public int Rental
         {
@@ -58,7 +64,7 @@ namespace DTO
         {
             FormId   = (int)row["FormId"];
             CheckIn  = (DateTime)row["CheckIn"];
-            CheckOut = (DateTime?)row["CheckOut"];
+            RoomId = (int) row["RoomId"];
         }
 
         public RegForm()

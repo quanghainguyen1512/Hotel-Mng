@@ -143,6 +143,9 @@
     <Compile Include="SubWindows\ChangeRoomWindow.xaml.cs">
       <DependentUpon>ChangeRoomWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SubWindows\CheckOutDialog.xaml.cs">
+      <DependentUpon>CheckOutDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SubWindows\EditRenterDialog.xaml.cs">
       <DependentUpon>EditRenterDialog.xaml</DependentUpon>
     </Compile>
@@ -217,6 +220,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="SubWindows\ChangeRoomWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SubWindows\CheckOutDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -316,11 +323,11 @@
   <ItemGroup>
     <Resource Include="Assets\Icon\appbar.currency.dollar.png" />
     <Resource Include="Assets\Icon\appbar.social.delicious.png" />
+    <Resource Include="AppIcon.ico" />
     <Content Include="SQL scripts\main_scripts.sql" />
     <Resource Include="Assets\Icon\appbar.people.png" />
     <Resource Include="Assets\Icon\appbar.key.png" />
     <Resource Include="Assets\Icon\appbar.math.plus.minus.png" />
-    <Resource Include="AppIcon.ico" />
     <Content Include="SQL scripts\HotelMng.sql" />
   </ItemGroup>
   <ItemGroup />

@@ -4,7 +4,6 @@
                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                  xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-                 xmlns:local="clr-namespace:HotelMng"
                  mc:Ignorable="d"
                  Title="Đăng nhập" Height="450" Width="650"
                  WindowStartupLocation="CenterScreen"
@@ -32,10 +31,13 @@
         <StackPanel Grid.Row="1"
                     VerticalAlignment="Center">
             <TextBox mah:TextBoxHelper.Watermark="Username"
-                     FontSize="18" Margin="0,0,0,5"
+                     FontSize="18" 
+                     Margin="0,0,0,5"
+                     Padding="10,5"
                      Name="TxbUsername"/>
             <PasswordBox mah:TextBoxHelper.Watermark="Password"
                          FontSize="18"
+                         Padding="10,5"
                          Name="TxbPassword"/>
         </StackPanel>
         

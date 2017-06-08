@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using DTO;
 
 namespace HotelMng
 {
@@ -19,13 +20,15 @@ namespace HotelMng
     /// </summary>
     public partial class BillWindow
     {
+        public string BillId { get; set; } = Bill.GenerateBillId();
+        public Func<int> PassParameterFunc { get; set; }
         public BillWindow()
         {
             InitializeComponent();
         }
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
 
     }

@@ -24,11 +24,15 @@ namespace HotelMng
     /// </summary>
     public partial class MainWindow : INotifyPropertyChanged
     {
-        #region Properties
+        #region Fields
 
         private ObservableCollection<Room> _rooms;
-        private readonly CollectionView _view;
+        private CollectionView _view;
         private IEnumerable<RoomStatus> _allRoomStatus;
+
+        #endregion
+
+        #region Properties
 
         public IEnumerable<RoomStatus> AllRoomStatus
         {
@@ -55,12 +59,8 @@ namespace HotelMng
         public MainWindow()
         {
             InitializeComponent();
-            Rooms = new ObservableCollection<Room>(RoomDAO.Instance.GetAllRooms());
-
+            LoadData();
             LoadRoomStatus(); 
-
-            _view = (CollectionView) CollectionViewSource.GetDefaultView(Rooms);
-            _view.GroupDescriptions?.Add(new PropertyGroupDescription("RoomTypeId"));
         }
 
         #region Mng Tab
@@ -79,9 +79,25 @@ namespace HotelMng
 
         #region Home Tab
 
+        private void LoadData()
+        {
+            Rooms = new ObservableCollection<Room>(RoomDAO.Instance.GetAllRooms());
+            _view = (CollectionView)CollectionViewSource.GetDefaultView(Rooms);
+            _view.GroupDescriptions?.Add(new PropertyGroupDescription("RoomTypeId"));
+
+        }
+
         private void LoadRoomStatus()
         {
             AllRoomStatus = RoomStatusDAO.Instance.GetAllRoomStatus();
+        }
+
+        private void ButtonExit_OnCick(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Bạn muốn thoát?", "Thông báo", MessageBoxButton.YesNo, MessageBoxImage.Warning) ==
+                MessageBoxResult.No)
+                return;
+            Close();
         }
 
         private void Tile_OnClick(object sender, RoutedEventArgs e)
@@ -108,6 +124,39 @@ namespace HotelMng
             cm.PlacementTarget = tile;
             cm.IsOpen = true;
         }
+        #endregion
+
+        #region About Tab
+
+        private void Hyperlink_OnRequestNavigate(object sender, RequestNavigateEventArgs e)
+        {
+            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
+            e.Handled = true;
+        }
+
+        #endregion
+
+        #region Report Tab
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (CbbMonth.SelectedIndex < 0 || CbbYear.SelectedIndex < 0)
+            {
+                MessageBox.Show("Vui lòng chọn tháng và năm");
+                return;
+            }
+
+            var query = "EXEC dbo.USP_GetDataForReporting @month, @year";
+            var data = DataProvider.Instance.ExecuteQueries(query, new object[] { (int)CbbMonth.SelectedValue, (int) CbbYear.SelectedValue});
+
+            var ds = new ReportDataSource("DataSet1", data);
+            Report.LocalReport.DataSources.Add(ds);
+            Report.LocalReport.ReportEmbeddedResource = "HotelMng.Report1.rdlc";
+            Report.RefreshReport();
+        }
+
+
+        #endregion
 
         #region MenuItem Click event
 
@@ -139,7 +188,6 @@ namespace HotelMng
                 {
                     if (RoomDAO.Instance.UpdateRoom(room))
                     {
-                        _view.Refresh();
                         if (oldStatus != itemBeingEdited.RoomStatus.StatusId)
                             LoadRoomStatus();
                     }
@@ -151,10 +199,12 @@ namespace HotelMng
         {
             var menuItem = sender as MenuItem;
             if (menuItem is null) return;
+
             var roomParam = (Room)menuItem.DataContext;
+
             var dialog = new RegistrationForm
             {
-                PassParameterFunc = () => roomParam,
+                PassParameterFunc = () => roomParam.RoomId,
                 UpdateRegFormAction = form =>
                 {
                     var temp = Rooms.First(r => r.RoomId == roomParam.RoomId);
@@ -191,41 +241,31 @@ namespace HotelMng
             dialog.ShowDialog();
         }
 
-        private void MenuItemBillInfo_OnClick(object sender, RoutedEventArgs e)
+        private void MenuItemPayBill_OnClick(object sender, RoutedEventArgs e)
         {
+        }
+        private void MenuItemCheckOut_OnClick(object sender, RoutedEventArgs e)
+        {
+            var menuItem = sender as MenuItem;
+            if (menuItem is null) return;
+            var roomParam = (Room)menuItem.DataContext;
+
+            var dialog = new CheckOutDialog()
+            {
+                PassParameterFunc = () => roomParam.RoomId,
+                CheckOutAction = form =>
+                {
+                    if (!RegFormDAO.Instance.UpdateForm(form)) return;
+
+                    if (RoomDAO.Instance.UpdateRoomAfterPay(roomParam.RoomId))
+                        LoadData();
+
+                }
+            };
+            dialog.ShowDialog();
         }
 
         #endregion
-
-        #endregion
-
-        #region About Tab
-
-        private void Hyperlink_OnRequestNavigate(object sender, RequestNavigateEventArgs e)
-        {
-            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
-            e.Handled = true;
-        }
-
-        #endregion
-
-        #region Report Tab
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            var query = "EXEC dbo.USP_GetDataForReporting @month, @year";
-            var data = DataProvider.Instance.ExecuteQueries(query, new object[] { 8, 2017 });
-
-            var ds = new ReportDataSource("DataSet1", data);
-            Report.LocalReport.DataSources.Add(ds);
-            Report.LocalReport.ReportEmbeddedResource = "HotelMng.Report1.rdlc";
-            Report.RefreshReport();
-
-        }
-
-
-        #endregion
-
 
         #region Implement INotifyPropertyChanged
 
@@ -239,5 +279,9 @@ namespace HotelMng
 
         #endregion
 
+        private void ButtonChangePassword_OnClick(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

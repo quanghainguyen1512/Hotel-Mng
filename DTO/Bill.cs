@@ -22,5 +22,11 @@ namespace DTO
             TotalMoney  = (int)row["TotalMoney"];
             Company     = row["Company"].ToString();
         }
+
+        public static string GenerateBillId()
+        {
+            var now = DateTime.Now;
+            return $"{now.Year}{now.Month}{now.Day}{now.Hour}{now.Minute}{now.Second}{now.Millisecond}";
+        }
     }
 }

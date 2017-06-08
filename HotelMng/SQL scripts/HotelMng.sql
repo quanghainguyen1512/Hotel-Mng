@@ -76,9 +76,12 @@ CREATE TABLE BILL
 	RenterId	VARCHAR(20),
 	RoomId		INT,
 	TotalMoney	MONEY NOT NULL,
+	RenterName VARCHAR(30) NOT NULL,
+	CompanyName VARCHAR(MAX) NOT NULL,
 	
 	FOREIGN KEY (RoomId) REFERENCES ROOM(RoomId),
-	FOREIGN KEY (RenterId) REFERENCES RENTER(RenterId),)
+	FOREIGN KEY (RenterId) REFERENCES RENTER(RenterId)
+)
 GO
 CREATE TABLE REG_FORM														
 (
@@ -196,7 +199,7 @@ AS
 	
 	SELECT	@total = SUM(t.Income)
 	FROM	@temptable AS t
-	SELECT	t.RoomTypeId, t.Income, (t.Income / @total * 100) AS Proportion
+	SELECT	t.RoomTypeId, t.Income, (t.Income * 100 / @total) AS Proportion
 	FROM	@temptable AS t
 GO
 CREATE PROC USP_GetNewestServiceInfo
@@ -220,3 +223,62 @@ AS
 	SELECT *
 	FROM dbo.ACCOUNT
 	WHERE Password = @password AND UserName = @username
+GO
+CREATE PROC USP_ServiceCharge
+	@formid INT
+AS
+	SELECT SUM(temp.Money)
+	FROM dbo.REG_FORM AS F
+	JOIN (SELECT US.FormId, US.Quantity * S.Price AS Money
+		FROM dbo.USE_SERVICES AS US
+		JOIN dbo.SERVICE AS S
+			ON S.ServId = US.ServId) AS temp
+		ON temp.FormId = F.FormId
+	WHERE F.FormId = @formid
+GO
+
+CREATE FUNCTION Rental(@formid INT, @checkout DATETIME)
+RETURNS MONEY
+AS
+BEGIN
+	DECLARE @timespan INT,
+			@pricebyday MONEY,
+			@pricefirsthour MONEY,
+			@priceperhour MONEY,
+			@result MONEY,
+			@days INT,
+			@hours INT;
+
+	SELECT @timespan = DATEDIFF(HOUR, F.CheckIn, @checkout), @pricebyday = RT.PriceByDay, @pricefirsthour = RT.PriceFirstHour, @priceperhour = RT.PricePerHour
+	FROM dbo.REG_FORM AS F
+	JOIN dbo.ROOM AS R
+		ON R.RoomId = F.RoomId
+	JOIN dbo.ROOM_TYPE AS RT
+		ON RT.RoomTypeId = R.RoomTypeId
+	WHERE F.FormId = @formid
+
+	SET @result = 0;
+	SET @days = @timespan / 24;
+	SET @hours = @timespan % 24;
+	
+	IF (@days > 0)
+		BEGIN
+			SET @pricefirsthour = 0;
+			SET @result = @days * @pricebyday + @result;
+		END
+
+	IF (@hours = 0)																								--Ở tiếng đầu
+		SET @result = @pricefirsthour + @result
+	ELSE IF (@hours BETWEEN 1 AND 6)																			--Ở theo giờ
+		SET @result = @pricefirsthour + @hours * @priceperhour + @result;
+	ELSE IF (@hours BETWEEN 7 AND 12)																			--Tính theo giá nửa ngày
+		SET @result = @pricebyday * 0.7 + @result;
+	ELSE IF (@hours BETWEEN 13 AND 17)																			--nửa ngày và thêm giờ
+		SET @result = @pricebyday * 0.7 + (@hours - 12) * @priceperhour + @result;
+	ELSE IF (@hours BETWEEN 18 AND 23)
+		SET @result = @result + @pricebyday;
+
+	RETURN @result;
+END
+
+GO

@@ -55,8 +55,10 @@ namespace HotelMng.Pages
         private bool ServiceFilter(object item)
         {
             var str = TxtNameFilter.Text;
+
             if (string.IsNullOrEmpty(str))
                 return true;
+
             var service = item as Service;
             return service != null && service.Name.IndexOf(str, StringComparison.InvariantCultureIgnoreCase) >= 0;
         }
@@ -72,7 +74,9 @@ namespace HotelMng.Pages
                 var rowBeingDeleted = (Service)btn.DataContext;
 
                 if (ServiceDAO.Instance.DeleteService(rowBeingDeleted.ServId))
+                {
                     LoadData();
+                }
             }
         }
 
@@ -88,7 +92,9 @@ namespace HotelMng.Pages
                 UpdateServiceAction = service =>
                 {
                     if (ServiceDAO.Instance.UpdateService(rowBeingEdited))
+                    {
                         LoadData();
+                    }
                 },
                 PassParameterToDialogFunc = () => rowBeingEdited,
                 PassServiceTypeFunc = () => ServiceTypes
@@ -114,9 +120,13 @@ namespace HotelMng.Pages
         private void ButtonAdd_OnClick(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrEmpty(TxtName.Text) || string.IsNullOrEmpty(TxtUnit.Text))
+            {
                 MessageBox.Show("Vui lòng nhập đầy đủ thông tin");
+            }
             else if (ServiceDAO.Instance.AddNewService(ServiceBeingAdded))
+            {
                 LoadData();
+            }
         }
 
         private void TxtNameFilter_OnTextChanged(object sender, TextChangedEventArgs e)

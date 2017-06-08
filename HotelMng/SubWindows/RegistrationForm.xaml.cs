@@ -15,7 +15,7 @@ namespace HotelMng
     /// </summary>
     public partial class RegistrationForm : INotifyPropertyChanged
     {
-        public Func<Room> PassParameterFunc;
+        public Func<int> PassParameterFunc;
         public Action<RegForm> UpdateRegFormAction;
         private RegForm _form;
         public ObservableCollection<Nationality> Nationalities { get; set; }
@@ -40,7 +40,7 @@ namespace HotelMng
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -57,7 +57,7 @@ namespace HotelMng
         }
         private void RegistrationForm_OnLoaded(object sender, RoutedEventArgs e)
         {
-            Form.Room = PassParameterFunc();
+            Form.RoomId = PassParameterFunc();
         }
         private void ButtonApply_OnClick(object sender, RoutedEventArgs e)
         {
@@ -65,7 +65,10 @@ namespace HotelMng
                 CbbNationality.SelectedIndex < 0 || CheckInTime.SelectedDate is null)
                 MessageBox.Show("Vui lòng điền đủ thông tin bắt buộc");
             UpdateRegFormAction(Form);
+            Close();
         }
+
+        #region Implement INotifyPropertyChanged
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -74,5 +77,7 @@ namespace HotelMng
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        #endregion
     }
 }

@@ -9,15 +9,6 @@ namespace DTO
 {
     public class Renter : Base
     {
-        #region Properties
-        //public string RenterId { get; set; }
-        //public string Name { get; set; }
-        //public bool Gender { get; set; }
-        //public string PhoneNum { get; set; }
-        //public string IdentityNum { get; set; }
-        //public string Address { get; set; }
-        #endregion
-
         private string _renterId;
         private string _name;
         private bool _gender;
@@ -25,6 +16,7 @@ namespace DTO
         private string _identityNum;
         private string _address;
         private Nationality _nationality;
+
         public Renter()
         {
             Nationality = new Nationality();
