@@ -82,6 +82,7 @@
             <TextBox Name="TxtRoomTypeId" 
                      VerticalAlignment="Center"
                      Grid.Row="0" Grid.Column="1" 
+                     MaxLength="1"
                      Text="{Binding RoomTypeBeingAdded.RoomTypeId}"/>
             <TextBlock Grid.Row="1" Grid.Column="0" Text="Giá theo ngày:" TextWrapping="Wrap"/>
             <mah:NumericUpDown Grid.Row="1" Grid.Column="1"
