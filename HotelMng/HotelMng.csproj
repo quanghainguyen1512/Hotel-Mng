@@ -349,10 +349,10 @@
     <Resource Include="Resources\Entypo-license.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="SQL scripts\scripts.sql" />
     <Resource Include="Assets\Icon\appbar.currency.dollar.png" />
     <Resource Include="Assets\Icon\appbar.social.delicious.png" />
     <Resource Include="AppIcon.ico" />
-    <Content Include="SQL scripts\main_scripts.sql" />
     <Resource Include="Assets\Icon\appbar.people.png" />
     <Resource Include="Assets\Icon\appbar.key.png" />
     <Resource Include="Assets\Icon\appbar.math.plus.minus.png" />

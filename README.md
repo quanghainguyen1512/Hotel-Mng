@@ -14,3 +14,7 @@ I hope this would suitable for who just get started with ADO.NET, WPF and SQL Se
 - Third-party:
   + MahApp Control
   + Entypo Icons
+
+  
+
+NOTE: to run smoothly, please attach database, then edit connection string in Dataprovider.cs
