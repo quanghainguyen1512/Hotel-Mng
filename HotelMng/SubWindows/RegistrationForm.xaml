@@ -112,7 +112,8 @@
                                 VerticalAlignment="Center"
                                 Name="CheckInTime"
                                 IsTodayHighlighted="True"
-                                SelectedDate="{Binding Form.CheckIn}"/>
+                                SelectedDate="{Binding Form.CheckIn}"
+                                DisplayDate="{Binding Form.CheckIn}"/>
             <TextBlock Text="Phòng" Grid.Row="1" Grid.Column="0"/>
             <TextBlock Grid.Row="1" Grid.Column="1"
                        Text="{Binding Form.RoomId}"

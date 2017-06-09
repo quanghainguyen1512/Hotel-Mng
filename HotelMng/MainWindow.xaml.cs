@@ -14,6 +14,7 @@ using DTO.Annotations;
 using HotelMng.SubWindows;
 using Microsoft.Reporting.WinForms;
 using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using HamburgerMenuItem = HamburgerMenu.HamburgerMenuItem;
 
 namespace HotelMng
@@ -94,9 +95,8 @@ namespace HotelMng
         private void ButtonExit_OnCick(object sender, RoutedEventArgs e)
         {
             if (MessageBox.Show("Bạn muốn thoát?", "Thông báo", MessageBoxButton.YesNo, MessageBoxImage.Warning) ==
-                MessageBoxResult.No)
-                return;
-            Close();
+                MessageBoxResult.Yes)
+                Close();
         }
         private void ButtonAddRoom_OnClick(object sender, RoutedEventArgs e)
         {
@@ -113,6 +113,19 @@ namespace HotelMng
                 }
             };
             dialog.ShowDialog();
+        }
+        private void ButtonBill_OnClick(object sender, RoutedEventArgs e)
+        {
+            var bill = new BillWindow()
+            {
+                CheckOutBillAction = form =>
+                {
+                    if (!RegFormDAO.Instance.UpdateForm(form) || !RoomDAO.Instance.UpdateRoomAfterPay(form.RoomId))
+                        MessageBox.Show($"Đã có lỗi xảy ra ở phiếu {form.FormId}");
+                }
+            };
+            bill.ShowDialog();
+            LoadData();
         }
 
         private void ButtonChangePassword_OnClick(object sender, RoutedEventArgs e)
@@ -235,6 +248,7 @@ namespace HotelMng
                     {
                         form.Renter.RenterId = RenterDAO.GetRenterId(form.Renter.IdentityNum);
                         RegFormDAO.Instance.AddRegForm(form);
+                        LoadData();
                     }
                 }
             };

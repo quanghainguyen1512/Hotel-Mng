@@ -25,7 +25,7 @@ CREATE TABLE ROOM_TYPE
 	Note			NVARCHAR(100)
 )
 GO
-CREATE TABLE ROOM_STATUSf
+CREATE TABLE ROOM_STATUS
 (
 	StatusID	INT IDENTITY (0,1) NOT NULL PRIMARY KEY,
 	StatusName	NVARCHAR(20)
@@ -237,7 +237,7 @@ AS
 	WHERE F.FormId = @formid
 GO
 
-CREATE FUNCTION Rental(@formid INT, @checkout DATETIME)
+ALTER FUNCTION Rental(@formid INT, @checkout DATETIME)
 RETURNS MONEY
 AS
 BEGIN
@@ -245,17 +245,44 @@ BEGIN
 			@pricebyday MONEY,
 			@pricefirsthour MONEY,
 			@priceperhour MONEY,
+			@renterid VARCHAR(50),
 			@result MONEY,
 			@days INT,
-			@hours INT;
+			@hours INT,
+			@capacity INT,
+			@fee_foreigner FLOAT,
+			@fee_moreguest FLOAT,
+			@count_roommate INT,
+			@count_foreinger INT
 
-	SELECT @timespan = DATEDIFF(HOUR, F.CheckIn, @checkout), @pricebyday = RT.PriceByDay, @pricefirsthour = RT.PriceFirstHour, @priceperhour = RT.PricePerHour
+	SELECT @fee_foreigner = FeeForForeigner, @fee_moreguest = FeeForEachMoreGuest
+	FROM dbo.FEE
+	WHERE Id = 1
+
+	SELECT	@timespan = DATEDIFF(HOUR, F.CheckIn, @checkout), 
+			@pricebyday = RT.PriceByDay, 
+			@pricefirsthour = RT.PriceFirstHour, 
+			@priceperhour = RT.PricePerHour,
+			@capacity = R.Capacity,
+			@renterid = f.RenterId
 	FROM dbo.REG_FORM AS F
 	JOIN dbo.ROOM AS R
 		ON R.RoomId = F.RoomId
 	JOIN dbo.ROOM_TYPE AS RT
 		ON RT.RoomTypeId = R.RoomTypeId
 	WHERE F.FormId = @formid
+
+	SELECT @count_foreinger = COUNT(RenterId)
+	FROM dbo.RENTER
+	WHERE RenterId = @renterid AND NatId <> 0
+
+	SELECT @count_roommate = COUNT(*)
+	FROM dbo.ROOMMATE
+	WHERE FormId = @formid
+
+	SELECT @count_foreinger = COUNT(*) + @count_foreinger
+	FROM dbo.ROOMMATE
+	WHERE FormId = @formid AND NatId <> 0
 
 	SET @result = 0;
 	SET @days = @timespan / 24;
@@ -278,7 +305,20 @@ BEGIN
 	ELSE IF (@hours BETWEEN 18 AND 23)
 		SET @result = @result + @pricebyday;
 
+	IF (@count_roommate + 1 > @capacity)
+		SET @result = (@fee_moreguest * (@count_roommate + 1 - @capacity) + 1) * @result;
+	IF (@count_foreinger > 0)
+		SET @result = @fee_foreigner * @result
+
 	RETURN @result;
 END
 
+GO
+SELECT dbo.Rental(3, GETDATE())
+GO
+CREATE PROC USP_GetUsingRoom
+AS
+	SELECT RF.RoomId, RF.FormId, RF.CheckIn
+	FROM dbo.REG_FORM AS RF
+	WHERE RF.CheckOut IS NULL
 GO

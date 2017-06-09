@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data;
 using DTO;
 
 namespace DAO
@@ -44,7 +46,7 @@ namespace DAO
                     $"UPDATE dbo.REG_FORM SET CheckOut = GETDATE(), Rental = {reg.Rental} WHERE FormId = {reg.FormId}";
             else
                 _query =
-                    $"UPDATE dbo.REG_FORM SET CheckOut = GETDATE(), Rental = {reg.Rental}, BillId = {reg.BillId} WHERE FormId = {reg.FormId}";
+                    $"UPDATE dbo.REG_FORM SET CheckOut = GETDATE(), Rental = {reg.Rental}, BillId = '{reg.BillId}' WHERE FormId = {reg.FormId}";
             var result = DataProvider.Instance.ExecuteNonQuery(_query);
             return result > 0;
         }
@@ -61,6 +63,16 @@ namespace DAO
             _query = $"SELECT dbo.Rental({formid}, GETDATE())";
             var result = DataProvider.Instance.ExecuteScalar(_query);
             return Convert.ToInt32(result);
+        }
+
+        public IEnumerable<RegForm> GetUsingForms()
+        {
+            _query = "EXEC dbo.USP_GetUsingRoom";
+            var data = DataProvider.Instance.ExecuteQueries(_query);
+            foreach (DataRow row in data.Rows)
+            {
+                yield return new RegForm(row);
+            }
         }
     }
 }

@@ -17,8 +17,6 @@ namespace HotelMng.SubWindows
         #region Fields
         private RegForm _form = new RegForm();
         private IEnumerable<UseService> _useServices;
-        private int _serviceCharge;
-        private int _rental;
         #endregion
 
         #region Properties
@@ -72,14 +70,11 @@ namespace HotelMng.SubWindows
             RegForm = RegFormDAO.Instance.GetFormById(RegForm.FormId);
             RegForm.CheckOut = DateTime.Now;
 
-            UseServices = UseServiceDAO.Instance.GetServicesBeingUsed(RegForm.FormId);
-            _serviceCharge = RegFormDAO.Instance.GetServiceCharge(RegForm.FormId);
-            ServCharge.Value = _serviceCharge;
+            RegForm.UseServices = UseServiceDAO.Instance.GetServicesBeingUsed(RegForm.FormId);
+            RegForm.ServiceCharge = RegFormDAO.Instance.GetServiceCharge(RegForm.FormId);
+            RegForm.Rental = RegFormDAO.Instance.GetRental(RegForm.FormId);
 
-            _rental = RegFormDAO.Instance.GetRental(RegForm.FormId);
-            RentalCost.Value = _rental;
-
-            RegForm.Rental = _serviceCharge + _rental;
+            RegForm.Total = RegForm.ServiceCharge + RegForm.Rental;
         }
 
         private void ButtonClose_OnClick(object sender, RoutedEventArgs e)

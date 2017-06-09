@@ -210,7 +210,8 @@
                         </StackPanel.Resources>
                         <Button Content="Thêm phòng mới"
                                 Click="ButtonAddRoom_OnClick"/>
-                        <Button Content="Lập hóa đơn"/>
+                        <Button Content="Lập hóa đơn"
+                                Click="ButtonBill_OnClick"/>
                         <Button Content="Đổi mật khẩu tài khoản" 
                                 FontSize="13"
                                 Click="ButtonChangePassword_OnClick"/>

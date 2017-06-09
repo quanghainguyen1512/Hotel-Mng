@@ -41,7 +41,8 @@
                                 HorizontalAlignment="Left">
                         <TextBlock Text="Phòng:"
                                    FontSize="15"/>
-                        <TextBlock Text="0102" Name="TxblRoomId"
+                        <TextBlock Text="{Binding ElementName=DataGridForms, Path=SelectedItem.RoomId}" 
+                                   Name="TxblRoomId"
                                    FontSize="15"
                                    FontWeight="DemiBold"/>
                     </StackPanel>
@@ -64,13 +65,13 @@
                     <TextBlock Grid.Row="0" Grid.Column="0"
                                Text="Ngày vào:"/>
                     <TextBlock Grid.Row="0" Grid.Column="1"
-                               Text="DateTime"
+                               Text="{Binding ElementName=DataGridForms, Path=SelectedItem.CheckIn}"
                                HorizontalAlignment="Right"
                                FontSize="14"/>
                     <TextBlock Grid.Row="1" Grid.Column="0"
                                Text="Ngày ra:"/>
                     <TextBlock Grid.Row="1" Grid.Column="1"
-                               Text="DateTime"
+                               Text="{Binding ElementName=DataGridForms, Path=SelectedItem.CheckOut}"
                                HorizontalAlignment="Right"
                                FontSize="14"/>
                     <Separator Grid.Row="2" Grid.Column="0"
@@ -81,17 +82,20 @@
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Center"
                                 Orientation="Horizontal">
-                        <TextBlock Text="Tổng (1):"/>
+                        <TextBlock Text="Tổng (1):"
+                                   FontSize="14"/>
                         <uc:MoneyDisplay x:Name="RentalCost"
                                          FontWeight="DemiBold"
-                                         ItemForeground="Black"/>
+                                         ItemForeground="Black"
+                                         Value="{Binding ElementName=DataGridForms, Path=SelectedItem.Rental}"
+                                         FontSize="14"/>
                     </StackPanel>
 
                     <TextBlock Grid.Row="4" 
                                Grid.Column="0"
                                TextWrapping="Wrap"
                                Grid.ColumnSpan="2"
-                               FontSize="14"
+                               FontSize="15"
                                Text="Danh sách dịch vụ đã sử dụng:"/>
                     <Grid Grid.Row="5" Grid.Column="0"
                           Grid.ColumnSpan="2">
@@ -100,9 +104,20 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <DataGrid Grid.Row="0">
+                        <DataGrid Grid.Row="0"
+                                  ItemsSource="{Binding ElementName=DataGridForms, Path=SelectedItem.UseServices}">
                             <DataGrid.Columns>
-                                <mah:DataGridNumericUpDownColumn Header="Số lượng"/>
+                                <DataGridTextColumn Header="Tên dịch vụ" 
+                                                    Binding="{Binding SvName}"
+                                                    Width="*"
+                                                    IsReadOnly="True"/>
+                                <DataGridTextColumn Header="Thời gian" 
+                                                    Binding="{Binding Time}"
+                                                    Width="*"
+                                                    IsReadOnly="True"/>
+                                <DataGridTextColumn Header="Số lượng"
+                                                    Binding="{Binding Quantity}"
+                                                    Width=".5*"/>
                             </DataGrid.Columns>
                         </DataGrid>
                         <Separator Grid.Row="1"
@@ -111,10 +126,12 @@
                                     HorizontalAlignment="Right"
                                     VerticalAlignment="Center"
                                     Orientation="Horizontal">
-                            <TextBlock Text="Tổng (2):"/>
+                            <TextBlock Text="Tổng (2):" FontSize="14"/>
                             <uc:MoneyDisplay x:Name="ServTotalPrice" 
                                              FontWeight="DemiBold"
-                                             ItemForeground="Black"/>
+                                             ItemForeground="Black"
+                                             Value="{Binding ElementName=DataGridForms, Path=SelectedItem.ServiceCharge}"
+                                             FontSize="14"/>
                         </StackPanel>
                     </Grid>
                     <Separator Grid.Row="6" Grid.Column="0"
@@ -128,6 +145,7 @@
                     <uc:MoneyDisplay x:Name="Total" 
                                      FontSize="20"
                                      FontWeight="DemiBold"
+                                     Value="{Binding ElementName=DataGridForms, Path=SelectedItem.Total}"
                                      ItemForeground="Red" 
                                      Grid.Row="7" Grid.Column="1"
                                      HorizontalAlignment="Right"/>
@@ -153,9 +171,10 @@
                         Grid.Row="0">
                 <TextBlock Text="Mã HĐ:"
                            FontSize="20"/>
-                <TextBlock Text="{Binding BillId}" 
-                           Name="TxblBillId"
-                           FontSize="20"/>
+                <TextBlock Name="TxblBillId"
+                           Text="{Binding Bill.BillId}"
+                           FontWeight="DemiBold"
+                           FontSize="15"/>
             </StackPanel>
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
@@ -170,32 +189,76 @@
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" Grid.Column="0"
                            Text="Khách hàng:"/>
-                <TextBlock Grid.Row="0" Grid.Column="1"
-                           Text="Nguyễn Văn A"
-                           HorizontalAlignment="Right"
-                           FontWeight="DemiBold"/>
+                <TextBox Grid.Row="0" Grid.Column="1"
+                         Name="TxbPayerName"
+                         Text="{Binding Bill.PayerName}"
+                         HorizontalContentAlignment="Right"
+                         FontWeight="DemiBold"
+                         Margin="5,0"/>
                 <TextBlock Grid.Row="1" Grid.Column="0"
                            Text="Công ty:"/>
-                <TextBlock Grid.Row="1" Grid.Column="1"
-                           HorizontalAlignment="Right"
-                           Text="CT TNHH adjansdlsad"
-                           FontWeight="DemiBold"
-                           TextWrapping="Wrap"/>
-                <DataGrid Grid.Row="2" Grid.Column="0"
-                          Grid.ColumnSpan="2"
-                          IsReadOnly="True"
-                          Margin="5"
-                          Name="DataGridForm"
-                          SelectedIndex="0">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Width="*"
-                                            Header="Mã phiếu"/>
-                        <DataGridTextColumn Width="*"
-                                            Header="Phòng"/>
-                        <DataGridTextColumn Width="*"
-                                            Header="Tiền thuê"/>
-                    </DataGrid.Columns>
-                </DataGrid>
+                <TextBox Grid.Row="1" Grid.Column="1"
+                         Name="TxbCompany"
+                         Text="{Binding Bill.Company}"
+                         HorizontalContentAlignment="Right"
+                         FontWeight="DemiBold"
+                         TextWrapping="Wrap"
+                         Margin="5,0"/>
+                <Grid Grid.Row="2" Grid.Column="0"
+                      Grid.ColumnSpan="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <DataGrid Grid.Row="0" Grid.Column="0"
+                              IsReadOnly="True"
+                              Margin="5"
+                              ItemsSource="{Binding Forms}"
+                              Name="DataGridForms"
+                              SelectedIndex="0">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Width="0.8*"
+                                                Header="Mã phiếu"
+                                                Binding="{Binding FormId}"/>
+                            <DataGridTextColumn Width="0.9*"
+                                                Header="Phòng"
+                                                Binding="{Binding RoomId}"/>
+                            <DataGridTextColumn Width="0.8*"
+                                                Header="Tiền thuê"
+                                                Binding="{Binding Rental}"/>
+                            <DataGridTemplateColumn Width="Auto">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Click="ButtonDelItem_OnClick"
+                                                Height="25"
+                                                Width="25"
+                                                Style="{StaticResource MetroCircleButtonStyle}">
+                                            <Button.ContentTemplate>
+                                                <DataTemplate>
+                                                    <Rectangle Width="7" Height="7">
+                                                        <Rectangle.Fill>
+                                                            <VisualBrush Stretch="Fill" 
+                                                                         Visual="{StaticResource appbar_axis_x_letter}"/>
+                                                        </Rectangle.Fill>
+                                                    </Rectangle>
+                                                </DataTemplate>
+                                            </Button.ContentTemplate>
+                                        </Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button Grid.Row="1"
+                            HorizontalAlignment="Right"
+                            Content="+" 
+                            FontSize="25"
+                            Padding="0,-3,0,0"
+                            Width="30"
+                            Margin="5,0"
+                            Click="ButtonAddForm_OnClick"/>
+                </Grid>
                 <TextBlock Grid.Row="3" Grid.Column="0"
                            Text="Trị giá hóa đơn:"
                            Foreground="Yellow"
@@ -203,8 +266,10 @@
                            FontWeight="Bold"
                            TextWrapping="Wrap"/>
                 <uc:MoneyDisplay Grid.Row="3" Grid.Column="1"
-                                 FontSize="20"
+                                 FontSize="17"
                                  FontWeight="Bold"
+                                 x:Name="TotalMoneyDisplay"
+                                 Value="{Binding Bill.TotalMoney}"
                                  ItemForeground="Yellow"
                                  HorizontalAlignment="Right"
                                  Margin="5,0"/>
@@ -213,7 +278,8 @@
                         HorizontalAlignment="Right"
                         Orientation="Horizontal">
                 <Button Content="THANH TOÁN" 
-                        Style="{DynamicResource StyleBtnCloseInForm}"/>
+                        Style="{DynamicResource StyleBtnCloseInForm}"
+                        Click="ButtonPay_OnClick"/>
                 <Button Content="ĐÓNG"
                         Style="{DynamicResource StyleBtnCloseInForm}"
                         Click="ButtonBase_OnClick"/>

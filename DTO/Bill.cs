@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DTO
 {
@@ -12,8 +7,8 @@ namespace DTO
         #region Properties
         public string BillId { get; set; }
         public int TotalMoney { get; set; }
+        public string PayerName { get; set; }
         public string Company { get; set; }
-        public ObservableCollection<RegForm> RegisterForms{ get; set; }    
         #endregion
 
         public Bill(System.Data.DataRow row)
@@ -21,6 +16,11 @@ namespace DTO
             BillId      = row["BillId"].ToString();
             TotalMoney  = (int)row["TotalMoney"];
             Company     = row["Company"].ToString();
+            PayerName = row["PayerName"].ToString();
+        }
+
+        public Bill()
+        {
         }
 
         public static string GenerateBillId()

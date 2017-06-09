@@ -137,6 +137,9 @@
     <Compile Include="Pages\ServicesPage.xaml.cs">
       <DependentUpon>ServicesPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SubWindows\AddFormToBillDialog.xaml.cs">
+      <DependentUpon>AddFormToBillDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SubWindows\AddNewServiceTypeDialog.xaml.cs">
       <DependentUpon>AddNewServiceTypeDialog.xaml</DependentUpon>
     </Compile>
@@ -209,6 +212,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\ServicesPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SubWindows\AddFormToBillDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

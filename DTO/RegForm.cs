@@ -12,9 +12,13 @@ namespace DTO
     {
         #region Fields
 
-        private int _rental;
+        private int _total;
         private Renter _renter;
         private DateTime? _checkOut;
+        private IEnumerable<UseService> _useServices;
+        private int _serviceCharge;
+        private int _rental;
+        private int _roomId;
 
         #endregion
 
@@ -42,7 +46,15 @@ namespace DTO
             }
         }
 
-        public int RoomId { get; set; }
+        public int RoomId
+        {
+            get => _roomId;
+            set
+            {
+                _roomId = value; 
+                OnPropertyChanged(nameof(RoomId));
+            }
+        }
 
         //public Bill Bill { get; set; }
         public string BillId { get; set; }
@@ -58,6 +70,37 @@ namespace DTO
         }
 
         public ObservableCollection<Service> Services { get; set; }
+
+        public IEnumerable<UseService> UseServices
+        {
+            get => _useServices;
+            set
+            {
+                _useServices = value; 
+                OnPropertyChanged(nameof(UseServices));
+            }
+        }
+
+        public int ServiceCharge
+        {
+            get => _serviceCharge;
+            set
+            {
+                _serviceCharge = value; 
+                OnPropertyChanged(nameof(ServiceCharge));
+            }
+        }
+
+        public int Total
+        {
+            get => _total;
+            set
+            {
+                _total = value; 
+                OnPropertyChanged(nameof(Total));
+            }
+        }
+
         #endregion
 
         public RegForm(System.Data.DataRow row)

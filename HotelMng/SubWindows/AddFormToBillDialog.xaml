@@ -1,0 +1,51 @@
+﻿<mah:MetroWindow x:Class="HotelMng.SubWindows.AddFormToBillDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:local="clr-namespace:HotelMng.SubWindows"
+        mc:Ignorable="d"
+        Title="AddFormToBillDialog" Height="300" Width="300"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        GlowBrush="{DynamicResource AccentColorBrush}">
+    <mah:MetroWindow.Resources>
+        <ResourceDictionary Source="/Assets/Styles/FormResources.xaml"/>
+    </mah:MetroWindow.Resources>
+    <mah:MetroWindow.Background>
+        <SolidColorBrush Color="{StaticResource FormBackgroundColor}"/>
+    </mah:MetroWindow.Background>
+    <Grid DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:AddFormToBillDialog}}}">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <DataGrid Grid.Row="0"
+                  Name="DataGrid"
+                  ItemsSource="{Binding Forms}"
+                  ColumnWidth="*">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Phòng"
+                                    Binding="{Binding RoomId}"/>
+                <DataGridTextColumn Header="Ngày vào"
+                                    Binding="{Binding CheckIn}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Separator Grid.Row="1"
+                   Grid.Column="0"
+                   Margin="0,15,0,5"/>
+        <StackPanel Grid.Row="2"
+                    Grid.Column="0"
+                    HorizontalAlignment="Right"
+                    Orientation="Horizontal">
+            <Button Content="THÊM" 
+                    Style="{DynamicResource StyleBtnApplyInForm}"
+                    Click="ButtonAdd_OnClick"/>
+            <Button Content="ĐÓNG"
+                    Style="{DynamicResource StyleBtnCloseInForm}"
+                    Click="ButtonClose_OnClick"/>
+        </StackPanel>
+    </Grid>
+</mah:MetroWindow>

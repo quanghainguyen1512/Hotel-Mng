@@ -78,6 +78,7 @@
                            FontSize="14"/>
                 <uc:MoneyDisplay x:Name="RentalCost"
                                  FontWeight="DemiBold"
+                                 Value="{Binding RegForm.Rental}"
                                  ItemForeground="Black"
                                  FontSize="14"/>
             </StackPanel>
@@ -96,7 +97,7 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <DataGrid Grid.Row="0"
-                          ItemsSource="{Binding UseServices}">
+                          ItemsSource="{Binding RegForm.UseServices}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Tên dịch vụ" 
                                             Binding="{Binding SvName}"
@@ -121,6 +122,7 @@
                                FontSize="14"/>
                     <uc:MoneyDisplay x:Name="ServCharge" 
                                      FontWeight="DemiBold"
+                                     Value="{Binding RegForm.ServiceCharge}"
                                      ItemForeground="Black"
                                      FontSize="14"/>
                 </StackPanel>
@@ -136,7 +138,7 @@
             <uc:MoneyDisplay x:Name="Total" 
                              FontSize="20"
                              FontWeight="DemiBold"
-                             Value="{Binding RegForm.Rental}"
+                             Value="{Binding RegForm.Total}"
                              ItemForeground="Red" 
                              Grid.Row="7" Grid.Column="1"
                              HorizontalAlignment="Right"/>
