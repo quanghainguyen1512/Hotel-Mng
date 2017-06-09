@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -8,6 +9,7 @@ using HotelMng.SubWindows;
 using System.ComponentModel;
 using System.Data.SqlClient;
 using System.Runtime.CompilerServices;
+using System.Windows.Data;
 using DTO.Annotations;
 
 namespace HotelMng.Pages
@@ -17,6 +19,7 @@ namespace HotelMng.Pages
     /// </summary>
     public partial class RentersPage : INotifyPropertyChanged
     {
+        private CollectionView _view;
         private IEnumerable<Renter> _renters;
 
         public IEnumerable<Renter> Renters
@@ -33,11 +36,26 @@ namespace HotelMng.Pages
         {
             InitializeComponent();
             LoadData();
+
+            _view.Filter = RenterFilter;
+        }
+
+        private bool RenterFilter(object obj)
+        {
+            var name = TxbName.Text;
+            var idnum = TxbIdNum.Text;
+
+            if (string.IsNullOrEmpty(name) && string.IsNullOrEmpty(idnum))
+                return true;
+            var renter = obj as Renter;
+            return renter != null && renter.Name.IndexOf(name, StringComparison.InvariantCultureIgnoreCase) >= 0 &&
+                   renter.IdentityNum.IndexOf(idnum, StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
         void LoadData()
         {
             Renters = RenterDAO.Instance.GetAllRenters();
+            _view = (CollectionView)CollectionViewSource.GetDefaultView(Renters);
         }
 
         private void ButtonEditItem_OnClick(object sender, RoutedEventArgs e)
@@ -59,26 +77,6 @@ namespace HotelMng.Pages
             };
             editor.ShowDialog();
         }
-        private void ButtonDelItem_OnClick(object sender, RoutedEventArgs e)
-        {
-            var btn = sender as Button;
-            var rowBeingDeleted = (Renter)btn?.DataContext;
-
-            if (MessageBox.Show("Chắc chắn xóa mục này ?", "", MessageBoxButton.YesNo, MessageBoxImage.Warning) ==
-                MessageBoxResult.Yes)
-            {
-                try
-                {
-                    if (RenterDAO.Instance.DelRenter(rowBeingDeleted?.RenterId))
-                        LoadData();
-
-                }
-                catch (SqlException)
-                {
-                    MessageBox.Show("Không thể xóa khách hàng này");
-                }
-            }
-        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -86,6 +84,11 @@ namespace HotelMng.Pages
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void Txb_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            _view.Refresh();
         }
     }
 }
