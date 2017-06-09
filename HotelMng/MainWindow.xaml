@@ -10,6 +10,7 @@
                  xmlns:hamburgerMenu="clr-namespace:HamburgerMenu;assembly=hamburgerMenu"
                  mc:Ignorable="d"
                  xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
+                 xmlns:pieChart="clr-namespace:HotelMng.DrawChart.PieChart"
                  Title="MainWindow" Height="700" Width="1000" 
                  WindowState="Maximized"
                  WindowStyle="None"
@@ -284,7 +285,8 @@
                         <RowDefinition/>
                         <RowDefinition Height="7*"/>
                     </Grid.RowDefinitions>
-                    <Grid Grid.Row="0">
+                    <Grid Grid.Row="0"
+                          Background="Azure">
                         <TextBlock Foreground="{StaticResource AccentBaseColorBrush}" 
                                    FontSize="35" 
                                    FontWeight="Bold" 
@@ -297,9 +299,43 @@
                             <ColumnDefinition Width="3*"/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <WindowsFormsHost>
-                            <rv:ReportViewer x:Name="Report"/>
-                        </WindowsFormsHost>
+                        <Grid Grid.Column="0"
+                              Name="GridReport">
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <Grid.Resources>
+                                <x:ArrayExtension Type="{x:Type Brush}" x:Key="Brushes">
+                                    <SolidColorBrush Color="#9F15C3"/>
+                                    <SolidColorBrush Color="#FF8E01"/>
+                                    <SolidColorBrush Color="#339933"/>
+                                    <SolidColorBrush Color="#00AAFF"/>
+                                    <SolidColorBrush Color="#818183"/>
+                                    <SolidColorBrush Color="#000033"/>
+                                </x:ArrayExtension>
+                            </Grid.Resources>
+                            
+                            <pieChart:PieChartLayout HorizontalAlignment="Center"
+                                                     PlottedProperty="Proportion"
+                                                     x:Name="PiePlotter"
+                                                     Margin="10"
+                                                     Visibility="Hidden">
+                                <pieChart:PieChartLayout.ColorSelector>
+                                    <pieChart:IndexedColourSelector Brushes="{StaticResource Brushes}"/>
+                                </pieChart:PieChartLayout.ColorSelector>
+                            </pieChart:PieChartLayout>
+                            
+                            <WindowsFormsHost Grid.Row="1"
+                                              Height="200"
+                                              Background="Transparent"
+                                              HorizontalAlignment="Center"
+                                              Width="600">
+                                <rv:ReportViewer x:Name="Report"/>
+                            </WindowsFormsHost>
+
+                        </Grid>
                         <Grid Grid.Column="1" Background="{StaticResource ToolBoxBrush}">
                             <Grid.Resources>
                                 <x:Array Type="sys:Int32" x:Key="MonthArr">

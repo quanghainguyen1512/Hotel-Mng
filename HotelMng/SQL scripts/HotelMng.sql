@@ -178,6 +178,9 @@ AS
 		ON S.ServId = US.ServId
 	WHERE US.FormId = @formid
 GO
+EXEC dbo.USP_GetDataForReporting @month = 6 , -- smallint
+                                 @year = 2017   -- int
+
 CREATE PROC USP_GetDataForReporting
 	@month SMALLINT,
 	@year  INT

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -29,6 +31,7 @@ namespace HotelMng
         private IEnumerable<Room> _rooms;
         private CollectionView _view;
         private IEnumerable<RoomStatus> _allRoomStatus;
+        private IEnumerable<ReportRow> _report = new List<ReportRow>();
 
         #endregion
 
@@ -60,7 +63,9 @@ namespace HotelMng
         {
             InitializeComponent();
             LoadData();
-            LoadRoomStatus(); 
+            LoadRoomStatus();
+
+            GridReport.DataContext = _report;
         }
 
         #region Management Tab
@@ -172,6 +177,11 @@ namespace HotelMng
 
         #region Report Tab
 
+        IEnumerable<ReportRow> GetReport(DataTable dt)
+        {
+            return from DataRow row in dt.Rows select new ReportRow(row);
+        }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             if (CbbMonth.SelectedIndex < 0 || CbbYear.SelectedIndex < 0)
@@ -182,6 +192,11 @@ namespace HotelMng
 
             var query = "EXEC dbo.USP_GetDataForReporting @month, @year";
             var data = DataProvider.Instance.ExecuteQueries(query, new object[] { (int)CbbMonth.SelectedValue, (int) CbbYear.SelectedValue});
+
+            _report = GetReport(data);
+            GridReport.DataContext = _report; 
+
+            PiePlotter.Visibility = Visibility.Visible;
 
             var ds = new ReportDataSource("DataSet1", data);
             Report.LocalReport.DataSources.Add(ds);

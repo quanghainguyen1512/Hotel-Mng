@@ -117,6 +117,23 @@
     </Compile>
     <Compile Include="Converter\GenderConverter.cs" />
     <Compile Include="Converter\RoomTypeConverter.cs" />
+    <Compile Include="DrawChart\Helpers.cs" />
+    <Compile Include="DrawChart\PieChart\ColourConverter.cs" />
+    <Compile Include="DrawChart\PieChart\IColorSelector.cs" />
+    <Compile Include="DrawChart\PieChart\IndexedColourSelector.cs" />
+    <Compile Include="DrawChart\PieChart\Legend.xaml.cs">
+      <DependentUpon>Legend.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DrawChart\PieChart\LegendConverter.cs" />
+    <Compile Include="DrawChart\PieChart\PieChartLayout.xaml.cs">
+      <DependentUpon>PieChartLayout.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DrawChart\PieChart\PiePlotter.xaml.cs">
+      <DependentUpon>PiePlotter.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DrawChart\Shapes\PiePiece.cs" />
+    <Compile Include="DrawChart\Util\FormattingConverter.cs" />
+    <Compile Include="DrawChart\Util\Utils.cs" />
     <Compile Include="HotelManagementDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -192,6 +209,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Assets\UserControls\RoomStatusItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DrawChart\PieChart\Legend.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DrawChart\PieChart\PieChartLayout.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DrawChart\PieChart\PiePlotter.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
