@@ -58,7 +58,7 @@ namespace DAO
 
         public int NewestServiceTypeId()
         {
-            _query = "SELECT TOP 1 ServId FROM dbo.SERVICE_TYPE ORDER BY ServId DESC";
+            _query = "SELECT TOP 1 SvTypeId FROM dbo.SERVICE_TYPE ORDER BY SvTypeId DESC";
             var data = DataProvider.Instance.ExecuteScalar(_query);
             return (int)data;
         }
