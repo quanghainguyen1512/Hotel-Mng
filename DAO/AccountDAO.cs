@@ -27,9 +27,11 @@ namespace DAO
 
         public bool LogIn(string username, string password)
         {
-            _query = "EXEC USP_LogIn @username, @password";
-            var result = DataProvider.Instance.ExecuteQueries(_query, new object[] { username, password });
-            return result.Rows.Count == 1;
+            
+             _query = "EXEC USP_LogIn @username, @password";
+             var result = DataProvider.Instance.ExecuteQueries(_query, new object[] {username, password});
+             return result.Rows.Count == 1;
+            
         }
 
         public bool ChangePassword(string username, string newPassword)

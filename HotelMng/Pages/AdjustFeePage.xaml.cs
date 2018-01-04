@@ -23,7 +23,7 @@ namespace HotelMng.Pages
     public partial class AdjustFeePage : Page
     {
         public Fee Fee { get; set; }
-        
+
         public AdjustFeePage()
         {
             InitializeComponent();

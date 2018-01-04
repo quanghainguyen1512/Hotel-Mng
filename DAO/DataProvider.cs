@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Configuration;
+using System.Linq;
 using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
@@ -9,11 +10,12 @@ namespace DAO
     {
         private static DataProvider _instance;
         private static readonly object Padlock = new object();
+        public string ServerName { private get; set; }
 
-        DataProvider() { }
+        private DataProvider() { }
 
-        private readonly string _connString = @"Data Source=DESKTOP-L9JNNSC;Initial Catalog=HotelManagement;Integrated Security=True";
-
+        private string _connString = ConfigurationManager.ConnectionStrings["HotelMng.Properties.Settings.HotelManagementConnectionString"].ConnectionString;
+        
         public static DataProvider Instance
         {
             get
@@ -35,6 +37,7 @@ namespace DAO
         /// <returns></returns>
         public DataTable ExecuteQueries(string query, object[] parameters = null)
         {
+            _connString = _connString.Replace("{server_name}", ServerName);
             var dataTable = new DataTable();
 
             using (var sqlConn = new SqlConnection(_connString))
@@ -75,8 +78,8 @@ namespace DAO
         /// <returns></returns>
         public int ExecuteNonQuery(string query, object[] parameters = null)
         {
+            _connString = _connString.Replace("{server_name}", ServerName);
             int count;
-
             using (var sqlConnection = new SqlConnection(_connString))
             {
                 sqlConnection.Open();
@@ -113,8 +116,8 @@ namespace DAO
         /// <returns></returns>
         public object ExecuteScalar(string query, object[] parameters = null)
         {
+            _connString = _connString.Replace("{server_name}", ServerName);
             object data;
-
             using (var sqlConnection = new SqlConnection(_connString))
             {
                 sqlConnection.Open();

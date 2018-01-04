@@ -66,7 +66,10 @@ namespace HotelMng
         {
             if (string.IsNullOrEmpty(TxtName.Text) || string.IsNullOrEmpty(TxtIdNum.Text) ||
                 CbbNationality.SelectedIndex < 0 || CheckInTime.SelectedDate is null)
+            {
                 MessageBox.Show("Vui lòng điền đủ thông tin bắt buộc");
+                return;
+            }
             UpdateRegFormAction(Form);
             Close();
         }

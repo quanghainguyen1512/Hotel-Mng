@@ -30,6 +30,10 @@
         
         <StackPanel Grid.Row="1"
                     VerticalAlignment="Center">
+            <TextBox mah:TextBoxHelper.Watermark="Tên Server (Server Name)"
+                     Name="TxbServerName"
+                     Padding="10,5"
+                     Margin="0,0,0,5"/>
             <TextBox mah:TextBoxHelper.Watermark="Tên đăng nhập"
                      FontSize="18" 
                      Margin="0,0,0,5"

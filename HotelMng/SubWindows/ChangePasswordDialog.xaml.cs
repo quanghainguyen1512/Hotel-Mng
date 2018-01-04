@@ -36,6 +36,10 @@ namespace HotelMng.SubWindows
             {
                 MessageBox.Show("Vui lòng kiểm tra lại Tên đăng nhập và Mật khẩu hiện tại");
             }
+            else if (string.IsNullOrEmpty(PwbNewPass.Password))
+            {
+                MessageBox.Show("Mật khẩu mới không được để trống");
+            }
             else if (PwbNewPass.Password != PwbConfirmNewPass.Password)
             {
                 MessageBox.Show("Mật khẩu xác nhận không khớp với mật khẩu mới, vui lòng thử lại");

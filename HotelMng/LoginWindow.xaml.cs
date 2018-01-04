@@ -15,9 +15,18 @@ namespace HotelMng
 
         private void ButtonLogIn_OnClick(object sender, RoutedEventArgs e)
         {
-            if (!AccountDAO.Instance.LogIn(TxbUsername.Text, TxbPassword.Password))
+            DataProvider.Instance.ServerName = TxbServerName.Text;
+            try
             {
-                MessageBox.Show("Đăng nhập thất bại, vui lòng thử lại");
+                if (!AccountDAO.Instance.LogIn(TxbUsername.Text, TxbPassword.Password))
+                {
+                    MessageBox.Show("Đăng nhập thất bại, vui lòng thử lại");
+                    return;
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Sai Server Name, vui lòng thử lại");
                 return;
             }
 
