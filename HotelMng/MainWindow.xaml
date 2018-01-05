@@ -468,8 +468,7 @@
                         <StackPanel Grid.Row="1" Grid.Column="1"
                                     Margin="0,10">
                             <TextBlock Text="1. Nguyễn Quang Hải (15520187)"/>
-                            <TextBlock Text="2. Nguyễn Trung Hào (15520199)"/>
-                            <TextBlock Text="3. Đào Đức Huy (15520295)"></TextBlock>
+                            <TextBlock Text="2. Phan Đức Anh (15520026)"/>
                         </StackPanel>
                         <TextBlock Grid.Row="2" Grid.Column="0"
                                    Text="Giảng viên hướng dẫn:"
