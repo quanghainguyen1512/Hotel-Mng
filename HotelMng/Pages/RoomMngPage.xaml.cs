@@ -52,8 +52,10 @@ namespace HotelMng.Pages
 
         private void ButtonEditRoomType_OnClick(object sender, RoutedEventArgs e)
         {
-            var btn = sender as Button;
-            if (btn is null) return;
+            //var btn = sender as Button;
+            //if (btn is null) return;
+            if (!(sender is Button btn))
+                return;
 
             var rowBeingEdited = RoomTypes.FirstOrDefault(r => r.RoomTypeId == ((RoomType)btn.DataContext).RoomTypeId);
 

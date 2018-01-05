@@ -7,15 +7,12 @@ using System.Globalization;
 
 namespace DTO
 {
-    public class Renter : Base
+    public class Renter : Guest
     {
         private string _renterId;
-        private string _name;
         private bool _gender;
         private string _phoneNum;
-        private string _identityNum;
         private string _address;
-        private Nationality _nationality;
 
         public Renter()
         {
@@ -30,15 +27,7 @@ namespace DTO
                 OnPropertyChanged(nameof(RenterId));
             }
         }
-        public string Name
-        {
-            get => _name;
-            set
-            {
-                _name =value;
-                OnPropertyChanged(nameof(Name));
-            }
-        }
+        
         public bool Gender
         {
             get => _gender;
@@ -57,15 +46,7 @@ namespace DTO
                 OnPropertyChanged(nameof(PhoneNum));
             }
         }
-        public string IdentityNum
-        {
-            get => _identityNum;
-            set
-            {
-                _identityNum = value;
-                OnPropertyChanged(nameof(IdentityNum));
-            }
-        }
+        
         public string Address
         {
             get => _address;
@@ -76,25 +57,12 @@ namespace DTO
             }
         }
 
-        public Nationality Nationality
-        {
-            get => _nationality;
-            set
-            {
-                _nationality = value; 
-                OnPropertyChanged(nameof(Nationality));
-            }
-        }
-
-        public Renter(System.Data.DataRow row)
+        public Renter(System.Data.DataRow row) : base(row)
         {
             RenterId = row["RenterId"].ToString();
-            Name = row["Name"].ToString();
             Gender = row["Gender"].Equals(true);
             PhoneNum = row["PhoneNum"].ToString();
-            IdentityNum = row["IdentityNum"].ToString();
             Address = row["Address"].ToString();
-            Nationality = new Nationality(row);
         }
     }
 }

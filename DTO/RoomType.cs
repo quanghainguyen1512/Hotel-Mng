@@ -5,13 +5,16 @@ namespace DTO
 {
     public class RoomType : Base
     {
-        #region Properties
+        #region Fields
 
         private int _priceByDay;
         private int _priceFirstHour;
         private int _pricePerHour;
         private string _note;
 
+        #endregion
+
+        #region Properties
 
         public char RoomTypeId { get; set; }
 

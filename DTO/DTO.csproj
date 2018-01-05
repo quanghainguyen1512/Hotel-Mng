@@ -43,6 +43,7 @@
     <Compile Include="Base.cs" />
     <Compile Include="Bill.cs" />
     <Compile Include="Fee.cs" />
+    <Compile Include="Guest.cs" />
     <Compile Include="Nationality.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="RegForm.cs" />

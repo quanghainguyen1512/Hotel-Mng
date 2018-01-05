@@ -8,6 +8,7 @@ namespace DAO
 {
     public class AccountDAO
     {
+        public bool IsAdmin { get; private set; } = false;
         private static AccountDAO _instance;
         private static readonly object Padlock = new object();
         private string _query;
@@ -30,7 +31,8 @@ namespace DAO
             
              _query = "EXEC USP_LogIn @username, @password";
              var result = DataProvider.Instance.ExecuteQueries(_query, new object[] {username, password});
-             return result.Rows.Count == 1;
+            IsAdmin = result.Rows[0]["IsAdmin"].Equals(true);
+                return result.Rows.Count == 1;
             
         }
 

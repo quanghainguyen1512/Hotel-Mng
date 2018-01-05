@@ -7,26 +7,15 @@ using System.Threading.Tasks;
 
 namespace DTO
 {
-    public class Roommate
+    public class Roommate : Guest
     {
-        #region Properties
-
-        public string Name { get; set; }
-        public string IdentityNum { get; set; }
-        public Nationality Nationality { get; set; }
-
-        #endregion
-
-        public Roommate(System.Data.DataRow row)
+        public Roommate(System.Data.DataRow row) : base(row)
         {
-            Name = row["Name"].ToString();
-            IdentityNum = row["IdentityNum"].ToString();
-            Nationality = new Nationality(row);
+
         }
-
-        public Roommate()
+        public Roommate() : base()
         {
-            Nationality = new Nationality();
+
         }
     }
 }
