@@ -211,8 +211,14 @@ namespace HotelMng
 
         private void MenuItemDelRoom_OnClick(object sender, RoutedEventArgs e)
         {
-            var menuItem = sender as MenuItem;
-            if (menuItem is null) return;
+            if (!AccountDAO.Instance.IsAdmin)
+            {
+                MessageBox.Show("Nhân viên không được phép xóa phòng");
+                return;
+            }
+                
+            if (!(sender is MenuItem menuItem)) return;
+            
             var room = (Room)menuItem.DataContext;
 
             if (MessageBox.Show("Chắc chắn xóa?", "", MessageBoxButton.YesNo, MessageBoxImage.Warning) ==
@@ -224,8 +230,7 @@ namespace HotelMng
         }
         private void MenuItemEditRoom_OnClick(object sender, RoutedEventArgs e)
         {
-            var menuItem = sender as MenuItem;
-            if (menuItem is null) return;
+            if (!(sender is MenuItem menuItem)) return;
 
             var itemBeingEdited = Rooms.First(r => r.RoomId == ((Room)menuItem.DataContext).RoomId);
             var oldStatus = itemBeingEdited.RoomStatus.StatusId;
@@ -247,8 +252,7 @@ namespace HotelMng
         }
         private void MenuItemRegRoom_OnClick(object sender, RoutedEventArgs e)
         {
-            var menuItem = sender as MenuItem;
-            if (menuItem is null) return;
+            if (!(sender is MenuItem menuItem)) return;
 
             var roomParam = (Room)menuItem.DataContext;
 
@@ -271,8 +275,8 @@ namespace HotelMng
         }
         private void MenuItemAddService_OnClick(object sender, RoutedEventArgs e)
         {
-            var menuItem = sender as MenuItem;
-            if (menuItem is null) return;
+            if (!(sender is MenuItem menuItem)) return;
+            
             var roomParam = (Room)menuItem.DataContext;
             var dialog = new UsingServiceWindow
             {
@@ -282,8 +286,8 @@ namespace HotelMng
         }
         private void MenuItemRentersInRoom_OnClick(object sender, RoutedEventArgs e)
         {
-            var menuItem = sender as MenuItem;
-            if (menuItem is null) return;
+            if (!(sender is MenuItem menuItem)) return;
+            
             var roomParam = (Room)menuItem.DataContext;
             var dialog = new RentersInRoomDialog
             {
@@ -294,8 +298,8 @@ namespace HotelMng
 
         private void MenuItemCheckOut_OnClick(object sender, RoutedEventArgs e)
         {
-            var menuItem = sender as MenuItem;
-            if (menuItem is null) return;
+            if (!(sender is MenuItem menuItem)) return;
+            
             var roomParam = (Room)menuItem.DataContext;
 
             var dialog = new CheckOutDialog()

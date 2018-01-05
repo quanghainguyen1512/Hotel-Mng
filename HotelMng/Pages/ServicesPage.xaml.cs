@@ -65,11 +65,17 @@ namespace HotelMng.Pages
 
         private void ButtonDelItem_OnClick(object sender, RoutedEventArgs e)
         {
+            if (!AccountDAO.Instance.IsAdmin)
+            {
+                MessageBox.Show("Chỉ admin được quyền thực hiện thao tác này");
+                return;
+            }
+
             if (MessageBox.Show("Chắc chắn xóa mục này ?", "", MessageBoxButton.YesNo, MessageBoxImage.Warning) ==
                 MessageBoxResult.Yes)
             {
-                var btn = sender as Button;
-                if (btn is null) return;
+                if (!(sender is Button btn)) return;
+                
 
                 var rowBeingDeleted = (Service)btn.DataContext;
 
@@ -82,8 +88,8 @@ namespace HotelMng.Pages
 
         private void ButtonEditItem_OnClick(object sender, RoutedEventArgs e)
         {
-            var btn = sender as Button;
-            if (btn is null) return;
+            if (!(sender is Button btn)) return;
+            
 
             var rowBeingEdited = Services.FirstOrDefault(s => s.ServId == ((Service)btn.DataContext).ServId);
 
