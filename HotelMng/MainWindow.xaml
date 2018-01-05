@@ -463,7 +463,7 @@
                         </Grid.Resources>
                         <TextBlock Text="Nhóm thực hiện:" Grid.Row="0" Grid.Column="0"
                                    Margin="0,10,0,0"/>
-                        <StackPanel Grid.Row="1" Grid.Column="1"
+                        <StackPanel Grid.Row="0" Grid.Column="1"
                                     Margin="0,10">
                             <TextBlock Text="1. Nguyễn Quang Hải (15520187)"/>
                             <TextBlock Text="2. Phan Đức Anh (15520026)"/>
@@ -472,7 +472,7 @@
                                    Text="Giảng viên hướng dẫn:"
                                    Margin="0,0,0,10"/>
                         <TextBlock Grid.Row="2" Grid.Column="1"
-                                   Text="Nguyễn Thị Thanh Trúc"
+                                   Text="PGS. TS. VŨ THANH NGUYÊN"
                                    Margin="0,0,0,10"/>
                         <TextBlock Grid.Row="3" Grid.Column="0"
                                    Text="Source control:"
