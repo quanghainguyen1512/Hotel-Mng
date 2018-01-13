@@ -30,9 +30,10 @@ namespace HotelMng.SubWindows
             Close();
         }
 
-        private void ButtonApply_OnClick(object sender, RoutedEventArgs e)
+        private async void ButtonApply_OnClick(object sender, RoutedEventArgs e)
         {
-            if (!AccountDAO.Instance.LogIn(TxbUsername.Text, PwbOldPass.Password))
+            var checkAccount = await AccountDAO.Instance.LogIn(TxbUsername.Text, PwbOldPass.Password);
+            if (!checkAccount)
             {
                 MessageBox.Show("Vui lòng kiểm tra lại Tên đăng nhập và Mật khẩu hiện tại");
             }

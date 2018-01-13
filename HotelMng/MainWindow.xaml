@@ -217,7 +217,7 @@
                                 FontSize="13"
                                 Click="ButtonChangePassword_OnClick"/>
 
-                        <Button Content="Thoát"
+                        <Button Content="Đăng xuất"
                                 Click="ButtonExit_OnCick"
                                 Margin="20,220,20,20"/>
                     </StackPanel>

@@ -359,7 +359,9 @@
     <Resource Include="Resources\Entypo.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DAO\DAO.csproj">
@@ -378,6 +380,7 @@
     <Resource Include="Resources\Entypo-license.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\loading_indicator.gif" />
     <Content Include="SQL scripts\scripts.sql" />
     <Resource Include="Assets\Icon\appbar.currency.dollar.png" />
     <Resource Include="Assets\Icon\appbar.social.delicious.png" />

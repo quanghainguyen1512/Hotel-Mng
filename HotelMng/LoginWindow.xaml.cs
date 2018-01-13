@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using DAO;
 
 namespace HotelMng
@@ -13,20 +14,26 @@ namespace HotelMng
             InitializeComponent();
         }
 
-        private void ButtonLogIn_OnClick(object sender, RoutedEventArgs e)
+        private async void ButtonLogIn_OnClick(object sender, RoutedEventArgs e)
         {
             DataProvider.Instance.ServerName = TxbServerName.Text;
             try
             {
-                if (!AccountDAO.Instance.LogIn(TxbUsername.Text, TxbPassword.Password))
+                LogInBtn.IsEnabled = false;
+                LoadingIndicator.Visibility = Visibility.Visible;
+                var logged = await AccountDAO.Instance.LogIn(TxbUsername.Text, TxbPassword.Password);
+                LogInBtn.IsEnabled = true;
+                LoadingIndicator.Visibility = Visibility.Hidden;
+
+                if (!logged)
                 {
                     MessageBox.Show("Đăng nhập thất bại, vui lòng thử lại");
                     return;
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                MessageBox.Show("Sai Server Name, vui lòng thử lại");
+                MessageBox.Show("Sai Server Name, vui lòng thử lại" + ex.Message);
                 return;
             }
 

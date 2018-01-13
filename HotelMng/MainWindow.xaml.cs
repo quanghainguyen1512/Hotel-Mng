@@ -99,9 +99,9 @@ namespace HotelMng
 
         private void ButtonExit_OnCick(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("Bạn muốn thoát?", "Thông báo", MessageBoxButton.YesNo, MessageBoxImage.Warning) ==
-                MessageBoxResult.Yes)
-                Close();
+            var login = new LoginWindow();
+            login.Show();
+            Close();
         }
         private void ButtonAddRoom_OnClick(object sender, RoutedEventArgs e)
         {

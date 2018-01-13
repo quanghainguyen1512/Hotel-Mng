@@ -16,10 +16,11 @@
         <SolidColorBrush Color="{StaticResource FormBackgroundColor}"/>
     </mah:MetroWindow.Background>
 
-    <Grid Margin="120,50">
+    <Grid Margin="120,50,120,30">
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         
@@ -45,9 +46,16 @@
                          Name="TxbPassword"/>
         </StackPanel>
         
-        <Button Grid.Row="2" Content="Đăng nhập" 
+        <Button Name="LogInBtn" 
+                Grid.Row="2" 
+                Content="Đăng nhập" 
                 FontSize="18"
                 Click="ButtonLogIn_OnClick"
                 Style="{DynamicResource StyleBtnApplyInForm}"/>
+        <Image Grid.Row="3"
+               Name="LoadingIndicator"
+               Source="./Resources/loading_indicator.gif"
+               Width="30"
+               Visibility="Hidden"/>
     </Grid>
 </mah:MetroWindow>

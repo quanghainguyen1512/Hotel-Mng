@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace DAO
@@ -26,13 +27,16 @@ namespace DAO
             }
         }
 
-        public bool LogIn(string username, string password)
+        public async Task<bool> LogIn(string username, string password)
         {
             
-             _query = "EXEC USP_LogIn @username, @password";
-             var result = DataProvider.Instance.ExecuteQueries(_query, new object[] {username, password});
+            _query = "EXEC USP_LogIn @username, @password";
+            var result = await Task.Run(() => DataProvider.Instance.ExecuteQueries(_query, new object[] { username, password }));
+            //var result = DataProvider.Instance.ExecuteQueries(_query, new object[] {username, password});
+            if (!(result.Rows.Count == 1))
+                return false;
             IsAdmin = result.Rows[0]["IsAdmin"].Equals(true);
-                return result.Rows.Count == 1;
+            return true;
             
         }
 

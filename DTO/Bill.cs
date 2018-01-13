@@ -16,7 +16,7 @@ namespace DTO
             BillId      = row["BillId"].ToString();
             TotalMoney  = (int)row["TotalMoney"];
             Company     = row["Company"].ToString();
-            PayerName = row["PayerName"].ToString();
+            PayerName   = row["PayerName"].ToString();
         }
 
         public Bill()
